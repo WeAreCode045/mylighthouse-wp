@@ -200,7 +200,7 @@
 .container.show .calendars:not(.grid-1) .calendar:first-child > .header .previous-button,
 .container.show .calendars:not(.grid-1) .calendar:last-child > .header .next-button {
 	visibility: visible !important;
-	display: none !important;
+	display: flex !important;
 }
 .calendar {
 	padding: 10px;
