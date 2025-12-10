@@ -40,14 +40,7 @@ class Mylighthouse_Booker_Frontend_Assets
 			'all'
 		);
 
-		// Register EasePick CSS from CDN
-		wp_register_style(
-			'easepick',
-			'https://cdn.jsdelivr.net/npm/@easepick/core@1.2.1/dist/index.css',
-			array(),
-			'1.2.1',
-			'all'
-		);
+		
 
 		// Register plugin styles
 		wp_register_style(
