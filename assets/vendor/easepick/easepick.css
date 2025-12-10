@@ -192,6 +192,12 @@
 	display: none !important;
 	visibility: hidden !important;
 }
+/* Also hide buttons when NOT inside a shown modal overlay */
+.mlb-calendar-modal-overlay:not(.mlb-calendar-modal-show) .calendar > .header .previous-button,
+.mlb-calendar-modal-overlay:not(.mlb-calendar-modal-show) .calendar > .header .next-button {
+	display: none !important;
+	visibility: hidden !important;
+}
 /* For multi-calendar layouts, configure button order and visibility */
 .calendars:not(.grid-1) .calendar > .header .month-name {
 	order: 2;
