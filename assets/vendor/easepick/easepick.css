@@ -204,6 +204,17 @@
 	visibility: visible !important;
 	display: flex !important;
 }
+/* Override inline styles for all navigation buttons when container is shown */
+.container.show .calendar > .header .previous-button,
+.container.show .calendar > .header .next-button {
+	display: flex !important;
+	visibility: visible !important;
+}
+/* But still hide middle calendar buttons in multi-calendar layouts */
+.container.show .calendars:not(.grid-1) .calendar:not(:first-child) > .header .previous-button,
+.container.show .calendars:not(.grid-1) .calendar:not(:last-child) > .header .next-button {
+	visibility: hidden !important;
+}
 .calendar {
 	padding: 10px;
 }
