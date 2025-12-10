@@ -194,9 +194,17 @@
 	order: 3;
 	visibility: hidden;
 }
-.calendars:not(.grid-1) .calendar:first-child > .header .previous-button,
-.calendars:not(.grid-1) .calendar:last-child > .header .next-button {
+/* Only show navigation arrows when the container is actually visible */
+.container.show .calendars:not(.grid-1) .calendar:first-child > .header .previous-button,
+.container.show .calendars:not(.grid-1) .calendar:last-child > .header .next-button {
 	visibility: visible;
+}
+
+/* Hide arrows when container is not shown */
+.container:not(.show) .calendars:not(.grid-1) .calendar:first-child > .header .previous-button,
+.container:not(.show) .calendars:not(.grid-1) .calendar:last-child > .header .next-button {
+	visibility: hidden !important;
+	display: none !important;
 }
 .calendar {
 	padding: 10px;
