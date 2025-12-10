@@ -445,6 +445,16 @@
                         // hide overlay
                         modalOverlay.classList.remove('mlb-calendar-modal-show');
 
+                        // Hide the easepick calendar UI to prevent arrows from staying visible
+                        const picker = $form.data('picker');
+                        if (picker && typeof picker.hide === 'function') {
+                            try {
+                                picker.hide();
+                            } catch (e) {
+                                console.warn('[MLB Modal Picker] Error hiding picker:', e);
+                            }
+                        }
+
                         // reset hidden inputs and visible daterange
                         try { $checkinHidden.val(''); } catch (e) {}
                         try { $checkoutHidden.val(''); } catch (e) {}
