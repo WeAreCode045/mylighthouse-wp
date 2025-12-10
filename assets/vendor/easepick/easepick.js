@@ -144,11 +144,15 @@
 			const n = document.createElement("button");
 			(n.className = "previous-button unit"),
 				(n.innerHTML = this.picker.options.locale.previousMonth),
+				(n.style.display = "none"),
+				(n.style.visibility = "hidden"),
 				t.appendChild(n);
 			const s = document.createElement("button");
 			return (
 				(s.className = "next-button unit"),
 				(s.innerHTML = this.picker.options.locale.nextMonth),
+				(s.style.display = "none"),
+				(s.style.visibility = "hidden"),
 				t.appendChild(s),
 				t
 			);
