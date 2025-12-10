@@ -16,7 +16,7 @@
     bottom: 0;
         /* Subtle black overlay behind the modal */
         background-color: rgba(0, 0, 0, 0.6);
-    z-index: 10000;
+    z-index: 9997;
     display: flex;
     align-items: center !important;
     justify-content: center !important;
@@ -61,6 +61,7 @@
     padding: 20px;
     height: fit-content;
 		width: fit-content;
+    z-index: 9998;
 }
 
 
@@ -80,7 +81,7 @@
     cursor: pointer;
     color: #666;
     padding: 5px 10px;
-    z-index: 10;
+    z-index: 10001;
     transition: color 0.2s ease;
 }
 
