@@ -506,8 +506,20 @@ select.mlb-hotel-select.mlb-native-select-hidden,
    EASEPICK CALENDAR CENTERING
    ========================================================================== */
 
+/* Hide EasePick calendar by default (prevents arrows showing when modal is closed) */
+.easepick-wrapper .container:not(.inline) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 /* Center the EasePick calendar dropdown on the screen for Hotel forms */
 .easepick-wrapper .container.show:not(.inline) {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
