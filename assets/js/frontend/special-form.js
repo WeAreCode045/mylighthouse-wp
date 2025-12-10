@@ -17,9 +17,10 @@
 
     function handleSpecialFallback($form, detail, bookingPageUrl) {
         try {
-            var target = (typeof cqb_params !== 'undefined' && cqb_params && cqb_params.result_target)
-                ? cqb_params.result_target
-                : 'booking_page';
+            // Use device-specific display mode if available
+            var target = (typeof window.mlbGetDisplayModeForDevice === 'function')
+                ? window.mlbGetDisplayModeForDevice()
+                : ((typeof cqb_params !== 'undefined' && cqb_params && cqb_params.result_target) ? cqb_params.result_target : 'booking_page');
             var hotelId = detail && detail.hotel
                 ? detail.hotel
                 : ($form.data('hotel-id') || $form.find('input[name="hotel_id"]').val() || '');
@@ -40,13 +41,27 @@
 
             console.log('[handleSpecialFallback] hotelId:', hotelId, 'rateId:', rateId, 'bookingPageUrl:', bookingPageUrl, 'target:', target);
 
-            if (!bookingPageUrl) {
+            if (!bookingPageUrl && target !== 'redirect_engine') {
                 try { $form[0].submit(); } catch (err) {}
                 return;
             }
 
             if (target === 'modal' && typeof window.MLB_Modal !== 'undefined' && typeof window.MLB_Modal.openBookingModal === 'function') {
                 window.MLB_Modal.openBookingModal(bookingPageUrl, hotelId, detail && detail.arrivalISO, detail && detail.departureISO, rateId, 'rate');
+                return;
+            }
+
+            // For redirect_engine target, navigate directly to the booking engine
+            if (target === 'redirect_engine') {
+                var bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+                var engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/GeneralAvailability';
+                var params = [];
+                if (rateId) params.push('Rate=' + encodeURIComponent(rateId));
+                if (detail && detail.arrivalISO) params.push('Arrival=' + encodeURIComponent(detail.arrivalISO));
+                if (detail && detail.departureISO) params.push('Departure=' + encodeURIComponent(detail.departureISO));
+                if (params.length > 0) engineUrl += '?' + params.join('&');
+                console.log('[handleSpecialFallback] Redirecting to engine:', engineUrl);
+                window.location.href = engineUrl;
                 return;
             }
 

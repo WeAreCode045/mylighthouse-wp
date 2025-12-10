@@ -101,8 +101,9 @@ class Mylighthouse_Booker_Shortcode_Iframe_Target
 				height="90%"
 				frameborder="0"
 				allowfullscreen
+				allow="payment; geolocation"
 				class="mlb-iframe"
-				loading="lazy"
+				loading="eager"
 				style="border: none;">
 			</iframe>
 		</div>

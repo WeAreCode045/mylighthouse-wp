@@ -111,11 +111,12 @@
             const bookingPageUrl = (typeof cqb_params !== 'undefined' && cqb_params.booking_page_url)
                 ? cqb_params.booking_page_url
                 : '';
-            const resultTarget = (typeof cqb_params !== 'undefined' && cqb_params.result_target)
-                ? cqb_params.result_target
-                : 'redirect';
+            // Use device-specific display mode if available
+            const resultTarget = (typeof window.mlbGetDisplayModeForDevice === 'function')
+                ? window.mlbGetDisplayModeForDevice()
+                : ((typeof cqb_params !== 'undefined' && cqb_params.result_target) ? cqb_params.result_target : 'redirect');
 
-            if (!bookingPageUrl) {
+            if (!bookingPageUrl && resultTarget !== 'redirect_engine') {
                 console.error('Booking page URL not configured');
                 return;
             }
@@ -130,6 +131,8 @@
                     var roomId = explicitRate || this.roomId || this.form.dataset.roomId;
                     this.openBookingModal(bookingPageUrl, arrivalISO, departureISO, roomId, 'room');
                 }
+            } else if (resultTarget === 'redirect_engine') {
+                this.redirectToBookingEngine(arrivalISO, departureISO);
             } else {
                 this.redirectToBookingPage(bookingPageUrl, arrivalISO, departureISO);
             }
@@ -183,6 +186,34 @@
             }
 
             window.location.href = url.toString();
+        }
+
+        /**
+         * Redirect directly to booking engine with parameters
+         */
+        redirectToBookingEngine(arrivalISO, departureISO) {
+            const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+            let engineUrl = bookingEngineBaseUrl + encodeURIComponent(this.hotelId) + '/Rooms/Select?Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
+            
+            if (this.roomId) {
+                engineUrl += '&room=' + encodeURIComponent(this.roomId);
+            }
+
+            window.location.href = engineUrl;
+        }
+
+        /**
+         * Redirect directly to booking engine with parameters
+         */
+        redirectToBookingEngine(arrivalISO, departureISO) {
+            const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+            let engineUrl = bookingEngineBaseUrl + encodeURIComponent(this.hotelId) + '/Rooms/Select?Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
+            
+            if (this.roomId) {
+                engineUrl += '&room=' + encodeURIComponent(this.roomId);
+            }
+
+            window.location.href = engineUrl;
         }
 
         /**

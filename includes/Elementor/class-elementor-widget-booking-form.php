@@ -706,8 +706,12 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 		$layout = $settings['layout'] ?? (isset($style_opts['form_layout']['layout']) ? $style_opts['form_layout']['layout'] : 'inline');
 		$placement = $settings['button_placement'] ?? (isset($style_opts['button_placement']) ? $style_opts['button_placement'] : 'after');
 
-		$display_mode = get_option('mlb_display_mode', 'modal');
-		$result_target = ($display_mode === 'modal') ? 'modal' : 'booking_page';
+		// Get device-specific display mode settings
+		$display_mode_mobile = get_option('mlb_display_mode_mobile', get_option('mlb_display_mode', 'modal'));
+		$display_mode_tablet = get_option('mlb_display_mode_tablet', get_option('mlb_display_mode', 'modal'));
+		$display_mode_desktop = get_option('mlb_display_mode_desktop', get_option('mlb_display_mode', 'modal'));
+		// Legacy result_target for backwards compatibility (use desktop as default)
+		$result_target = ($display_mode_desktop === 'modal') ? 'modal' : 'booking_page';
 
 		// Prepare room and hotel names
 		$hotel_name = '';
@@ -812,6 +816,9 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 			'booking_page_url' => $booking_page_url,
 			'modal_template' => $modal_template,
 			'result_target' => $result_target,
+			'display_mode_mobile' => $display_mode_mobile,
+			'display_mode_tablet' => $display_mode_tablet,
+			'display_mode_desktop' => $display_mode_desktop,
 			'spinner_image_url' => $spinner_image,
 		));
 

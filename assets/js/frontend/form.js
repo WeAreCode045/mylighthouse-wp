@@ -13,6 +13,50 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (e) {}
         return str;
     }
+
+    // ========================================================================
+    // DEVICE DETECTION UTILITY
+    // ========================================================================
+
+    /**
+     * Detect current device type based on screen width
+     * Mobile: < 768px
+     * Tablet: 768px - 1024px
+     * Desktop: > 1024px
+     */
+    function getDeviceType() {
+        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        if (width < 768) return 'mobile';
+        if (width <= 1024) return 'tablet';
+        return 'desktop';
+    }
+
+    /**
+     * Get the appropriate display mode for the current device
+     */
+    function getDisplayModeForDevice() {
+        if (typeof cqb_params === 'undefined') return 'booking_page';
+        
+        const deviceType = getDeviceType();
+        
+        if (deviceType === 'mobile' && cqb_params.display_mode_mobile) {
+            return cqb_params.display_mode_mobile;
+        }
+        if (deviceType === 'tablet' && cqb_params.display_mode_tablet) {
+            return cqb_params.display_mode_tablet;
+        }
+        if (deviceType === 'desktop' && cqb_params.display_mode_desktop) {
+            return cqb_params.display_mode_desktop;
+        }
+        
+        // Fallback to legacy result_target
+        return cqb_params.result_target || 'booking_page';
+    }
+
+    // Make device detection utilities globally available
+    window.mlbGetDeviceType = getDeviceType;
+    window.mlbGetDisplayModeForDevice = getDisplayModeForDevice;
+
     // ========================================================================
     // CONFIGURATION
     // ========================================================================
@@ -217,9 +261,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Open in modal or redirect depending on configured result target.
-        // cqb_params.result_target is localized from PHP and may be 'modal' or 'booking_page'.
-        // Accept the legacy 'page' value as an alias for 'booking_page'.
-        const target = (typeof cqb_params !== 'undefined' && cqb_params && cqb_params.result_target) ? cqb_params.result_target : 'booking_page';
+        // Use device-specific display mode if available, otherwise fall back to legacy result_target.
+        const target = getDisplayModeForDevice();
 
         if (target === 'modal' && typeof window.MLB_Modal !== 'undefined' && window.MLB_Modal.openBookingModal) {
             // Determine if this form uses a rate (special) or room
@@ -230,6 +273,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Pass a URL object and other details to the modal handler.
                 window.MLB_Modal.openBookingModal(bookingPageUrl, hotelId, arrivalISO, departureISO, roomId, 'room');
             }
+            return;
+        }
+
+        // For redirect_engine target, navigate directly to the booking engine
+        if (target === 'redirect_engine') {
+            const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+            let engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/Select?Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
+            
+            const rateId = bookingForm.dataset.rateId || bookingForm.querySelector('input[name="rate"]')?.value;
+            if (rateId) {
+                engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/GeneralAvailability?Rate=' + encodeURIComponent(rateId) + '&Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
+            } else if (roomId) {
+                engineUrl += '&room=' + encodeURIComponent(roomId);
+            }
+            
+            try {
+                showBookingRedirectSpinner();
+            } catch (e) { /* ignore */ }
+            window.location.href = engineUrl;
             return;
         }
 

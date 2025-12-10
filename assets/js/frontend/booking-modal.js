@@ -145,6 +145,9 @@ window.MLB_Modal = window.MLB_Modal || {};
     iframe.id = 'mylighthouse-booking-iframe';
     iframe.className = 'mlb-modal-iframe';
     iframe.setAttribute('title', mlbGettext('Booking results'));
+    // Allow scripts, forms, popups, and same-origin access for booking engine functionality
+    iframe.setAttribute('allow', 'payment; geolocation');
+    iframe.setAttribute('loading', 'eager');
 
         let loadTimeout = null;
 

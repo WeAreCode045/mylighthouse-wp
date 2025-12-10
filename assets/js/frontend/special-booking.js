@@ -90,11 +90,12 @@
             const bookingPageUrl = (typeof cqb_params !== 'undefined' && cqb_params.booking_page_url)
                 ? cqb_params.booking_page_url
                 : '';
-            const resultTarget = (typeof cqb_params !== 'undefined' && cqb_params.result_target)
-                ? cqb_params.result_target
-                : 'redirect';
+            // Use device-specific display mode if available
+            const resultTarget = (typeof window.mlbGetDisplayModeForDevice === 'function')
+                ? window.mlbGetDisplayModeForDevice()
+                : ((typeof cqb_params !== 'undefined' && cqb_params.result_target) ? cqb_params.result_target : 'redirect');
 
-            if (!bookingPageUrl) {
+            if (!bookingPageUrl && resultTarget !== 'redirect_engine') {
                 console.error('Booking page URL not configured');
                 return;
             }
@@ -102,6 +103,8 @@
             if (resultTarget === 'modal') {
                 var rateToUse = explicitRate || this.rateId || this.form.dataset.rateId || this.form.dataset.specialId || '';
                 this.openBookingModal(bookingPageUrl, arrivalISO, departureISO, rateToUse, 'rate');
+            } else if (resultTarget === 'redirect_engine') {
+                this.redirectToBookingEngine(arrivalISO, departureISO);
             } else {
                 this.redirectToBookingPage(bookingPageUrl, arrivalISO, departureISO);
             }
@@ -144,6 +147,17 @@
             }
 
             window.location.href = url.toString();
+        }
+
+        redirectToBookingEngine(arrivalISO, departureISO) {
+            const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+            let engineUrl = bookingEngineBaseUrl + encodeURIComponent(this.hotelId) + '/Rooms/GeneralAvailability';
+            const params = [];
+            if (this.rateId) params.push('Rate=' + encodeURIComponent(this.rateId));
+            if (arrivalISO) params.push('Arrival=' + encodeURIComponent(arrivalISO));
+            if (departureISO) params.push('Departure=' + encodeURIComponent(departureISO));
+            if (params.length > 0) engineUrl += '?' + params.join('&');
+            window.location.href = engineUrl;
         }
 
     // Export class and per-form initializer for external use

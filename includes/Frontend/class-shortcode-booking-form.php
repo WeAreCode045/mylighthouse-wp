@@ -151,9 +151,12 @@ class Mylighthouse_Booker_Shortcode_Booking_Form
 		$layout     = 'inline';
 		$placement  = 'after';
 
-		// Get display mode setting
-		$display_mode = get_option('mlb_display_mode', 'modal');
-		$result_target = ($display_mode === 'modal') ? 'modal' : 'booking_page';
+		// Get device-specific display mode settings
+		$display_mode_mobile = get_option('mlb_display_mode_mobile', get_option('mlb_display_mode', 'modal'));
+		$display_mode_tablet = get_option('mlb_display_mode_tablet', get_option('mlb_display_mode', 'modal'));
+		$display_mode_desktop = get_option('mlb_display_mode_desktop', get_option('mlb_display_mode', 'modal'));
+		// Legacy result_target for backwards compatibility (use desktop as default)
+		$result_target = ($display_mode_desktop === 'modal') ? 'modal' : 'booking_page';
 
 		$show_hotel_select = false;
 		$default_hotel_id  = '';
@@ -221,6 +224,9 @@ class Mylighthouse_Booker_Shortcode_Booking_Form
 			'booking_page_url' => $this->booking_page_url,
 			'modal_template' => $modal_template,
 			'result_target' => $result_target,
+			'display_mode_mobile' => $display_mode_mobile,
+			'display_mode_tablet' => $display_mode_tablet,
+			'display_mode_desktop' => $display_mode_desktop,
 			'spinner_image_url' => $spinner_image,
 		));
 

@@ -24,7 +24,10 @@ class Mylighthouse_Booker_Admin_Settings {
                 <?php
                 // Load current options
                 $booking_page = get_option('mlb_booking_page_url', '');
-                $display_mode = get_option('mlb_display_mode', 'modal');
+                $display_mode = get_option('mlb_display_mode', 'modal'); // Legacy option (kept for backwards compatibility)
+                $display_mode_mobile = get_option('mlb_display_mode_mobile', $display_mode);
+                $display_mode_tablet = get_option('mlb_display_mode_tablet', $display_mode);
+                $display_mode_desktop = get_option('mlb_display_mode_desktop', $display_mode);
                 $spinner_image_url = get_option('mlb_spinner_image_url', '');
                 if (empty($spinner_image_url)) {
                     $legacy_spinner_id = get_option('mlb_spinner_image_id', '');
@@ -52,11 +55,52 @@ class Mylighthouse_Booker_Admin_Settings {
                             <tr>
                                 <th scope="row"><?php esc_html_e('Display Mode', 'mylighthouse-booker'); ?></th>
                                 <td>
-                                    <fieldset>
-                                        <label><input type="radio" name="mlb_display_mode" value="modal" <?php checked( $display_mode, 'modal' ); ?> /> <?php esc_html_e('Modal (show results in popup)', 'mylighthouse-booker'); ?></label><br />
-                                        <label><input type="radio" name="mlb_display_mode" value="booking_page" <?php checked( $display_mode, 'booking_page' ); ?> /> <?php esc_html_e('Booking Page (redirect to booking page)', 'mylighthouse-booker'); ?></label>
-                                    </fieldset>
-                                    <p class="description"><?php esc_html_e('Choose how booking results are displayed after form submission.', 'mylighthouse-booker'); ?></p>
+                                    <p class="description" style="margin-bottom: 10px;"><?php esc_html_e('Choose how booking results are displayed after form submission for each device type.', 'mylighthouse-booker'); ?></p>
+                                    <table class="mlb-device-modes" style="border-collapse: collapse; width: 100%; max-width: 600px;">
+                                        <thead>
+                                            <tr style="background-color: #f0f0f1;">
+                                                <th style="padding: 8px; text-align: left; border: 1px solid #c3c4c7;"><?php esc_html_e('Device', 'mylighthouse-booker'); ?></th>
+                                                <th style="padding: 8px; text-align: left; border: 1px solid #c3c4c7;"><?php esc_html_e('Display Mode', 'mylighthouse-booker'); ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 8px; border: 1px solid #c3c4c7;"><strong><?php esc_html_e('Mobile', 'mylighthouse-booker'); ?></strong></td>
+                                                <td style="padding: 8px; border: 1px solid #c3c4c7;">
+                                                    <select name="mlb_display_mode_mobile" class="mlb-input" style="width: 100%;">
+                                                        <option value="modal" <?php selected( $display_mode_mobile, 'modal' ); ?>><?php esc_html_e('Modal (popup)', 'mylighthouse-booker'); ?></option>
+                                                        <option value="booking_page" <?php selected( $display_mode_mobile, 'booking_page' ); ?>><?php esc_html_e('Booking Page', 'mylighthouse-booker'); ?></option>
+                                                        <option value="redirect_engine" <?php selected( $display_mode_mobile, 'redirect_engine' ); ?>><?php esc_html_e('Direct Redirect', 'mylighthouse-booker'); ?></option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 8px; border: 1px solid #c3c4c7;"><strong><?php esc_html_e('Tablet', 'mylighthouse-booker'); ?></strong></td>
+                                                <td style="padding: 8px; border: 1px solid #c3c4c7;">
+                                                    <select name="mlb_display_mode_tablet" class="mlb-input" style="width: 100%;">
+                                                        <option value="modal" <?php selected( $display_mode_tablet, 'modal' ); ?>><?php esc_html_e('Modal (popup)', 'mylighthouse-booker'); ?></option>
+                                                        <option value="booking_page" <?php selected( $display_mode_tablet, 'booking_page' ); ?>><?php esc_html_e('Booking Page', 'mylighthouse-booker'); ?></option>
+                                                        <option value="redirect_engine" <?php selected( $display_mode_tablet, 'redirect_engine' ); ?>><?php esc_html_e('Direct Redirect', 'mylighthouse-booker'); ?></option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 8px; border: 1px solid #c3c4c7;"><strong><?php esc_html_e('Desktop', 'mylighthouse-booker'); ?></strong></td>
+                                                <td style="padding: 8px; border: 1px solid #c3c4c7;">
+                                                    <select name="mlb_display_mode_desktop" class="mlb-input" style="width: 100%;">
+                                                        <option value="modal" <?php selected( $display_mode_desktop, 'modal' ); ?>><?php esc_html_e('Modal (popup)', 'mylighthouse-booker'); ?></option>
+                                                        <option value="booking_page" <?php selected( $display_mode_desktop, 'booking_page' ); ?>><?php esc_html_e('Booking Page', 'mylighthouse-booker'); ?></option>
+                                                        <option value="redirect_engine" <?php selected( $display_mode_desktop, 'redirect_engine' ); ?>><?php esc_html_e('Direct Redirect', 'mylighthouse-booker'); ?></option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="description" style="margin-top: 10px;">
+                                        <strong><?php esc_html_e('Modal:', 'mylighthouse-booker'); ?></strong> <?php esc_html_e('Show results in popup', 'mylighthouse-booker'); ?><br>
+                                        <strong><?php esc_html_e('Booking Page:', 'mylighthouse-booker'); ?></strong> <?php esc_html_e('Redirect to booking page', 'mylighthouse-booker'); ?><br>
+                                        <strong><?php esc_html_e('Direct Redirect:', 'mylighthouse-booker'); ?></strong> <?php esc_html_e('Redirect to booking engine', 'mylighthouse-booker'); ?>
+                                    </p>
                                 </td>
                             </tr>
                             <tr>
