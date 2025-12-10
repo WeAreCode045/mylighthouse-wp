@@ -80,7 +80,26 @@ class Mylighthouse_Booker_Frontend_Assets
 			wp_enqueue_style('fontawesome');
 		}
 
-		// Enqueue EasePick CSS first
+		// Force deregister any existing easepick CSS that might come from CDN or other sources
+		// This ensures our customized local version takes precedence
+		if (wp_style_is('easepick', 'registered')) {
+			// Get the registered src to check if it's not ours
+			global $wp_styles;
+			if (isset($wp_styles->registered['easepick'])) {
+				$registered_src = $wp_styles->registered['easepick']->src;
+				$our_src = plugins_url('/assets/vendor/easepick/easepick.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE);
+				// If it's registered with a different source (CDN or another plugin), deregister it
+				if (strpos($registered_src, 'cdn.') !== false || $registered_src !== $our_src) {
+					wp_deregister_style('easepick');
+					// Re-register with our local version
+					$easepick_css_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/vendor/easepick/easepick.css';
+					$easepick_css_ver = (file_exists($easepick_css_path)) ? filemtime($easepick_css_path) : '1.2.1';
+					wp_register_style('easepick', $our_src, array(), $easepick_css_ver, 'all');
+				}
+			}
+		}
+
+		// Enqueue EasePick CSS from our local version
 		if (!wp_style_is('easepick', 'enqueued')) {
 			wp_enqueue_style('easepick');
 		}
