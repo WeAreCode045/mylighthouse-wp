@@ -336,7 +336,4 @@
 		min-width: unset;
 		width: auto;
 	}
-	.calendars .calendar > .header:not(.no-next-month) .next-button {
-		visibility: visible;
-	}
 }
