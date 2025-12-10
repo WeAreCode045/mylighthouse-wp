@@ -199,7 +199,7 @@
 /* Only show navigation arrows when the container is actually visible */
 .container.show .calendars:not(.grid-1) .calendar:first-child > .header .previous-button,
 .container.show .calendars:not(.grid-1) .calendar:last-child > .header .next-button {
-	visibility: hidden !important;
+	visibility: visible !important;
 	display: none !important;
 }
 .calendar {
