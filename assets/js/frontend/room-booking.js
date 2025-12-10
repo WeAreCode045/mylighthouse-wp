@@ -107,8 +107,32 @@
             if (!arrivalISO && checkinInput && checkinInput.value) arrivalISO = this.parseToISO(checkinInput.value);
             if (!departureISO && checkoutInput && checkoutInput.value) departureISO = this.parseToISO(checkoutInput.value);
 
-            // Direct redirect naar MyLighthouse booking engine
-            this.redirectToBookingPage('', arrivalISO, departureISO);
+            // Get booking page URL and result target from localized params
+            const bookingPageUrl = (typeof cqb_params !== 'undefined' && cqb_params.booking_page_url)
+                ? cqb_params.booking_page_url
+                : '';
+            const resultTarget = (typeof cqb_params !== 'undefined' && cqb_params.result_target)
+                ? cqb_params.result_target
+                : 'redirect';
+
+            if (!bookingPageUrl) {
+                console.error('Booking page URL not configured');
+                return;
+            }
+
+            if (resultTarget === 'modal') {
+                // Prefer rate if present in event detail, otherwise dataset or input
+                var rateId = explicitRate || this.form.dataset.rateId || this.form.querySelector('input[name="rate"]')?.value || '';
+                if (rateId) {
+                    this.openBookingModal(bookingPageUrl, arrivalISO, departureISO, rateId, 'rate');
+                } else {
+                    // Use room id if available
+                    var roomId = explicitRate || this.roomId || this.form.dataset.roomId;
+                    this.openBookingModal(bookingPageUrl, arrivalISO, departureISO, roomId, 'room');
+                }
+            } else {
+                this.redirectToBookingPage(bookingPageUrl, arrivalISO, departureISO);
+            }
         }
 
         /**
@@ -146,37 +170,19 @@
         }
 
         /**
-         * Redirect direct naar MyLighthouse booking engine
+         * Redirect to booking page with parameters
          */
         redirectToBookingPage(bookingPageUrl, arrivalISO, departureISO) {
-            // Build direct MyLighthouse booking engine URL
-            const bookingEngineBase = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
-            
-            // Check for rate/special ID
-            const rateId = this.form.dataset.rateId || this.form.querySelector('input[name="rate"]')?.value;
-            
-            let bookingUrl;
-            if (rateId) {
-                // Special rate booking
-                const qs = new URLSearchParams();
-                qs.set('Rate', rateId);
-                if (arrivalISO) qs.set('Arrival', arrivalISO);
-                if (departureISO) qs.set('Departure', departureISO);
-                bookingUrl = `${bookingEngineBase}${encodeURIComponent(this.hotelId)}/Rooms/GeneralAvailability`;
-                const query = qs.toString();
-                if (query) {
-                    bookingUrl += `?${query}`;
-                }
-            } else {
-                // Regular room booking
-                bookingUrl = `${bookingEngineBase}${encodeURIComponent(this.hotelId)}/Rooms/Select?Arrival=${encodeURIComponent(arrivalISO)}&Departure=${encodeURIComponent(departureISO)}`;
-                
-                if (this.roomId) {
-                    bookingUrl += `&room=${encodeURIComponent(this.roomId)}`;
-                }
+            const url = new URL(bookingPageUrl);
+            url.searchParams.set('Arrival', arrivalISO);
+            url.searchParams.set('Departure', departureISO);
+            url.searchParams.set('hotel_id', this.hotelId);
+
+            if (this.roomId) {
+                url.searchParams.set('room', this.roomId);
             }
 
-            window.location.href = bookingUrl;
+            window.location.href = url.toString();
         }
 
         /**

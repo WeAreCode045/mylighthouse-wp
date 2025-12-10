@@ -82,8 +82,29 @@
             if (!arrivalISO && checkinInput && checkinInput.value) arrivalISO = this.parseToISO(checkinInput.value);
             if (!departureISO && checkoutInput && checkoutInput.value) departureISO = this.parseToISO(checkoutInput.value);
 
-            // Direct redirect naar MyLighthouse booking engine
-            this.redirectToBookingPage('', arrivalISO, departureISO);
+            // For skip-dates forms, bypass the date requirement and go straight to booking page
+            if (this.skipDates) {
+                this.redirectToBookingPage('', '', '');
+                return;
+            }
+            const bookingPageUrl = (typeof cqb_params !== 'undefined' && cqb_params.booking_page_url)
+                ? cqb_params.booking_page_url
+                : '';
+            const resultTarget = (typeof cqb_params !== 'undefined' && cqb_params.result_target)
+                ? cqb_params.result_target
+                : 'redirect';
+
+            if (!bookingPageUrl) {
+                console.error('Booking page URL not configured');
+                return;
+            }
+
+            if (resultTarget === 'modal') {
+                var rateToUse = explicitRate || this.rateId || this.form.dataset.rateId || this.form.dataset.specialId || '';
+                this.openBookingModal(bookingPageUrl, arrivalISO, departureISO, rateToUse, 'rate');
+            } else {
+                this.redirectToBookingPage(bookingPageUrl, arrivalISO, departureISO);
+            }
         }
 
         parseToISO(dateStr) {
@@ -112,30 +133,17 @@
         }
 
         redirectToBookingPage(bookingPageUrl, arrivalISO, departureISO) {
-            // Build direct MyLighthouse booking engine URL
-            const bookingEngineBase = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
-            
-            let bookingUrl;
+            const url = new URL(bookingPageUrl);
+            if (arrivalISO) url.searchParams.set('Arrival', arrivalISO);
+            if (departureISO) url.searchParams.set('Departure', departureISO);
+            url.searchParams.set('hotel_id', this.hotelId);
+
             if (this.rateId) {
-                // Special rate booking
-                const qs = new URLSearchParams();
-                qs.set('Rate', this.rateId);
-                if (arrivalISO) qs.set('Arrival', arrivalISO);
-                if (departureISO) qs.set('Departure', departureISO);
-                bookingUrl = `${bookingEngineBase}${encodeURIComponent(this.hotelId)}/Rooms/GeneralAvailability`;
-                const query = qs.toString();
-                if (query) {
-                    bookingUrl += `?${query}`;
-                }
-            } else {
-                // Regular room booking (fallback)
-                bookingUrl = `${bookingEngineBase}${encodeURIComponent(this.hotelId)}/Rooms/Select`;
-                if (arrivalISO && departureISO) {
-                    bookingUrl += `?Arrival=${encodeURIComponent(arrivalISO)}&Departure=${encodeURIComponent(departureISO)}`;
-                }
+                url.searchParams.delete('rate');
+                url.searchParams.set('Rate', this.rateId);
             }
 
-            window.location.href = bookingUrl;
+            window.location.href = url.toString();
         }
 
     // Export class and per-form initializer for external use

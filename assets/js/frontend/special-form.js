@@ -51,33 +51,19 @@
             }
 
             try {
-                // Build direct MyLighthouse booking engine URL
-                const bookingEngineBase = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
-                
-                let bookingUrl;
+                var redirectUrl = new URL(bookingPageUrl, window.location.origin);
+                if (detail && detail.arrivalISO) redirectUrl.searchParams.set('Arrival', detail.arrivalISO);
+                if (detail && detail.departureISO) redirectUrl.searchParams.set('Departure', detail.departureISO);
+                if (hotelId) redirectUrl.searchParams.set('hotel_id', hotelId);
                 if (rateId) {
-                    // Special rate booking
-                    const qs = new URLSearchParams();
-                    qs.set('Rate', rateId);
-                    if (detail && detail.arrivalISO) qs.set('Arrival', detail.arrivalISO);
-                    if (detail && detail.departureISO) qs.set('Departure', detail.departureISO);
-                    bookingUrl = `${bookingEngineBase}${encodeURIComponent(hotelId)}/Rooms/GeneralAvailability`;
-                    const query = qs.toString();
-                    if (query) {
-                        bookingUrl += `?${query}`;
-                    }
-                } else {
-                    // Fallback to general availability
-                    bookingUrl = `${bookingEngineBase}${encodeURIComponent(hotelId)}/Rooms/GeneralAvailability`;
+                    redirectUrl.searchParams.delete('rate');
+                    redirectUrl.searchParams.delete('special_id');
+                    redirectUrl.searchParams.set('Rate', rateId);
                 }
-                
-                console.log('[handleSpecialFallback] Direct redirect to:', bookingUrl);
-                window.location.href = bookingUrl;
+                console.log('[handleSpecialFallback] Final redirectUrl:', redirectUrl.toString());
+                window.location.href = redirectUrl.toString();
             } catch (err) {
-                console.error('[handleSpecialFallback] Error:', err);
-                // Fallback to general availability page
-                const bookingEngineBase = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
-                window.location.href = `${bookingEngineBase}${encodeURIComponent(hotelId)}/Rooms/GeneralAvailability`;
+                window.location.href = bookingPageUrl;
             }
         } catch (fallbackErr) {
             try { $form[0].submit(); } catch (ignore) {}

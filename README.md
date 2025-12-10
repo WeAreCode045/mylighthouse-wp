@@ -3,11 +3,12 @@
 WordPress booking plugin for the MyLighthouse Booking Engine (formerly Cubilis). It lets site admins curate hotels, rooms, and specials from the MyLighthouse platform and expose booking flows through modern frontend components.
 
 ## Features
-- Central "MyLighthouse Booker" admin area with dashboards, settings, and hotel management.
+- Central “MyLighthouse Booker” admin area with dashboards, settings, and hotel management.
 - Drag-and-drop hotel ordering plus per-hotel room and special management.
-- Elementor widget ("Lighthouse Booking Form") with extensive layout controls for hotel, room, or special-focused forms.
-- **Direct redirect to MyLighthouse booking engine** - no iframe needed, providing full functionality and better user experience.
-- Customizable loading spinner/background imagery to maintain brand consistency during redirects.
+- Elementor widget (“Lighthouse Booking Form”) with extensive layout controls for hotel, room, or special-focused forms.
+- Booking results shortcode (`[lighthouse_booking_results]`) to host iframe-based search results on any page.
+- Flexible display modes: inline modal overlay or redirect to a dedicated booking/results page.
+- Customizable loading spinner/background imagery to maintain brand consistency.
 
 ## Requirements
 - WordPress 6.0 or newer (tested up to 6.7).
@@ -22,11 +23,11 @@ WordPress booking plugin for the MyLighthouse Booking Engine (formerly Cubilis).
 
 ## Initial Configuration
 1. In the WordPress dashboard, open **MyLighthouse Booker → Settings**.
-2. Configure the following option:
-	- **Spinner Background**: Optional image URL for the loading spinner shown during redirect to the MyLighthouse booking engine.
+2. Fill in the following options:
+	- **Booking Page URL**: The page slug or absolute URL where full booking results should load (e.g., `/book-now/`).
+	- **Display Mode**: Choose **Modal** (display availability results in a popup overlay) or **Booking Page** (redirect to the configured page with query parameters).
+	- **Spinner Background**: Optional image URL for the loading spinner shown while fetching live availability.
 3. Save the settings.
-
-**Note:** The plugin now automatically redirects users directly to the MyLighthouse booking engine (bookingengine.mylighthouse.com) with the appropriate parameters, providing full booking functionality without requiring an iframe or separate booking page.
 
 ### Add Hotels
 1. Go to **MyLighthouse Booker → Hotels**.
@@ -36,8 +37,13 @@ WordPress booking plugin for the MyLighthouse Booking Engine (formerly Cubilis).
 3. After saving, use the room and special repeaters inside each hotel to register individual rooms or promotional rates (IDs must match the MyLighthouse backend).
 4. Reorder hotels by grabbing the drag icon beside each entry; the new order is saved automatically when you drop an item.
 
-### Direct Booking Redirect
-The plugin automatically redirects users to the MyLighthouse booking engine when they submit a booking form. No separate booking page or iframe shortcode is required. Users are taken directly to bookingengine.mylighthouse.com with their selected dates, hotel, and room/special information.
+### Booking Page / Results Shortcode
+1. Create or edit the page whose URL matches the **Booking Page URL** you configured.
+2. Add the shortcode:
+	```
+	[lighthouse_booking_results width="100%" height="100vh"]
+	```
+	Adjust `width` or `height` as needed. This shortcode renders the iframe target that receives search parameters from the booking forms.
 
 ## Embedding Booking Forms
 

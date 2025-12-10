@@ -43,12 +43,20 @@ class Mylighthouse_Booker_Admin_Settings {
 
                         <table class="form-table">
                             <tr>
-                                <th scope="row"><?php esc_html_e('Booking Redirect', 'mylighthouse-booker'); ?></th>
+                                <th scope="row"><?php esc_html_e('Booking Page', 'mylighthouse-booker'); ?></th>
                                 <td>
-                                    <p class="description" style="margin-top:0;">
-                                        <strong><?php esc_html_e('Direct Redirect Mode Active', 'mylighthouse-booker'); ?></strong><br>
-                                        <?php esc_html_e('The plugin now redirects directly to the MyLighthouse booking engine (bookingengine.mylighthouse.com) instead of using an iframe. This provides a better user experience with full functionality.', 'mylighthouse-booker'); ?>
-                                    </p>
+                                    <input type="text" name="mlb_booking_page_url" value="<?php echo esc_attr($booking_page); ?>" class="regular-text mlb-input" placeholder="<?php echo esc_attr(esc_html__('Relative or absolute URL', 'mylighthouse-booker')); ?>" />
+                                    <p class="description"><?php esc_html_e('Optional: URL to the booking page where full results should be shown.', 'mylighthouse-booker'); ?></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><?php esc_html_e('Display Mode', 'mylighthouse-booker'); ?></th>
+                                <td>
+                                    <fieldset>
+                                        <label><input type="radio" name="mlb_display_mode" value="modal" <?php checked( $display_mode, 'modal' ); ?> /> <?php esc_html_e('Modal (show results in popup)', 'mylighthouse-booker'); ?></label><br />
+                                        <label><input type="radio" name="mlb_display_mode" value="booking_page" <?php checked( $display_mode, 'booking_page' ); ?> /> <?php esc_html_e('Booking Page (redirect to booking page)', 'mylighthouse-booker'); ?></label>
+                                    </fieldset>
+                                    <p class="description"><?php esc_html_e('Choose how booking results are displayed after form submission.', 'mylighthouse-booker'); ?></p>
                                 </td>
                             </tr>
                             <tr>

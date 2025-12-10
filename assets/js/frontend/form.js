@@ -175,9 +175,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Handle form submission logic
-     * Direct redirect naar MyLighthouse booking engine
      */
     function handleFormSubmission(bookingForm) {
+        const bookingPageRaw = (typeof cqb_params !== 'undefined' && cqb_params && cqb_params.booking_page_url)
+            ? cqb_params.booking_page_url
+            : bookingForm.getAttribute('data-booking-page') || bookingForm.dataset.bookingPage;
+
+        if (!bookingPageRaw) {
+            alert( mlbGettext('Admin Error: The booking page URL is not set in the plugin settings.') );
+            return;
+        }
+
         const hotelSelect = bookingForm.querySelector('.mlb-hotel-select');
         const hotelId = hotelSelect ? hotelSelect.value : bookingForm.dataset.hotelId;
 
@@ -191,40 +199,55 @@ document.addEventListener('DOMContentLoaded', function() {
         const arrivalISO = toISO(arrival);
         const departureISO = toISO(departure);
 
-        // Build direct MyLighthouse booking engine URL
-        const bookingEngineBase = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
-        
-        // Check for rate/special ID
-        const rateId = bookingForm.dataset.rateId || bookingForm.querySelector('input[name="rate"]')?.value;
-        
-        let bookingUrl;
-        if (rateId) {
-            // Special rate booking
-            const qs = new URLSearchParams();
-            qs.set('Rate', rateId);
-            if (arrivalISO) qs.set('Arrival', arrivalISO);
-            if (departureISO) qs.set('Departure', departureISO);
-            bookingUrl = `${bookingEngineBase}${encodeURIComponent(hotelId)}/Rooms/GeneralAvailability`;
-            const query = qs.toString();
-            if (query) {
-                bookingUrl += `?${query}`;
-            }
-        } else {
-            // Regular room booking
-            bookingUrl = `${bookingEngineBase}${encodeURIComponent(hotelId)}/Rooms/Select?Arrival=${encodeURIComponent(arrivalISO)}&Departure=${encodeURIComponent(departureISO)}`;
-            
-            const roomId = bookingForm.dataset.roomId;
-            if (roomId) {
-                bookingUrl += `&room=${encodeURIComponent(roomId)}`;
-            }
+        let bookingPageUrl;
+        try {
+            bookingPageUrl = new URL(bookingPageRaw);
+        } catch (e) {
+            alert( mlbGettext('Admin Error: The configured booking page URL is invalid.') );
+            return;
         }
 
-        // Show redirect spinner and redirect
+        bookingPageUrl.searchParams.set('Arrival', arrivalISO);
+        bookingPageUrl.searchParams.set('Departure', departureISO);
+        bookingPageUrl.searchParams.set('hotel_id', hotelId);
+
+        const roomId = bookingForm.dataset.roomId;
+        if (roomId) {
+            bookingPageUrl.searchParams.set('room', roomId);
+        }
+
+        // Open in modal or redirect depending on configured result target.
+        // cqb_params.result_target is localized from PHP and may be 'modal' or 'booking_page'.
+        // Accept the legacy 'page' value as an alias for 'booking_page'.
+        const target = (typeof cqb_params !== 'undefined' && cqb_params && cqb_params.result_target) ? cqb_params.result_target : 'booking_page';
+
+        if (target === 'modal' && typeof window.MLB_Modal !== 'undefined' && window.MLB_Modal.openBookingModal) {
+            // Determine if this form uses a rate (special) or room
+            const rateId = bookingForm.dataset.rateId || bookingForm.querySelector('input[name="rate"]')?.value;
+            if (rateId) {
+                window.MLB_Modal.openBookingModal(bookingPageUrl, hotelId, arrivalISO, departureISO, rateId, 'rate');
+            } else {
+                // Pass a URL object and other details to the modal handler.
+                window.MLB_Modal.openBookingModal(bookingPageUrl, hotelId, arrivalISO, departureISO, roomId, 'room');
+            }
+            return;
+        }
+
+        // For booking page targets (or any unknown target), navigate to the configured booking page.
+        // Support both 'booking_page' and legacy 'page' values.
+        if (target === 'booking_page' || target === 'page') {
+            try {
+                showBookingRedirectSpinner();
+            } catch (e) { /* ignore */ }
+            window.location.href = bookingPageUrl.href;
+            return;
+        }
+
+        // Fallback: if target is unexpected, default to redirecting to the booking page.
         try {
             showBookingRedirectSpinner();
         } catch (e) { /* ignore */ }
-        
-        window.location.href = bookingUrl;
+        window.location.href = bookingPageUrl.href;
     }
 
     // Set up form submission handlers
