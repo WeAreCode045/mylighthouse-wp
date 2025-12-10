@@ -40,7 +40,17 @@ class Mylighthouse_Booker_Frontend_Assets
 			'all'
 		);
 
-		
+		// Register EasePick CSS from local vendor directory with our custom modifications
+		// Use file modification time for version to bust cache when we update the file
+		$easepick_css_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/vendor/easepick/easepick.css';
+		$easepick_css_ver = (file_exists($easepick_css_path)) ? filemtime($easepick_css_path) : '1.2.1';
+		wp_register_style(
+			'easepick',
+			plugins_url('/assets/vendor/easepick/easepick.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array(),
+			$easepick_css_ver,
+			'all'
+		);
 
 		// Register plugin styles
 		wp_register_style(
