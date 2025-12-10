@@ -188,17 +188,19 @@
 }
 .calendars:not(.grid-1) .calendar > .header .previous-button {
 	order: 1;
-	visibility: hidden !important;
-	display: none !important;
+	visibility: hidden;
 }
 .calendars:not(.grid-1) .calendar > .header .next-button {
 	order: 3;
-	visibility: hidden !important;
-	display: none !important;
+	visibility: hidden;
 }
-/* Only show navigation arrows when the container is actually visible */
-.container.show .calendars:not(.grid-1) .calendar:first-child > .header .previous-button,
-.container.show .calendars:not(.grid-1) .calendar:last-child > .header .next-button {
+.calendars:not(.grid-1) .calendar:first-child > .header .previous-button,
+.calendars:not(.grid-1) .calendar:last-child > .header .next-button {
+	visibility: visible;
+}
+/* For single calendar grids (grid-1), always show both buttons when container is shown */
+.container.show .calendars.grid-1 .calendar > .header .previous-button,
+.container.show .calendars.grid-1 .calendar > .header .next-button {
 	visibility: visible !important;
 	display: flex !important;
 }
