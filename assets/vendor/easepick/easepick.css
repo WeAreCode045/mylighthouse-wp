@@ -186,34 +186,34 @@
 	order: 2;
 	text-align: center;
 }
-.calendars:not(.grid-1) .calendar > .header .previous-button {
-	order: 1;
-	visibility: hidden;
+/* Hide all navigation buttons by default */
+.calendar > .header .previous-button,
+.calendar > .header .next-button {
+	display: none !important;
+	visibility: hidden !important;
 }
-.calendars:not(.grid-1) .calendar > .header .next-button {
-	order: 3;
-	visibility: hidden;
-}
-.calendars:not(.grid-1) .calendar:first-child > .header .previous-button,
-.calendars:not(.grid-1) .calendar:last-child > .header .next-button {
-	visibility: visible;
-}
-/* For single calendar grids (grid-1), always show both buttons when container is shown */
-.container.show .calendars.grid-1 .calendar > .header .previous-button,
-.container.show .calendars.grid-1 .calendar > .header .next-button {
-	visibility: visible !important;
-	display: flex !important;
-}
-/* Override inline styles for all navigation buttons when container is shown */
+/* Show navigation buttons when container is visible */
 .container.show .calendar > .header .previous-button,
 .container.show .calendar > .header .next-button {
 	display: flex !important;
 	visibility: visible !important;
 }
-/* But still hide middle calendar buttons in multi-calendar layouts */
+/* For multi-calendar layouts, hide middle calendar buttons */
 .container.show .calendars:not(.grid-1) .calendar:not(:first-child) > .header .previous-button,
 .container.show .calendars:not(.grid-1) .calendar:not(:last-child) > .header .next-button {
+	display: none !important;
 	visibility: hidden !important;
+}
+/* Reorder buttons for multi-calendar layouts */
+.calendars:not(.grid-1) .calendar > .header .month-name {
+	order: 2;
+	text-align: center;
+}
+.calendars:not(.grid-1) .calendar > .header .previous-button {
+	order: 1;
+}
+.calendars:not(.grid-1) .calendar > .header .next-button {
+	order: 3;
 }
 .calendar {
 	padding: 10px;
