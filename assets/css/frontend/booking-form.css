@@ -1,0 +1,664 @@
+/**
+ * Frontend styles for Mylighthouse Booker
+ * Based on Cubilis Quickbooker styling system
+ */
+
+/* ==========================================================================
+   1. CSS VARIABLES & FONT
+   ========================================================================== */
+
+/* Import Poppins font for form */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+/* Base form wrapper with CSS variables */
+.mlb-booking-form {
+    /* Themeable variables set by plugin via inline styles when configured */
+    --mlb-form-bg: #dc143c;
+    --mlb-form-border: #dc143c;
+    --mlb-form-radius: 5px;
+    --mlb-btn-bg: #dc143c;
+    --mlb-btn-text: #ffffff;
+    --mlb-btn-bg-hover: #292929;
+    --mlb-btn-radius: 4px;
+    --mlb-input-text: #333;
+    --mlb-input-bg: #ffffff;
+    --mlb-field-radius: 4px;
+    --mlb-calendar-startend-bg: #dc143c;
+    --mlb-calendar-startend-color: #ffffff;
+
+
+    /* Enable container queries based on the form's inline size */
+    container-type: inline-size;
+
+    /* Use Poppins font family */
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* Ensure the form never exceeds its container width */
+    max-width: 100%;
+
+    /* Defaults for non-fit inline spans (in sixths) */
+    --mlb-span-hotel: 2;
+    --mlb-span-date: 3;
+    --mlb-span-button: 1;
+
+    /* Defaults for fit-inline proportional weights */
+    --mlb-col-hotel: 4;
+    --mlb-col-date: 4;
+    --mlb-col-button: 2;
+
+}
+
+/* ==========================================================================
+   2. BASE FORM LAYOUT
+   ========================================================================== */
+
+.mlb-form {
+    display: flex;
+    gap: var(--mlb-field-gap, 12px);
+}
+
+/* Layout: Inline (default) */
+.mlb-layout-inline .mlb-form {
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+/* Layout: Stacked */
+.mlb-layout-stacked .mlb-form {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.mlb-layout-stacked .form-field {
+    flex: none;
+    width: 100%;
+}
+
+/* Layout: Button Below (fields inline, button drops below full width) */
+.mlb-placement-below .mlb-form {
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+/* Form field styling */
+.mlb-form .form-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Date field narrower than hotel select */
+.mlb-form .form-field.daterange-field {
+    flex: 0.8;
+}
+
+
+.mlb-form .form-field {
+    min-width: 0;
+}
+
+
+
+/* ==========================================================================
+   3. FORM GROUPS & INPUTS
+   ========================================================================== */
+
+/* Field with icon wrapper */
+.mlb-form .form-field {
+    position: relative;
+}
+
+/* Inline field icons */
+.mlb-field-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    color: var(--mlb-icon-color, #64748b);
+    font-size: var(--mlb-icon-size, 16px);
+    pointer-events: none;
+}
+
+.mlb-location-icon {
+    color: var(--mlb-icon-color, #64748b);
+}
+
+.mlb-calendar-icon {
+    color: var(--mlb-icon-color, #64748b);
+}
+
+/* Removed separator icon styles */
+
+/* Base input styling */
+.mlb-form input,
+.mlb-form select {
+    padding: 10px;
+    border: 1px solid var(--mlb-input-border, #ccc);
+    border-radius: var(--mlb-field-radius);
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+    color: var(--mlb-input-text);
+    background-color: var(--mlb-input-bg);
+}
+
+/* Consistent height for form inputs to match hotel select */
+.mlb-form .form-field input,
+.mlb-form .form-field input.cqb-date,
+.mlb-form .form-field select,
+.mlb-form .form-field textarea {
+    height: var(--mlb-field-height, 48px) !important;
+    padding: 0 20px !important;
+    font-size: var(--mlb-field-font-size, 18px);
+    font-weight: var(--mlb-field-font-weight, 400);
+    text-transform: var(--mlb-field-text-transform, none);
+    line-height: 1 !important;
+    box-sizing: border-box !important;
+}
+
+/* Adjust padding for fields with icons */
+.mlb-form .form-field.has-icon input,
+.mlb-form .form-field.has-icon select {
+    padding-left: 44px !important;
+}
+
+/* Hover states */
+.mlb-form input:hover,
+.mlb-form select:hover {
+    background-color: var(--mlb-input-bg-hover, var(--mlb-input-bg));
+    color: var(--mlb-input-text-hover, var(--mlb-input-text));
+    border-color: var(--mlb-input-border-hover, var(--mlb-input-border, #ccc));
+}
+
+/* ==========================================================================
+   4. SPECIAL INPUTS (Hotel Select, Date Range)
+   ========================================================================== */
+
+/* Hotel Select */
+.mlb-form .hotel-selector select#mlb-hotel-select {
+    width: 100% !important;
+    height: var(--mlb-field-height, 48px) !important;
+    padding: 0 40px 0 0 !important;
+    font-size: var(--mlb-select-font-size, var(--mlb-field-font-size, 18px));
+    font-weight: var(--mlb-select-font-weight, var(--mlb-field-font-weight, 400));
+    line-height: 1 !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1) !important;
+    border: 1px solid var(--mlb-input-border, #e6e6e6) !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-color: var(--mlb-select-bg, var(--mlb-input-bg, #fff)) !important;
+    color: var(--mlb-input-text);
+    transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease !important;
+}
+
+.mlb-form .hotel-selector select#mlb-hotel-select:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08) !important;
+    outline: none !important;
+    border-color: #d0d0d0 !important;
+}
+
+.mlb-form .hotel-selector select#mlb-hotel-select:focus {
+    border-color: var(--mlb-btn-bg, #0073aa) !important;
+    box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.12) !important;
+}
+
+.mlb-form .hotel-selector select#mlb-hotel-select option {
+    padding: 10px 20px !important;
+    font-size: var(--mlb-select-font-size, var(--mlb-field-font-size, 18px));
+    font-weight: var(--mlb-select-font-weight, var(--mlb-field-font-weight, 400));
+    line-height: 1.5 !important;
+    background-color: var(--mlb-hotel-bg, var(--mlb-input-bg, #fff)) !important;
+    color: var(--mlb-input-text);
+}
+
+.mlb-form .daterange-field {
+    flex: 1.5 !important;
+}
+
+#mlb-daterange,
+.mlb-form .daterange-field input#mlb-checkin,
+.mlb-form .daterange-field input#mlb-checkout {
+    cursor: pointer;
+}
+
+#mlb-daterange {
+    padding-right: 40px !important;
+}
+
+/* ==========================================================================
+   5. BUTTONS
+   ========================================================================== */
+
+.mlb-submit-btn,
+.mlb-form button {
+    background-color: var(--mlb-btn-bg);
+    color: var(--mlb-btn-text);
+    border: 1px solid var(--mlb-btn-border, var(--mlb-btn-bg));
+    height: var(--mlb-field-height, 48px);
+    padding: 0 16px;
+    font-size: var(--mlb-button-font-size, 12px);
+    font-weight: var(--mlb-button-font-weight, 700);
+    text-transform: var(--mlb-button-text-transform, uppercase);
+    border-radius: var(--mlb-btn-radius);
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.mlb-submit-btn:hover,
+.mlb-form button:hover {
+    background-color: var(--mlb-btn-bg-hover);
+    color: var(--mlb-btn-text-hover, var(--mlb-btn-text));
+    border-color: var(--mlb-btn-border-hover, var(--mlb-btn-border, var(--mlb-btn-bg-hover)));
+}
+
+/* ==========================================================================
+   6. LAYOUT MODIFIERS (Inline, Stacked, Button-Below)
+   ========================================================================== */
+
+.mlb-form[data-layout="stacked"] {
+    flex-direction: column;
+}
+
+.mlb-form[data-layout="stacked"] .form-field {
+    min-width: auto;
+}
+
+/* Button placement modifiers */
+.mlb-form .form-actions {
+    margin: 12px 0 0 0;
+}
+
+.mlb-placement-below .mlb-form .form-actions {
+    order: 999;
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Ensure button below overrides inline-fit weighting when used */
+.mlb-elementor-widget .mlb-layout-inline.mlb-placement-below .mlb-form .form-actions {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* ==========================================================================
+   7. CUSTOM SELECT DROPDOWN
+   ========================================================================== */
+
+/* Inline Fit Mode (Elementor): distribute widths by weights and fit 100% */
+.mlb-elementor-widget.mlb-inline-fit .mlb-layout-inline .mlb-form .hotel-selector {
+    flex: var(--mlb-col-hotel, 4) 1 0 !important;
+    max-width: none !important;
+    width: auto !important;
+}
+.mlb-elementor-widget.mlb-inline-fit .mlb-layout-inline .mlb-form .daterange-field {
+    flex: var(--mlb-col-date, 4) 1 0 !important;
+    max-width: none !important;
+    width: auto !important;
+}
+.mlb-elementor-widget.mlb-inline-fit .mlb-layout-inline .mlb-form .form-actions {
+    flex: var(--mlb-col-button, 2) 1 0 !important;
+    max-width: none !important;
+    width: auto !important;
+}
+
+/* Ensure that when button placement is BELOW, the button takes full width even in FIT mode */
+.mlb-elementor-widget.mlb-inline-fit .mlb-layout-inline.mlb-placement-below .mlb-form .form-actions {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Inline Non-Fit Mode (Elementor): use sixth-based spans for fixed proportions */
+.mlb-elementor-widget:not(.mlb-inline-fit) .mlb-layout-inline .mlb-form .hotel-selector {
+    flex: 0 0 calc((var(--mlb-span-hotel, 2) / 6) * 100%) !important;
+    max-width: calc((var(--mlb-span-hotel, 2) / 6) * 100%) !important;
+    width: calc((var(--mlb-span-hotel, 2) / 6) * 100%) !important;
+}
+.mlb-elementor-widget:not(.mlb-inline-fit) .mlb-layout-inline .mlb-form .daterange-field {
+    flex: 0 0 calc((var(--mlb-span-date, 3) / 6) * 100%) !important;
+    max-width: calc((var(--mlb-span-date, 3) / 6) * 100%) !important;
+    width: calc((var(--mlb-span-date, 3) / 6) * 100%) !important;
+}
+.mlb-elementor-widget:not(.mlb-inline-fit) .mlb-layout-inline .mlb-form .form-actions {
+    flex: 0 0 calc((var(--mlb-span-button, 1) / 6) * 100%) !important;
+    max-width: calc((var(--mlb-span-button, 1) / 6) * 100%) !important;
+    width: calc((var(--mlb-span-button, 1) / 6) * 100%) !important;
+}
+
+/* But when button placement is BELOW, force full width for the actions */
+.mlb-elementor-widget:not(.mlb-inline-fit) .mlb-layout-inline.mlb-placement-below .mlb-form .form-actions {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Hide the native select when enhanced */
+select.mlb-hotel-select.mlb-native-select-hidden,
+.mlb-native-select-hidden {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+}
+
+/* Custom select wrapper */
+.mlb-custom-select {
+    position: relative;
+    width: 100%;
+}
+
+/* Custom select toggle button */
+.mlb-custom-select__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--mlb-field-height, 48px) !important;
+		padding: 0px 20px 0px 35px !important;
+    background: var(--mlb-select-bg, #ffffff);
+    border: 1px solid var(--mlb-form-border, #e5f7f7);
+    border-radius: var(--mlb-field-radius, 4px);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--mlb-field-font-size, 18px);
+    font-weight: var(--mlb-field-font-weight, 400);
+    text-transform: var(--mlb-field-text-transform, none);
+    line-height: 1 !important;
+    color: var(--mlb-select-text, #333);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+}
+
+/* Custom select label */
+.mlb-custom-select__label {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Custom select arrow */
+.mlb-custom-select__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    transition: transform 0.2s ease;
+    color: var(--mlb-select-arrow-color, var(--mlb-select-text, #333));
+}
+
+.mlb-custom-select__toggle[aria-expanded="true"] .mlb-custom-select__arrow {
+    transform: rotate(180deg);
+}
+
+/* Custom select dropdown list */
+.mlb-custom-select__list {
+    position: absolute;
+    top: 95%;
+    left: 0;
+    right: 0;
+    background: var(--mlb-dropdown-bg, var(--mlb-input-bg, #ffffff));
+    border-top: none;
+    border-radius: 0 0 var(--mlb-field-radius, 4px) var(--mlb-field-radius, 4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+/* Custom select items */
+.mlb-custom-select__item {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: var(--mlb-field-font-size, 18px);
+     font-weight: var(--mlb-field-font-weight, 400);
+     text-transform: var(--mlb-field-text-transform, none);
+    line-height: 1.5 !important;
+    color: var(--mlb-dropdown-item-text, var(--mlb-input-text, #333));
+    transition: background-color 0.2s ease;
+}
+
+.mlb-custom-select__item:hover,
+.mlb-custom-select__item:focus {
+    background-color: var(--mlb-dropdown-item-hover-bg, #f8fafc);
+    color: var(--mlb-dropdown-item-hover-text, var(--mlb-dropdown-item-text, #1e293b));
+    outline: none;
+}
+
+.mlb-custom-select__item.mlb-selected {
+    background-color: var(--mlb-btn-bg, #0073aa);
+    color: var(--mlb-btn-text, #ffffff);
+}
+
+/* ==========================================================================
+   RESPONSIVE: Force stacked layout when form width is below 600px
+   ========================================================================== */
+
+/* Use container query when available (modern browsers) */
+@container (max-width: 600px) {
+    .mlb-form {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .mlb-form .form-field {
+        width: 100% !important;
+        flex: none !important;
+    }
+    .mlb-form .form-actions,
+    .mlb-form .mlb-submit-btn,
+    .mlb-form button {
+        width: 100% !important;
+    }
+
+    /* Elementor widget: keep inline when explicitly requested via widget option */
+    .mlb-elementor-widget.mlb-inline-no-stack .mlb-layout-inline .mlb-form {
+        flex-direction: row !important;
+        align-items: flex-end !important;
+        flex-wrap: wrap !important;
+    }
+}
+
+/* Fallback for browsers without container queries: use viewport width */
+@media (max-width: 600px) {
+    .mlb-form {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .mlb-form .form-field {
+        width: 100% !important;
+        flex: none !important;
+    }
+    .mlb-form .form-actions,
+    .mlb-form .mlb-submit-btn,
+    .mlb-form button {
+        width: 100% !important;
+    }
+
+    /* Elementor widget: keep inline when explicitly requested via widget option */
+    .mlb-elementor-widget.mlb-inline-no-stack .mlb-layout-inline .mlb-form {
+        flex-direction: row !important;
+        align-items: flex-end !important;
+        flex-wrap: wrap !important;
+    }
+}
+
+/* ==========================================================================
+   EASEPICK CALENDAR CENTERING
+   ========================================================================== */
+
+/* Center the EasePick calendar dropdown on the screen for Hotel forms */
+.easepick-wrapper .container.show:not(.inline) {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    transform-origin: center !important;
+    z-index: 9999 !important;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+/* Ensure wrapper doesn't constrain positioning */
+.easepick-wrapper {
+    position: static !important;
+}
+
+/* Add backdrop overlay when calendar is shown */
+.mlb-calendar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: none;
+}
+
+.mlb-calendar-backdrop.show {
+    display: block;
+}
+
+/* ==========================================================================
+   8. SINGLE-BUTTON FORMS (Room / Special)
+   - Default to full-width buttons for room/special variants by marking
+     the wrapper with `data-single-button="true"`. The Elementor
+     `Form Width` control still applies a concrete width to
+     `{{WRAPPER}} .mlb-booking-form` and will override this default.
+   ========================================================================== */
+
+.mlb-booking-form[data-single-button="true"] {
+    width: 100%;
+}
+
+.mlb-booking-form[data-single-button="true"] .form-actions {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Ensure inline-fit / span rules do not reduce the button width for
+   the single-button variant */
+.mlb-elementor-widget.mlb-inline-fit .mlb-booking-form[data-single-button="true"] .form-actions {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Additional specificity to override span/flex rules applied by Elementor
+   when the widget is NOT in fit mode (ensures single-button forms get
+   full width under all inline-fit/non-fit combinations). */
+.mlb-elementor-widget:not(.mlb-inline-fit) .mlb-booking-form[data-single-button="true"] .form-actions,
+.mlb-booking-form[data-single-button="true"].mlb-layout-inline .mlb-form .form-actions,
+.mlb-booking-form[data-single-button="true"] .mlb-form .form-actions {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Ensure the button element inside a single-button wrapper occupies full width */
+.mlb-booking-form[data-single-button="true"] .mlb-submit-btn,
+.mlb-booking-form[data-single-button="true"] .mlb-form button {
+    width: 100% !important;
+}
+
+/* ==========================================================================
+   18. BOOKING PAGE IFRAME LOADER
+   ========================================================================== */
+
+.mlb-iframe-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.mlb-iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.mlb-iframe-container.mlb-iframe-ready iframe {
+    opacity: 1;
+}
+
+.mlb-iframe-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px;
+    text-align: center;
+    z-index: 2;
+    background: rgba(29, 29, 29, 0.438);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mlb-iframe-loading p {
+    margin: 0;
+    font-size: 1rem;
+    color: #111;
+}
+
+.mlb-iframe-loading--hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   19. BOOKING PAGE REDIRECT OVERLAY
+   ========================================================================== */
+
+.mlb-redirect-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 99999;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.mlb-redirect-overlay.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mlb-redirect-overlay__text {
+    margin: 0;
+    font-size: 1rem;
+    color: #0f172a;
+    text-align: center;
+}

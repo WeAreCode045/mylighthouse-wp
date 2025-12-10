@@ -1,0 +1,905 @@
+# Copyright (C) 2025 
+# This file is distributed under the same license as the mylighthouse-booker plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: mylighthouse-booker 1.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mylighthouse-booker\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-11-25T02:55:28+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: mylighthouse-booker\n"
+
+#. Plugin Name of the plugin
+#: mylighthouse-booker.php
+msgid "mylighthouse-booker"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: mylighthouse-booker.php
+msgid "https://code045.nl/"
+msgstr ""
+
+#. Description of the plugin
+#: mylighthouse-booker.php
+msgid "Wordpress Booking Plugin for MyLighthouse Booking Engine (formely Cubilis). Integrate the Booking engine into your Wordpress Website."
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:77
+msgid "Preparing..."
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:78
+msgid "Export failed"
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:79
+msgid "Export request failed"
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:80
+#: includes/Admin/class-admin-tools.php:60
+msgid "Download Export"
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:81
+msgid "Export complete."
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:82
+msgid "Please select a JSON file to import."
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:83
+msgid "Invalid JSON file."
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:84
+msgid "Import failed"
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:85
+msgid "Importing..."
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:86
+#: includes/Admin/class-admin-tools.php:83
+msgid "Import JSON"
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:87
+msgid "Import request failed"
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:88
+msgid "Previewing..."
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:89
+msgid "Preview failed"
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:90
+msgid "Preview request failed"
+msgstr ""
+
+#: includes/Admin/class-admin-assets.php:91
+#: includes/Admin/class-admin-tools.php:82
+msgid "Preview Import"
+msgstr ""
+
+#: includes/Admin/class-admin-dashboard.php:37
+msgid "Hotels"
+msgstr ""
+
+#: includes/Admin/class-admin-dashboard.php:42
+msgid "Settings"
+msgstr ""
+
+#: includes/Admin/class-admin-dashboard.php:48
+#: includes/Admin/class-admin-tools.php:16
+msgid "Tools"
+msgstr ""
+
+#: includes/Admin/class-admin-dashboard.php:64
+msgid "Hotels page unavailable."
+msgstr ""
+
+#: includes/Admin/class-admin-dashboard.php:75
+msgid "Tools page unavailable."
+msgstr ""
+
+#: includes/Admin/class-admin-dashboard.php:86
+msgid "Settings page unavailable."
+msgstr ""
+
+#: includes/Admin/class-admin-dashboard.php:90
+msgid "Select a section from the sidebar."
+msgstr ""
+
+#: includes/Admin/class-admin-hotels.php:53
+#: includes/Admin/hotels/Templates/hotels-list.php:24
+#: includes/Admin/hotels/Templates/hotels-list.php:32
+#: includes/Admin/hotels/Templates/hotels-list.php:46
+msgid "Add Hotel"
+msgstr ""
+
+#: includes/Admin/class-admin-hotels.php:53
+msgid "Edit Hotel"
+msgstr ""
+
+#: includes/Admin/class-admin-hotels.php:58
+msgid "Basic editor unavailable; template missing."
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:19
+msgid "General"
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:22
+#: includes/Elementor/class-elementor-widget-booking-form.php:47
+msgid "General Settings"
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:23
+msgid "Configure plugin options here."
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:46
+msgid "Booking Page"
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:48
+msgid "Relative or absolute URL"
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:49
+msgid "Optional: URL to the booking page where full results should be shown."
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:53
+msgid "Display Mode"
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:56
+msgid "Modal (show results in popup)"
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:57
+msgid "Booking Page (redirect to booking page)"
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:59
+msgid "Choose how booking results are displayed after form submission."
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:63
+msgid "Spinner Background"
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:68
+msgid "Spinner preview"
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:71
+msgid "Enter the full URL to the image that should appear behind the spinner in the booking modal."
+msgstr ""
+
+#: includes/Admin/class-admin-settings.php:76
+msgid "Save General Settings"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:17
+msgid "Utility actions for this plugin."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:22
+msgid "Check/Create Tables"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:27
+msgid "Migrate Legacy Hotels to Database"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:32
+msgid "Update Database Tables (dbDelta)"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:39
+msgid "Import & Export"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:40
+msgid "Move hotels (with rooms and specials) between environments using JSON exports."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:44
+msgid "Export Data"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:45
+msgid "Download a JSON snapshot of all hotels, rooms, and specials."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:50
+msgid "Export scope"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:52
+msgid "All hotels (includes rooms and specials)"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:56
+msgid "Include General Settings"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:58
+msgid "Adds booking page URL, display mode, and spinner image to the export."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:63
+msgid "Export download frame"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:67
+msgid "Import Data"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:68
+msgid "Upload a JSON export to preview changes and import hotels, rooms, and specials."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:69
+msgid "JSON file"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:73
+msgid "Apply General Settings from file"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:75
+msgid "Updates booking-related options when the export contains them."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:78
+msgid "Skip items that already exist"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:80
+msgid "When enabled, matching hotel, room, or special IDs already in the database will be ignored."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:112
+msgid "Hotels Table"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:117
+msgid "Rooms Table"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:122
+msgid "Specials Table"
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:152
+msgid "Table check completed."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:234
+msgid "Export generated successfully."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:247
+#: includes/Admin/class-admin-tools.php:379
+msgid "Invalid JSON payload."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:252
+#: includes/Admin/class-admin-tools.php:384
+msgid "No hotels found in the provided payload."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:282
+#: includes/Admin/class-admin-tools.php:423
+msgid "Missing hotel ID or name."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:349
+msgid "Preview ready: %1$d hotel(s) to create, %2$d hotel(s) to update."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:355
+msgid "General settings will also be updated."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:468
+msgid "Failed to create hotel %s."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:581
+msgid "Import completed. %1$d hotel(s) created, %2$d hotel(s) updated."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:587
+msgid "General settings updated."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:669
+#: includes/Admin/hotels/class-hotels-page.php:46
+#: includes/Admin/hotels/class-hotels-page.php:66
+#: includes/API/class-ajax-handlers.php:161
+#: includes/API/class-ajax-handlers.php:465
+msgid "Security check failed."
+msgstr ""
+
+#: includes/Admin/class-admin-tools.php:673
+#: includes/API/class-ajax-handlers.php:469
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: includes/Admin/hotels/class-hotels-page.php:49
+msgid "You do not have permission to delete hotels."
+msgstr ""
+
+#: includes/Admin/hotels/class-hotels-page.php:69
+msgid "You do not have permission to save hotels."
+msgstr ""
+
+#: includes/Admin/hotels/Templates/hotel-info-section.php:11
+msgid "Hotel Details"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/hotel-info-section.php:14
+#: includes/Admin/hotels/Templates/hotels-list.php:36
+msgid "Hotel Name"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/hotel-info-section.php:18
+#: includes/Admin/hotels/Templates/hotels-list.php:40
+#: includes/Admin/hotels/Templates/room-edit-sidebar.php:27
+#: includes/Admin/hotels/Templates/rooms-tabs.php:65
+msgid "External ID"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/hotel-row.php:50
+msgid "Change hotel order"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/hotel-row.php:51
+msgid "Move hotel up"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/hotel-row.php:54
+msgid "Move hotel down"
+msgstr ""
+
+#. translators: %s is the external hotel identifier (hotel ID) from the supplier/API.
+#: includes/Admin/hotels/Templates/hotel-row.php:63
+#: includes/Admin/hotels/Templates/room-card.php:23
+#: includes/Admin/hotels/Templates/special-card.php:23
+msgid "ID: %s"
+msgstr ""
+
+#. translators: %d is the number of rooms for this hotel.
+#: includes/Admin/hotels/Templates/hotel-row.php:68
+msgid "%d room"
+msgid_plural "%d rooms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Admin/hotels/Templates/hotel-row.php:73
+msgid "Edit"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/hotel-row.php:76
+msgid "Delete"
+msgstr ""
+
+#. translators: %s is the hotel name shown in the admin title when editing a hotel.
+#: includes/Admin/hotels/Templates/hotels-edit.php:22
+msgid "Add New Hotel"
+msgstr ""
+
+#. translators: %s is the hotel name shown in the admin title when editing a hotel.
+#: includes/Admin/hotels/Templates/hotels-edit.php:22
+msgid "Edit: %s"
+msgstr ""
+
+#. translators: %s is the internal WP hotel id (numeric).
+#: includes/Admin/hotels/Templates/hotels-edit.php:44
+msgid "Hotel ID: %s"
+msgstr ""
+
+#. translators: First %1$d is the number of rooms, second %2$d is the number of specials for this hotel. Use ordered placeholders if reordering is required for your language.
+#: includes/Admin/hotels/Templates/hotels-edit.php:46
+msgid "Rooms: %1$d — Specials: %2$d"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/hotels-list.php:20
+msgid "Hotel Management"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/hotels-list.php:45
+#: includes/Admin/hotels/Templates/rooms-tabs.php:70
+msgid "Cancel"
+msgstr ""
+
+#. translators: %d is the total number of hotels in the site (for diagnostic display).
+#: includes/Admin/hotels/Templates/hotels-list.php:67
+msgid "Hotels count: %d"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/no-hotels.php:13
+msgid "No hotels found"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/no-hotels.php:28
+msgid "No hotels configured yet"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/no-hotels.php:29
+msgid "Add your first hotel to get started with the booking system."
+msgstr ""
+
+#: includes/Admin/hotels/Templates/room-card.php:27
+msgid "Edit room"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/room-card.php:30
+msgid "Delete room"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/room-edit-sidebar.php:13
+#: includes/Elementor/class-elementor-widget-booking-form.php:65
+msgid "Hotel"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/room-edit-sidebar.php:15
+#: includes/Admin/hotels/Templates/rooms-tabs.php:61
+msgid "Name"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/room-edit-sidebar.php:18
+msgid "Edit name"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/room-edit-sidebar.php:21
+#: includes/Admin/hotels/Templates/room-edit-sidebar.php:33
+#: includes/Admin/hotels/Templates/rooms-tabs.php:71
+msgid "Save"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/room-edit-sidebar.php:30
+msgid "Edit external id"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/rooms-tabs.php:15
+msgid "Rooms"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/rooms-tabs.php:19
+msgid "Specials"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/rooms-tabs.php:37
+msgid "Add Room"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/rooms-tabs.php:55
+msgid "Item"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/rooms-tabs.php:89
+#: includes/Admin/hotels/Templates/specials-section.php:20
+msgid "Add Special"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/special-card.php:27
+msgid "Edit special"
+msgstr ""
+
+#: includes/Admin/hotels/Templates/special-card.php:30
+msgid "Delete special"
+msgstr ""
+
+#: includes/API/class-ajax-handlers.php:165
+msgid "You do not have permission to save settings."
+msgstr ""
+
+#: includes/API/class-ajax-handlers.php:482
+msgid "Database tables have been updated. New columns are available immediately."
+msgstr ""
+
+#: includes/Elementor/class-elementor-loader.php:52
+msgid "Mylighthouse Booker"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:25
+msgid "Lighthouse Booking Form"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:63
+msgid "Form Type"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:65
+msgid "Room"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:65
+msgid "Special"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:76
+msgid "Icons"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:85
+msgid "Hotel Select Icon"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:94
+msgid "Date Field Icon"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:108
+msgid "Source"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:117
+msgid "Preselect Hotel (Optional)"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:119
+msgid "None - User selects on frontend"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:122
+msgid "Optionally preselect a hotel. User can still change it on the frontend."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:130
+#: includes/Elementor/class-elementor-widget-booking-form.php:142
+msgid "1. Select Hotel"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:132
+msgid "— Kies een Hotel —"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:134
+#: includes/Elementor/class-elementor-widget-booking-form.php:146
+msgid "First, select the hotel."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:144
+msgid "— Select a Hotel —"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:158
+msgid "— Select a Room —"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:169
+msgid "No rooms available for this hotel"
+msgstr ""
+
+#. translators: %s is the hotel name (e.g. "Seaside Hotel").
+#: includes/Elementor/class-elementor-widget-booking-form.php:176
+msgid "2. Select Room from %s"
+msgstr ""
+
+#. translators: %s is the hotel name (e.g. "Seaside Hotel").
+#: includes/Elementor/class-elementor-widget-booking-form.php:195
+msgid "Select a room from %s."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:200
+msgid "— Select a Special —"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:210
+msgid "No specials available for this hotel"
+msgstr ""
+
+#. translators: %s is the hotel name (e.g. "Seaside Hotel").
+#: includes/Elementor/class-elementor-widget-booking-form.php:217
+msgid "2. Select Special from %s"
+msgstr ""
+
+#. translators: %s is the hotel name (e.g. "Seaside Hotel").
+#: includes/Elementor/class-elementor-widget-booking-form.php:236
+msgid "Select a special from %s."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:247
+msgid "Layout & Visibility"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:256
+msgid "Form Width"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:267
+msgid "Form Element Placement"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:269
+msgid "Inline"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:269
+msgid "Stacked"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:278
+msgid "Button Placement"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:280
+msgid "Right (inline)"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:280
+msgid "Below (full width)"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:289
+msgid "Prevent Auto-Stack on Small Widths"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:291
+#: includes/Elementor/class-elementor-widget-booking-form.php:304
+msgid "Yes"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:292
+#: includes/Elementor/class-elementor-widget-booking-form.php:305
+msgid "No"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:302
+msgid "Auto Adjust Inline Widths (fit 100%)"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:316
+msgid "Hotel Select Width"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:323
+#: includes/Elementor/class-elementor-widget-booking-form.php:336
+#: includes/Elementor/class-elementor-widget-booking-form.php:349
+msgid "Total width of elements cannot be more than 5."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:329
+msgid "Date Picker Width"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:342
+msgid "Button Width"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:353
+msgid "Form Fields Height"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:354
+msgid "Gap"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:356
+msgid "Form Alignment"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:359
+msgid "Left"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:360
+msgid "Center"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:361
+msgid "Right"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:379
+msgid "Buttons"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:385
+#: includes/Elementor/class-elementor-widget-booking-form.php:452
+msgid "Background"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:390
+#: includes/Elementor/class-elementor-widget-booking-form.php:453
+msgid "Hover Background"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:395
+#: includes/Elementor/class-elementor-widget-booking-form.php:454
+msgid "Text Color"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:400
+#: includes/Elementor/class-elementor-widget-booking-form.php:455
+msgid "Text Hover"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:405
+#: includes/Elementor/class-elementor-widget-booking-form.php:456
+msgid "Border Color"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:410
+#: includes/Elementor/class-elementor-widget-booking-form.php:457
+msgid "Border Hover"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:416
+#: includes/Elementor/class-elementor-widget-booking-form.php:460
+msgid "Border Width"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:424
+#: includes/Elementor/class-elementor-widget-booking-form.php:473
+msgid "Border Radius"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:436
+msgid "Button Typography"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:447
+msgid "Fields Styling & Typography"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:490
+msgid "Field Typography"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:495
+msgid "Select Background"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:496
+msgid "Select Text Color"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:497
+msgid "Select Arrow Color"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:498
+msgid "Dropdown Background"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:499
+msgid "Dropdown Item Text"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:500
+msgid "Dropdown Item Hover BG"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:501
+msgid "Dropdown Item Hover Text"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:509
+msgid "Icon Styling"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:514
+msgid "Icon Color"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:516
+msgid "Field Icons Size"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:521
+msgid "Applies to the hotel and date field icons on the left."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:602
+msgid "No valid hotels configured. Please add hotels in Hotels -> Mylighthouse Booker."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:609
+msgid "Booking Page URL is not set. Please configure it in Settings -> Mylighthouse Booker."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:635
+msgid "Room form requires selecting a hotel and room in the Source settings."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:659
+msgid "Special form requires selecting a hotel and special in the Source settings."
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:867
+#: templates/modals/calendar-modal.php:48
+#: templates/modals/modal-room.php:48
+msgid "Book This Room"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:869
+#: templates/modals/calendar-modal.php:49
+#: templates/modals/modal-room.php:49
+msgid "Book Special"
+msgstr ""
+
+#: includes/Elementor/class-elementor-widget-booking-form.php:871
+#: templates/booking-form.php:17
+msgid "Check Availability"
+msgstr ""
+
+#: templates/booking-form-hotel.php:43
+#: templates/booking-form.php:80
+msgid "Select Arrival Date"
+msgstr ""
+
+#: templates/booking-form-hotel.php:44
+#: templates/booking-form.php:80
+msgid "Select Departure Date"
+msgstr ""
+
+#: templates/booking-form.php:27
+msgid "Choose a hotel..."
+msgstr ""
+
+#: templates/booking-form.php:28
+msgid "Select Arrival Date ⇢ Select Departure Date"
+msgstr ""
+
+#: templates/modals/calendar-modal.php:18
+#: templates/modals/modal-calendar-template.php:24
+#: templates/modals/modal-room.php:18
+msgid "Close calendar"
+msgstr ""
+
+#: templates/modals/calendar-modal.php:23
+#: templates/modals/modal-calendar-template.php:29
+#: templates/modals/modal-room.php:23
+msgid "Booking Details"
+msgstr ""
+
+#: templates/modals/calendar-modal.php:26
+#: templates/modals/modal-room.php:26
+msgid "Hotel:"
+msgstr ""
+
+#: templates/modals/calendar-modal.php:30
+#: templates/modals/modal-room.php:30
+msgid "Room:"
+msgstr ""
+
+#: templates/modals/calendar-modal.php:34
+#: templates/modals/modal-room.php:34
+msgid "Special:"
+msgstr ""
+
+#: templates/modals/calendar-modal.php:38
+#: templates/modals/modal-room.php:38
+msgid "Check-in:"
+msgstr ""
+
+#: templates/modals/calendar-modal.php:39
+#: templates/modals/calendar-modal.php:43
+#: templates/modals/modal-room.php:39
+#: templates/modals/modal-room.php:43
+msgid "Select dates"
+msgstr ""
+
+#: templates/modals/calendar-modal.php:42
+#: templates/modals/modal-room.php:42
+msgid "Check-out:"
+msgstr ""

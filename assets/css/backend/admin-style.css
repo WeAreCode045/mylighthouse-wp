@@ -1,0 +1,909 @@
+/*
+ * Mylighthouse Booker - Admin Style (global)
+ * Purpose: single source of admin layout and utility styles used across the plugin.
+ * Keep selectors namespaced with `mlb-` to avoid collisions with other admin CSS.
+ */
+
+/* -------------------- Variables -------------------- */
+:root {
+    --mlb-sidebar-bg: #f9fafb;
+    --mlb-sidebar-border: #e5e7eb;
+    --mlb-sidebar-active: #41558d;
+    --mlb-sidebar-active-bg: #eff6ff;
+    --mlb-sidebar-hover: #f3f4f6;
+    --mlb-card-bg: #ffffff;
+    --mlb-card-border: #e5e7eb;
+    --mlb-text-primary: #1e293b;
+    --mlb-text-secondary: #64748b;
+    --mlb-border-radius: 8px;
+    --mlb-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --mlb-gap: 16px;
+    --mlb-transition: 180ms cubic-bezier(.2, .9, .2, 1);
+}
+
+/* -------------------- Layout wrappers -------------------- */
+.mlb-admin-wrap {
+    min-height: calc(100vh - 32px);
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.mlb-admin-layout {
+    display: flex;
+    gap: 0;
+    margin-top: 20px;
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    flex: 1;
+    min-height: calc(100vh - 200px);
+}
+
+.mlb-admin-sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--mlb-sidebar-bg);
+    border-right: 1px solid var(--mlb-sidebar-border);
+    padding: 20px 0;
+}
+
+.mlb-admin-main {
+    flex: 1;
+    padding: 30px;
+    background: #fff;
+    overflow-y: auto;
+}
+
+.mlb-admin-sections {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* -------------------- Section row (card + sidebar) -------------------- */
+.mlb-section-row {
+    display: flex;
+    gap: var(--mlb-gap);
+    align-items: flex-start;
+    width: 100%;
+}
+
+.mlb-section-row .mlb-section-card {
+    flex: 1 1 0;
+    min-width: 0; /* allow flex child to shrink properly */
+}
+
+.mlb-rooms-sidebar {
+    flex: 0 0 320px;
+    width: 320px;
+    max-width: 36%;
+}
+
+/* Prevent the card from wrapping below the sidebar when container has room; constrain max-width so sidebar fits */
+.mlb-section-row {
+    flex-wrap: nowrap;
+}
+
+.mlb-section-row--tabs {
+    gap: 10px; /* smaller gap for the tabs + sidebar row */
+}
+
+.mlb-section-row--tabs > .mlb-section-card,
+.mlb-section-row--tabs > .mlb-tabs-card {
+    flex: 0 0 80%;
+    max-width: 80%;
+}
+
+.mlb-section-row--tabs > .mlb-rooms-sidebar,
+.mlb-section-row--tabs > aside.mlb-rooms-sidebar {
+    flex: 0 0 20%;
+    width: 20%;
+    max-width: 20%;
+}
+
+@media (max-width: 980px) {
+    .mlb-section-row--tabs {
+        flex-direction: column;
+        gap: var(--mlb-gap);
+    }
+    .mlb-section-row--tabs > .mlb-section-card,
+    .mlb-section-row--tabs > .mlb-tabs-card,
+    .mlb-section-row--tabs > .mlb-rooms-sidebar,
+    .mlb-section-row--tabs > aside.mlb-rooms-sidebar {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 980px) {
+    .mlb-section-row {
+        flex-direction: column;
+    }
+    .mlb-rooms-sidebar {
+        width: 100%;
+        flex: none;
+    }
+}
+
+/* -------------------- Sidebar (admin navigation) -------------------- */
+.mlb-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 8px;
+}
+
+.mlb-sidebar-item {
+    position: relative;
+}
+
+.mlb-sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 18px;
+    border: 0;
+    background: transparent;
+    color: var(--mlb-text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--mlb-transition), color var(--mlb-transition), border-color var(--mlb-transition), transform var(--mlb-transition);
+    border-left: 4px solid transparent;
+}
+
+.mlb-sidebar-link .mlb-dashicon,
+.mlb-sidebar-link i {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--mlb-text-secondary);
+}
+
+.mlb-sidebar-link:hover {
+    background: transparent !important;
+    color: #0f172a;
+}
+
+.mlb-sidebar-link:hover .mlb-dashicon,
+.mlb-sidebar-link:hover i {
+    color: #475569;
+}
+
+.mlb-sidebar-link.active {
+    background: transparent !important;
+    color: var(--mlb-sidebar-active);
+    border-left-color: var(--mlb-sidebar-active);
+}
+
+/* Strong enforcement: ensure sidebar items are square even if other styles are loaded */
+.mlb-admin-sidebar .mlb-sidebar-link,
+.mlb-admin-sidebar .mlb-sidebar-item .mlb-btn {
+    border-radius: 0 !important;
+}
+
+
+/* -------------------- Cards & containers -------------------- */
+.mlb-card {
+    background: var(--mlb-card-bg);
+    border: 1px solid var(--mlb-card-border);
+    border-radius: var(--mlb-border-radius);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--mlb-shadow);
+}
+
+.mlb-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--mlb-text-primary);
+    margin: 0 0 18px 0;
+}
+
+/* -------------------- Buttons & controls -------------------- */
+.mlb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none;
+    vertical-align: middle;
+    line-height: 1;
+    min-height: 40px;
+    box-sizing: border-box;
+    transition: background var(--mlb-transition), color var(--mlb-transition), border-color var(--mlb-transition), transform var(--mlb-transition);
+    background: #f8fafc;
+    color: var(--mlb-text-primary);
+}
+
+.mlb-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(65, 85, 141, 0.08);
+}
+
+.mlb-btn:hover {
+    background: #edf2f7;
+}
+
+/* Button modifiers (base + variants) */
+/* Use modifier names and include legacy mlb-style names for compatibility */
+.mlb-btn-primary {
+    background: var(--mlb-sidebar-active);
+    color: #fff;
+    border: 1px solid var(--mlb-sidebar-active);
+    box-shadow: 0 1px 2px rgba(65, 85, 141, 0.08);
+}
+
+.mlb-btn-primary:hover {
+    background: #354a78;
+    transform: translateY(-1px);
+}
+
+.mlb-btn-secondary {
+    background: #fff;
+    color: var(--mlb-text-primary);
+    border: 1px solid #d1d5db;
+}
+
+.mlb-btn-secondary:hover {
+    background: #f9fafb;
+}
+
+/* Button size modifiers */
+.mlb-btn-sm {
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+}
+
+/* Loading / disabled states */
+.mlb-btn.loading {
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.mlb-btn[disabled],
+.mlb-btn.disabled,
+.mlb-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Icon spacing inside buttons */
+.mlb-btn .mlb-dashicon,
+.mlb-btn i {
+    line-height: 1;
+}
+
+/* Primary button icon color */
+.mlb-btn-primary .mlb-dashicon,
+.mlb-btn-primary i {
+    color: #ffffff;
+}
+
+/* -------------------- Badges & Status -------------------- */
+.mlb-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.mlb-badge.created,
+.mlb-badge-created {
+    background: var(--mlb-sidebar-active);
+}
+
+.mlb-badge.updated,
+.mlb-badge-updated {
+    background: #10b981;
+}
+
+.mlb-badge.failed,
+.mlb-badge-failed {
+    background: #dc2626;
+}
+
+/* -------------------- Icons */
+.mlb-dashicon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    font-size: 16px;
+    line-height: 1;
+    color: inherit;
+}
+
+/* -------------------- Lists & items -------------------- */
+.mlb-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.mlb-list-item {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    background: transparent;
+    transition: all var(--mlb-transition);
+}
+
+.mlb-list-item + .mlb-list-item {
+    margin-top: 12px;
+}
+
+.mlb-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+}
+
+.mlb-list-item.mlb-repeater-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mlb-list-item.mlb-repeater-item .mlb-room-fields,
+.mlb-list-item.mlb-repeater-item .mlb-special-fields {
+    flex: 1 1 0;
+    align-items: center;
+}
+
+/* Keep the remove button sized and pinned to the right of the row */
+.mlb-room-fields .mlb-btn,
+.mlb-special-fields .mlb-btn {
+    margin-left: 8px;
+    flex: 0 0 auto;
+    height: 36px;
+}
+
+/* Ensure labels remain block and inputs fill their container */
+.mlb-room-fields .mlb-field label,
+.mlb-special-fields .mlb-field label {
+    display: block;
+}
+
+@media (max-width:782px) {
+    .mlb-room-fields,
+    .mlb-special-fields {
+        display: block;
+    }
+
+    /* On small screens, stack fields and place the remove button below */
+    .mlb-list-item.mlb-repeater-item {
+        display: block;
+    }
+
+    .mlb-room-fields .mlb-btn,
+    .mlb-special-fields .mlb-btn {
+        margin-left: 0;
+        margin-top: 8px;
+        width: auto;
+    }
+}
+
+
+/* -------------------- Forms */
+.mlb-form {
+    width: 100%;
+}
+
+.mlb-field {
+    margin-bottom: 12px;
+}
+
+.mlb-input,
+.mlb-select,
+.mlb-textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.mlb-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.mlb-input:focus,
+.mlb-select:focus,
+.mlb-textarea:focus {
+    outline: none;
+    border-color: var(--mlb-sidebar-active);
+    box-shadow: 0 0 0 3px rgba(65, 85, 141, 0.06);
+}
+
+
+/* -------------------- Tables */
+.mlb-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mlb-table th,
+.mlb-table td {
+    padding: 10px 12px;
+    border: 1px solid var(--mlb-card-border);
+    text-align: left;
+}
+
+.mlb-table th {
+    background: #f8fafc;
+    font-weight: 700;
+}
+
+/* Form table adjustments within our cards (hotel edit info sections) */
+.mlb-section-card .form-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.mlb-section-card .form-table th {
+    width: 240px;
+    padding: 12px 20px 12px 0;
+    vertical-align: top;
+    color: var(--mlb-text-primary);
+    font-weight: 600;
+}
+
+.mlb-section-card .form-table td {
+    padding: 12px 0;
+}
+
+/* -------------------- Hotels list specifics -------------------- */
+.mlb-hotel-item {
+    background: var(--mlb-card-bg);
+    border: 1px solid var(--mlb-card-border);
+    border-radius: var(--mlb-border-radius);
+    padding: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.mlb-hotel-order-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-right: 12px;
+}
+
+.mlb-hotel-order-controls .mlb-order-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 22px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #475569;
+    transition: color 0.2s ease;
+    min-height: auto;
+}
+
+.mlb-hotel-order-controls .mlb-order-btn:hover {
+    color: var(--mlb-sidebar-active, #41558d);
+}
+
+.mlb-hotel-order-controls .mlb-order-btn:disabled,
+.mlb-hotel-order-controls .mlb-order-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.mlb-hotel-order-controls .mlb-order-btn .mlb-dashicon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+.mlb-hotels-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.mlb-hotel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.mlb-hotel-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1 1 auto;
+}
+
+.mlb-hotel-summary .mlb-dashicon,
+.mlb-hotel-summary i {
+    color: var(--mlb-sidebar-active);
+}
+
+.mlb-hotel-name-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--mlb-text-primary);
+    text-align: left;
+}
+
+.mlb-hotel-id-text {
+    font-size: 13px;
+    color: var(--mlb-text-secondary);
+}
+
+.mlb-hotel-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: auto;
+}
+
+.mlb-action-btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    padding: 0;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f5f9;
+    color: #475569;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform var(--mlb-transition), box-shadow var(--mlb-transition), background var(--mlb-transition);
+}
+
+.mlb-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(15, 23, 42, 0.15);
+}
+
+.mlb-action-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(65, 85, 141, 0.12);
+}
+
+.mlb-action-btn:disabled,
+.mlb-action-btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.mlb-action-btn .mlb-dashicon {
+    font-size: 16px;
+    width: 18px;
+    height: 18px;
+    line-height: 1;
+    margin: 0;
+    color: currentColor;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.mlb-action-btn .mlb-dashicon::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+}
+
+.mlb-action-btn--primary {
+    background: var(--mlb-sidebar-active);
+    border-color: var(--mlb-sidebar-active);
+    color: #fff;
+}
+
+.mlb-action-btn--danger {
+    background: #dc2626;
+    border-color: #dc2626;
+    color: #fff;
+}
+
+.mlb-hotels-wrap .mlb-hotel-item {
+    margin-bottom: 16px;
+}
+
+/* Reuse hotel-list item styles for rooms/specials repeater items */
+.mlb-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--mlb-card-border);
+    border-radius: 8px;
+    background: var(--mlb-card-bg);
+}
+
+.mlb-list-item .mlb-item-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mlb-list-item .mlb-dashicon,
+.mlb-list-item i {
+    color: var(--mlb-sidebar-active);
+}
+
+.mlb-list-item .mlb-action-btn .mlb-dashicon,
+.mlb-list-item .mlb-action-btn .mlb-dashicon::before {
+    color: inherit;
+}
+
+.mlb-item-name-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mlb-text-primary);
+}
+
+.mlb-item-id-text {
+    font-size: 13px;
+    color: var(--mlb-text-secondary);
+}
+
+.mlb-item-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Rooms/Specials sidebar styles */
+.mlb-tabs-panels-with-sidebar {
+    display: flex;
+    gap: 18px;
+}
+
+.mlb-tabs-panels-with-sidebar .mlb-tabs-panels {
+    flex: 1 1 0;
+}
+
+.mlb-rooms-sidebar {
+    width: 260px;
+    flex: 0 0 260px;
+}
+
+.mlb-sidebar-card {
+    padding: 12px;
+    border: 1px solid var(--mlb-card-border);
+    border-radius: 8px;
+    background: var(--mlb-card-bg);
+}
+
+.mlb-sidebar-field {
+    margin-bottom: 12px;
+}
+
+.mlb-sidebar-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mlb-sidebar-text {
+    flex: 1 1 auto;
+}
+
+.mlb-inline-edit {
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.mlb-sidebar-value .mlb-inline-save {
+    display: none !important;
+    align-items: center;
+    padding: 6px 8px;
+}
+
+.mlb-sidebar-value.editing .mlb-inline-save {
+    display: inline-flex !important;
+}
+
+.mlb-hotels-content .mlb-section-row {
+    display: block;
+    gap: var(--mlb-gap);
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Header-level buttons (Add Hotel) */
+.mlb-hotels-header .button.button-primary,
+.mlb-hotels-header a.button.button-primary,
+.mlb-hotels-header .button.primary {
+    background: var(--mlb-sidebar-active);
+    color: #fff;
+    border-color: var(--mlb-sidebar-active);
+}
+
+.mlb-hotels-header .button.button-secondary,
+.mlb-hotels-header a.button.button-secondary {
+    background: #fff;
+    color: var(--mlb-text-primary);
+    border: 1px solid #d1d5db;
+}
+
+/* Modal styles (small) */
+.mlb-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.mlb-modal[hidden] { display: none; }
+.mlb-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+}
+.mlb-modal-panel {
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.2);
+    padding: 16px;
+    width: 420px;
+    z-index: 2;
+}
+.mlb-modal-header h3 { margin: 0 0 8px 0; }
+.mlb-modal-body { margin-bottom: 12px; }
+.mlb-modal-footer { display:flex; gap:8px; justify-content:flex-end; }
+
+
+/* -------------------- Tools / Import preview */
+.mlb-tools-wrap {
+    padding: 20px;
+}
+
+.mlb-tools-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.mlb-tools-result {
+    margin-top: 16px;
+}
+
+/* Tools buttons: scope compact spacing to our button classes */
+.mlb-tools-wrap .mlb-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Ensure tool area icons use the primary accent where appropriate */
+.mlb-tools-wrap .mlb-dashicon,
+.mlb-tools-wrap i { color: var(--mlb-sidebar-active); }
+
+/* -------------------- Tabs: Rooms & Specials -------------------- */
+.mlb-tabs {
+    display: block;
+}
+
+.mlb-tabs-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.mlb-tab-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid transparent;
+    background: transparent;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--mlb-text-secondary);
+    cursor: pointer;
+    transition: background var(--mlb-transition), color var(--mlb-transition), transform var(--mlb-transition);
+}
+
+.mlb-tab-btn.active {
+    background: var(--mlb-sidebar-active-bg);
+    color: var(--mlb-sidebar-active);
+    border-color: transparent;
+}
+
+.mlb-tab-panel {
+    display: block;
+    padding: 12px 0 0 0;
+}
+
+.mlb-tab-panel[hidden] {
+    display: none;
+}
+
+.mlb-tab-actions {
+    margin-top: 12px;
+}
+
+@media (max-width:782px) {
+    .mlb-admin-sidebar {
+        display: none;
+    }
+
+    .mlb-admin-main {
+        padding: 16px;
+    }
+
+    .mlb-card {
+        padding: 16px;
+    }
+}
+
+/* -------------------- Backwards compatibility: map legacy names to new ones -------------------- */
+/* Keep legacy helper classes working; prefer the new names above */
+.mlb-section-card {
+    /* Legacy alias mapped to the unified card style */
+    background: var(--mlb-card-bg);
+    border: 1px solid var(--mlb-card-border);
+    border-radius: var(--mlb-border-radius);
+    padding: 24px;
+    box-shadow: var(--mlb-shadow);
+    margin-top: 20px;
+}
+
+.mlb-badge-created {
+    background: var(--mlb-sidebar-active);
+    color: #fff;
+}
+
+.mlb-badge-updated {
+    background: #10b981;
+    color: #fff;
+}
+
+.mlb-badge-failed {
+    background: #dc2626;
+    color: #fff;
+}
+
+/* End of admin-style.css */

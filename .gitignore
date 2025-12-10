@@ -1,0 +1,12 @@
+
+.github/copilot-profiles-general-state.json
+/depricated
+node_modules
+/tests
+.vscode
+*.log
+*.lock
+.DS_Store
+thumbs.db
+.idea
+*.iml
