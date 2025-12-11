@@ -73,14 +73,7 @@ class Mylighthouse_Booker_Frontend_Assets
 			'all'
 		);
 
-		// Register legacy modal styles (for backward compatibility)
-		wp_register_style(
-			'mylighthouse-booker-modal',
-			plugins_url('/assets/css/frontend/modal.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array(),
-			'1.0.0',
-			'all'
-		);
+		// Legacy modal.css registration removed - using modular components.css instead
 
 	}
 
