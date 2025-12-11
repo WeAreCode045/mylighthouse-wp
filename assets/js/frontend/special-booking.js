@@ -160,6 +160,8 @@
             window.location.href = engineUrl;
         }
 
+    }
+    
     // Export class and per-form initializer for external use
     window.MLB_SpecialBooking = window.MLB_SpecialBooking || {};
     window.MLB_SpecialBooking.SpecialBooking = SpecialBooking;

@@ -46,7 +46,7 @@ class Mylighthouse_Booker_Frontend_Assets
 		$easepick_css_ver = (file_exists($easepick_css_path)) ? filemtime($easepick_css_path) : '1.2.1';
 		wp_register_style(
 			'easepick',
-			plugins_url('/assets/vendor/easepick/easepick.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			plugins_url('assets/vendor/easepick/easepick.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
 			array(),
 			$easepick_css_ver,
 			'all'
