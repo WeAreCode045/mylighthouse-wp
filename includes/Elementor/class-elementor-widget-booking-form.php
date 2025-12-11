@@ -648,10 +648,7 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 				return;
 			}
 			
-			// Enqueue room booking script
-			if (!wp_script_is('mylighthouse-booker-room-booking', 'enqueued')) {
-				wp_enqueue_script('mylighthouse-booker-room-booking');
-			}
+			// Legacy room-booking script removed - using modular room-widget instead
 		}
 
 		// Handle Special Form Type

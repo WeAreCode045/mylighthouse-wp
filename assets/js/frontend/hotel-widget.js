@@ -21,14 +21,19 @@
 
             const dateInput = form.querySelector('[data-mlb-date-input]');
             const submitBtn = form.querySelector('[data-mlb-submit]');
-            const hotelId = form.dataset.hotelId;
-
-            if (!hotelId) {
-                console.error('MLB: Missing hotel ID in form');
-                return;
-            }
-
+            const hotelSelect = form.querySelector('[data-mlb-hotel-select]');
+            
             let selectedDates = null;
+            
+            /**
+             * Get current hotel ID from select or form data attribute
+             */
+            function getCurrentHotelId() {
+                if (hotelSelect) {
+                    return hotelSelect.value;
+                }
+                return form.dataset.hotelId || '';
+            }
 
             // Open date picker on input click
             if (dateInput) {
@@ -66,6 +71,12 @@
                     
                     if (!selectedDates) {
                         alert('Please select your dates');
+                        return;
+                    }
+                    
+                    const hotelId = getCurrentHotelId();
+                    if (!hotelId) {
+                        alert('Please select a hotel');
                         return;
                     }
 
