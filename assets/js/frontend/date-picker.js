@@ -65,7 +65,7 @@ window.MLB_DatePicker = (function() {
                     picker.on('select', function(e) {
                         // Auto-submit when both dates are selected
                         if (picker.getStartDate() && picker.getEndDate()) {
-                            // Delay to allow visual feedback and ensure dates are set
+                            // Minimal delay for visual feedback
                             setTimeout(function() {
                                 if (currentCallback && picker.getStartDate() && picker.getEndDate()) {
                                     // Format dates using native JavaScript to ensure YYYY-MM-DD format
@@ -87,7 +87,7 @@ window.MLB_DatePicker = (function() {
                                     currentCallback(dates);
                                     close();
                                 }
-                            }, 500);
+                            }, 200);
                         }
                     });
                 }

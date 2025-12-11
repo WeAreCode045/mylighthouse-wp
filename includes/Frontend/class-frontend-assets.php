@@ -104,14 +104,12 @@ class Mylighthouse_Booker_Frontend_Assets
 			wp_enqueue_style('mylighthouse-booker-components');
 		}
 
-		// Enqueue legacy styles for backward compatibility
+		// Enqueue legacy booking form styles for backward compatibility
 		if (!wp_style_is('mylighthouse-booker-frontend', 'enqueued')) {
 			wp_enqueue_style('mylighthouse-booker-frontend');
 		}
 
-		if (!wp_style_is('mylighthouse-booker-modal', 'enqueued')) {
-			wp_enqueue_style('mylighthouse-booker-modal');
-		}
+		// Legacy modal.css removed - using modular components.css instead
 
 		// Styling is handled by the Elementor widget; do not read legacy DB option here.
 		// Styling is managed by the theme/Elementor; no inline legacy styles are emitted.
