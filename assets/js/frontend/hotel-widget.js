@@ -113,14 +113,18 @@
     /**
      * Format date range for display
      *
-     * @param {string} arrival   Arrival date
-     * @param {string} departure Departure date
+     * @param {string} arrival   Arrival date (dd-mm-yyyy format)
+     * @param {string} departure Departure date (dd-mm-yyyy format)
      * @return {string} Formatted date range
      */
     function formatDateRange(arrival, departure) {
         try {
-            const arrivalDate = new Date(arrival + 'T00:00:00');
-            const departureDate = new Date(departure + 'T00:00:00');
+            // Parse dd-mm-yyyy format dates
+            const [aDay, aMonth, aYear] = arrival.split('-');
+            const [dDay, dMonth, dYear] = departure.split('-');
+            
+            const arrivalDate = new Date(aYear, aMonth - 1, aDay);
+            const departureDate = new Date(dYear, dMonth - 1, dDay);
             
             const arrivalStr = arrivalDate.toLocaleDateString('en-US', { 
                 month: 'short', 
@@ -133,7 +137,7 @@
                 year: 'numeric'
             });
             
-            return `${arrivalStr} - ${departureStr}`;
+            return `${arrivalStr} → ${departureStr}`;
         } catch (error) {
             console.error('MLB: Error formatting date range:', error);
             return `${arrival} - ${departure}`;
