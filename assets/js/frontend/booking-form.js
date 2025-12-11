@@ -634,7 +634,7 @@
 				const pickerConfig = {
 					element: pickerElement,
 					css: [
-						'/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
+						'https://new.differenthotels.be/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
 					],
 					inline: true,
 					plugins: [easepickRef.RangePlugin, easepickRef.LockPlugin],
