@@ -547,9 +547,7 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 		if (! wp_style_is('mylighthouse-booker-frontend', 'enqueued')) {
 			wp_enqueue_style('mylighthouse-booker-frontend');
 		}
-		if (! wp_style_is('mylighthouse-booker-modal', 'enqueued')) {
-			wp_enqueue_style('mylighthouse-booker-modal');
-		}
+		// Legacy modal.css removed - using modular components.css instead
 
 		// Enqueue modular component scripts (already loaded globally, but ensure they're available)
 		if (! wp_script_is('easepick-wrapper', 'enqueued')) {
