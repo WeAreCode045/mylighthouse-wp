@@ -113,15 +113,15 @@
     /**
      * Format date range for display
      *
-     * @param {string} arrival   Arrival date (dd-mm-yyyy format)
-     * @param {string} departure Departure date (dd-mm-yyyy format)
+     * @param {string} arrival   Arrival date (YYYY-MM-DD format)
+     * @param {string} departure Departure date (YYYY-MM-DD format)
      * @return {string} Formatted date range
      */
     function formatDateRange(arrival, departure) {
         try {
-            // Parse dd-mm-yyyy format dates
-            const [aDay, aMonth, aYear] = arrival.split('-');
-            const [dDay, dMonth, dYear] = departure.split('-');
+            // Parse YYYY-MM-DD format dates (from date-picker.js)
+            const [aYear, aMonth, aDay] = arrival.split('-');
+            const [dYear, dMonth, dDay] = departure.split('-');
             
             const arrivalDate = new Date(aYear, aMonth - 1, aDay);
             const departureDate = new Date(dYear, dMonth - 1, dDay);
