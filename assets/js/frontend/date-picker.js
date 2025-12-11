@@ -25,8 +25,8 @@ window.MLB_DatePicker = (function() {
             return;
         }
 
-        const input = document.getElementById('mlb-global-datepicker');
-        if (!input) {
+        const dateInput = document.getElementById('mlb-global-datepicker');
+        if (!dateInput) {
             console.error('MLB: Date picker input not found');
             return;
         }
@@ -39,7 +39,7 @@ window.MLB_DatePicker = (function() {
 
         // Initialize easepick
         try {
-            const picker = new easepick.create({
+            picker = new easepick.create({
                 element: dateInput,
                 css: [(window.MLBPluginUrl && window.MLBPluginUrl.url || '') + 'assets/vendor/easepick/easepick.css'],
                 plugins: ['RangePlugin', 'LockPlugin'],
