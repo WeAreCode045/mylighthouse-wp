@@ -140,8 +140,8 @@ window.MLB_BookingActions = (function() {
      * Build booking engine URL
      *
      * @param {string} hotelId    Hotel ID
-     * @param {string} arrival    Arrival date
-     * @param {string} departure  Departure date
+     * @param {string} arrival    Arrival date (YYYY-MM-DD or dd-mm-yyyy)
+     * @param {string} departure  Departure date (YYYY-MM-DD or dd-mm-yyyy)
      * @param {string} identifier Optional identifier (room/rate)
      * @param {string} paramName  Optional parameter name
      * @return {string} Booking URL
@@ -149,21 +149,25 @@ window.MLB_BookingActions = (function() {
     function buildBookingUrl(hotelId, arrival, departure, identifier, paramName) {
         const baseUrl = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || 'https://bookingengine.mylighthouse.com/';
         
+        // Convert dates to YYYY-MM-DD format
+        const arrivalYMD = convertToYMD(arrival);
+        const departureYMD = convertToYMD(departure);
+        
         // Special handling for rate bookings
         if (paramName === 'rate' && identifier) {
             const params = new URLSearchParams({
                 Rate: identifier
             });
             // Only add dates if they are provided
-            if (arrival && departure) {
-                params.set('Arrival', arrival);
-                params.set('Departure', departure);
+            if (arrivalYMD && departureYMD) {
+                params.set('Arrival', arrivalYMD);
+                params.set('Departure', departureYMD);
             }
             return `${baseUrl}${hotelId}/Rooms/GeneralAvailability?${params.toString()}`;
         }
         
         // Standard room selection URL
-        let url = `${baseUrl}${hotelId}/Rooms/Select?Arrival=${arrival}&Departure=${departure}`;
+        let url = `${baseUrl}${hotelId}/Rooms/Select?Arrival=${arrivalYMD}&Departure=${departureYMD}`;
         
         if (identifier && paramName) {
             url += `&${paramName}=${identifier}`;
@@ -177,8 +181,8 @@ window.MLB_BookingActions = (function() {
      *
      * @param {string} baseUrl    Base booking page URL
      * @param {string} hotelId    Hotel ID
-     * @param {string} arrival    Arrival date
-     * @param {string} departure  Departure date
+     * @param {string} arrival    Arrival date (YYYY-MM-DD or dd-mm-yyyy)
+     * @param {string} departure  Departure date (YYYY-MM-DD or dd-mm-yyyy)
      * @param {string} identifier Optional identifier
      * @param {string} paramName  Optional parameter name
      * @return {string} Booking page URL
@@ -190,8 +194,9 @@ window.MLB_BookingActions = (function() {
         
         // Only add dates if they are provided
         if (arrival && departure) {
-            params.set('arrival', arrival);
-            params.set('departure', departure);
+            // Convert dates to YYYY-MM-DD format if needed
+            params.set('Arrival', convertToYMD(arrival));
+            params.set('Departure', convertToYMD(departure));
         }
         
         if (identifier && paramName) {
@@ -199,6 +204,29 @@ window.MLB_BookingActions = (function() {
         }
         
         return `${baseUrl}?${params.toString()}`;
+    }
+
+    /**
+     * Convert date string to YYYY-MM-DD format
+     *
+     * @param {string} dateStr Date string in YYYY-MM-DD or dd-mm-yyyy format
+     * @return {string} Date in YYYY-MM-DD format
+     */
+    function convertToYMD(dateStr) {
+        if (!dateStr) return '';
+        
+        // Check if already in YYYY-MM-DD format
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+            return dateStr;
+        }
+        
+        // Convert from dd-mm-yyyy to YYYY-MM-DD
+        if (/^\d{2}-\d{2}-\d{4}$/.test(dateStr)) {
+            const [day, month, year] = dateStr.split('-');
+            return `${year}-${month}-${day}`;
+        }
+        
+        return dateStr;
     }
 
     // Public API
