@@ -69,14 +69,6 @@ class Mylighthouse_Booker_Frontend_Assets
 			'all'
 		);
 
-		// Register easepick override CSS to load LAST with highest priority
-		wp_register_style(
-			'mylighthouse-booker-easepick-override',
-			plugins_url('/assets/css/frontend/easepick-override.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('easepick', 'mylighthouse-booker-frontend', 'mylighthouse-booker-modal'), // Load after all other styles
-			filemtime(plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/css/frontend/easepick-override.css'),
-			'all'
-		);
 	}
 
 	/**
