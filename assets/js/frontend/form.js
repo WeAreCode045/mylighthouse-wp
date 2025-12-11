@@ -136,6 +136,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (bookingForms.length) {
         bookingForms.forEach(function(formEl) {
+            // Skip modular forms - they're handled by widget scripts
+            if (formEl.dataset.mlbModular || formEl.classList.contains('mlb-modular-form')) {
+                console.log('MLB: Skipping legacy form.js init - modular widget handles this form');
+                return;
+            }
+            
             try { initCustomHotelSelect(formEl); } catch (e) {}
 
             // Decide which frontend modules to initialize per form type

@@ -18,6 +18,10 @@
             // Prevent multiple bindings
             if (form.dataset.mlbBound) return;
             form.dataset.mlbBound = 'true';
+            
+            // Mark as modular form to prevent legacy scripts from interfering
+            form.classList.add('mlb-modular-form');
+            form.dataset.mlbModular = 'true';
 
             const dateInput = form.querySelector('[data-mlb-date-input]');
             const submitBtn = form.querySelector('[data-mlb-submit]');
@@ -73,8 +77,11 @@
                 submitBtn.classList.add('mlb-button-disabled');
             }
 
-            // Validate form before submission
+            // Validate and handle form submission via POST
             form.addEventListener('submit', function(e) {
+                // Stop any other scripts from intercepting
+                e.stopImmediatePropagation();
+                
                 if (!selectedDates) {
                     e.preventDefault();
                     alert('Please select your dates');
@@ -90,8 +97,10 @@
                 
                 // Form will submit via POST to booking page
                 console.log('MLB: Form submitting via POST - arrival:', selectedDates.arrival, 'departure:', selectedDates.departure);
+                
+                // Allow form to submit normally
                 return true;
-            });
+            }, true); // Use capture phase to run before other handlers
         });
     }
 
