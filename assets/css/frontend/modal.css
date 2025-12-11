@@ -152,6 +152,15 @@
     pointer-events: none !important;
 }
 
+/* Hide navigation buttons when modal is not shown */
+.mlb-calendar-modal-overlay:not(.mlb-calendar-modal-show) ~ * .calendar > .header .previous-button,
+.mlb-calendar-modal-overlay:not(.mlb-calendar-modal-show) ~ * .calendar > .header .next-button,
+body:not(:has(.mlb-calendar-modal-overlay.mlb-calendar-modal-show)) .calendar > .header .previous-button,
+body:not(:has(.mlb-calendar-modal-overlay.mlb-calendar-modal-show)) .calendar > .header .next-button {
+    display: none !important;
+    visibility: hidden !important;
+}
+
 /* Ensure easepick calendar is visible when modal is shown */
 .mlb-calendar-modal-overlay.mlb-calendar-modal-show .mlb-modal-calendar .container:not(.inline),
 .mlb-calendar-modal-overlay.mlb-calendar-modal-show .easepick-wrapper .container:not(.inline) {
@@ -159,6 +168,13 @@
     visibility: visible !important;
     opacity: 1 !important;
     pointer-events: auto !important;
+}
+
+/* Show navigation buttons when modal is shown */
+.mlb-calendar-modal-overlay.mlb-calendar-modal-show ~ * .calendar > .header .previous-button,
+.mlb-calendar-modal-overlay.mlb-calendar-modal-show ~ * .calendar > .header .next-button {
+    display: flex !important;
+    visibility: visible !important;
 }
 
 /* Submit button in modal - inherits button styling from settings */
