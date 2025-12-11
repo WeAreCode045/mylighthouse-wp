@@ -68,6 +68,15 @@ class Mylighthouse_Booker_Frontend_Assets
 			'1.0.0',
 			'all'
 		);
+
+		// Register easepick override CSS to load LAST with highest priority
+		wp_register_style(
+			'mylighthouse-booker-easepick-override',
+			plugins_url('/assets/css/frontend/easepick-override.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array('easepick', 'mylighthouse-booker-frontend', 'mylighthouse-booker-modal'), // Load after all other styles
+			filemtime(plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/css/frontend/easepick-override.css'),
+			'all'
+		);
 	}
 
 	/**
@@ -92,6 +101,11 @@ class Mylighthouse_Booker_Frontend_Assets
 
 		if (!wp_style_is('mylighthouse-booker-modal', 'enqueued')) {
 			wp_enqueue_style('mylighthouse-booker-modal');
+		}
+
+		// Enqueue easepick override CSS LAST to ensure it overrides CDN styles
+		if (!wp_style_is('mylighthouse-booker-easepick-override', 'enqueued')) {
+			wp_enqueue_style('mylighthouse-booker-easepick-override');
 		}
 
 		// Styling is handled by the Elementor widget; do not read legacy DB option here.
