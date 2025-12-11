@@ -66,59 +66,32 @@
                 dateInput.readOnly = true;
             }
 
-            // Handle form submission - prevent default and use JavaScript redirect
+            // Handle form submission validation
             if (submitBtn) {
                 // Disable initially
                 submitBtn.disabled = true;
                 submitBtn.classList.add('mlb-button-disabled');
-
-                submitBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    if (!selectedDates) {
-                        alert('Please select your dates');
-                        return;
-                    }
-                    
-                    const hotelId = getCurrentHotelId();
-                    if (!hotelId) {
-                        alert('Please select a hotel');
-                        return;
-                    }
-
-                    if (typeof window.MLB_BookingActions === 'undefined') {
-                        console.error('MLB: Booking actions not loaded');
-                        return;
-                    }
-
-                    // Use dates directly from picker (already in YYYY-MM-DD format)
-                    console.log('MLB: hotel-widget submitting - arrival:', selectedDates.arrival, 'departure:', selectedDates.departure);
-                    
-                    window.MLB_BookingActions.checkHotelAvailability(
-                        hotelId,
-                        selectedDates.arrival,
-                        selectedDates.departure
-                    );
-                });
             }
 
-            // Prevent form submission - handle everything via JavaScript
+            // Validate form before submission
             form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                
-                console.log('MLB: Form submit event prevented');
-                
-                if (submitBtn) {
-                    submitBtn.click();
+                if (!selectedDates) {
+                    e.preventDefault();
+                    alert('Please select your dates');
+                    return false;
                 }
                 
-                return false;
+                const hotelId = getCurrentHotelId();
+                if (!hotelId) {
+                    e.preventDefault();
+                    alert('Please select a hotel');
+                    return false;
+                }
+                
+                // Form will submit via POST to booking page
+                console.log('MLB: Form submitting via POST - arrival:', selectedDates.arrival, 'departure:', selectedDates.departure);
+                return true;
             });
-            
-            // Remove form action to prevent accidental submission
-            form.removeAttribute('action');
         });
     }
 

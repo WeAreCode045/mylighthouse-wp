@@ -69,13 +69,21 @@ class Mylighthouse_Booker_Shortcode_Iframe_Target
 			}
 		}
 
-		// Get URL parameters and convert dates to YYYY-MM-DD format if needed.
-		$arrival    = isset($_GET['Arrival']) ? $this->convert_date_to_ymd(sanitize_text_field(wp_unslash($_GET['Arrival']))) : '';
-		$departure  = isset($_GET['Departure']) ? $this->convert_date_to_ymd(sanitize_text_field(wp_unslash($_GET['Departure']))) : '';
-		$hotel_id   = isset($_GET['hotel_id']) ? sanitize_text_field(wp_unslash($_GET['hotel_id'])) : '';
-		$room_id    = isset($_GET['room']) ? sanitize_text_field(wp_unslash($_GET['room'])) : '';
+		// Get parameters from POST or GET (POST takes precedence) and convert dates to YYYY-MM-DD format if needed.
+		$arrival    = isset($_POST['arrival']) ? $this->convert_date_to_ymd(sanitize_text_field(wp_unslash($_POST['arrival']))) : 
+		              (isset($_GET['Arrival']) ? $this->convert_date_to_ymd(sanitize_text_field(wp_unslash($_GET['Arrival']))) : '');
+		$departure  = isset($_POST['departure']) ? $this->convert_date_to_ymd(sanitize_text_field(wp_unslash($_POST['departure']))) : 
+		              (isset($_GET['Departure']) ? $this->convert_date_to_ymd(sanitize_text_field(wp_unslash($_GET['Departure']))) : '');
+		$hotel_id   = isset($_POST['hotel_id']) ? sanitize_text_field(wp_unslash($_POST['hotel_id'])) : 
+		              (isset($_GET['hotel_id']) ? sanitize_text_field(wp_unslash($_GET['hotel_id'])) : '');
+		$room_id    = isset($_POST['room']) ? sanitize_text_field(wp_unslash($_POST['room'])) : 
+		              (isset($_GET['room']) ? sanitize_text_field(wp_unslash($_GET['room'])) : '');
 		$rate_param = '';
-		if (isset($_GET['Rate'])) {
+		if (isset($_POST['rate']) || isset($_POST['Rate']) || isset($_POST['special_id'])) {
+			$rate_param = isset($_POST['Rate']) ? sanitize_text_field(wp_unslash($_POST['Rate'])) :
+			              (isset($_POST['rate']) ? sanitize_text_field(wp_unslash($_POST['rate'])) :
+			              sanitize_text_field(wp_unslash($_POST['special_id'])));
+		} elseif (isset($_GET['Rate'])) {
 			$rate_param = sanitize_text_field(wp_unslash($_GET['Rate']));
 		} elseif (isset($_GET['rate'])) {
 			$rate_param = sanitize_text_field(wp_unslash($_GET['rate']));

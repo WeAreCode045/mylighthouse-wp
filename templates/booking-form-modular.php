@@ -36,7 +36,7 @@ $form_uid = 'mlb-form-' . $form_instance_counter;
 <?php if ($form_type === 'hotel'): ?>
     <!-- Hotel Form: Preserves original layout with modular data attributes -->
     <div class="mlb-booking-form mlb-layout-<?php echo esc_attr($layout); ?> mlb-placement-<?php echo esc_attr($placement); ?>" data-layout="<?php echo esc_attr($layout); ?>" data-button-placement="<?php echo esc_attr($placement); ?>">
-        <form id="<?php echo esc_attr($form_uid); ?>" class="mlb-form" method="GET" action="<?php echo esc_url($booking_page_url); ?>" data-mlb-hotel-form data-hotel-id="<?php echo esc_attr($hotel_id); ?>" data-hotel-name="<?php echo esc_attr($hotel_name); ?>">
+        <form id="<?php echo esc_attr($form_uid); ?>" class="mlb-form" method="POST" action="<?php echo esc_url($booking_page_url); ?>" data-mlb-hotel-form data-hotel-id="<?php echo esc_attr($hotel_id); ?>" data-hotel-name="<?php echo esc_attr($hotel_name); ?>">
 
             <?php if ($show_hotel_select) : ?>
                 <div class="form-field hotel-selector has-icon">
@@ -74,9 +74,9 @@ $form_uid = 'mlb-form-' . $form_instance_counter;
                     data-departure-text="<?php echo esc_attr(isset($args['departure_text']) ? $args['departure_text'] : __('Select Departure Date', 'mylighthouse-booker')); ?>"
                     required
                     readonly />
-                <!-- Hidden fields for JavaScript only - no name attribute to prevent form submission -->
-                <input type="hidden" id="<?php echo esc_attr($form_uid); ?>-checkin" class="mlb-checkin" />
-                <input type="hidden" id="<?php echo esc_attr($form_uid); ?>-checkout" class="mlb-checkout" />
+                <!-- Hidden fields for POST submission - dates in YYYY-MM-DD format -->
+                <input type="hidden" id="<?php echo esc_attr($form_uid); ?>-checkin" class="mlb-checkin" name="arrival" />
+                <input type="hidden" id="<?php echo esc_attr($form_uid); ?>-checkout" class="mlb-checkout" name="departure" />
             </div>
 
             <div class="form-actions">
