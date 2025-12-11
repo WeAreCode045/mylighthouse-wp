@@ -134,13 +134,15 @@
 }
 
 /* Calendar container inside modal */
+.mlb-modal-calendar .header {
+    display: none !important;
+}
+
 .mlb-modal-calendar {
     position: relative;
     display: flex;
     align-items: stretch;
-}
-.mlb-modal-calendar .header {
-    display: none !important;
+    flex-direction: column;
 }
 
 /* Hide easepick calendar elements when modal is not shown */
