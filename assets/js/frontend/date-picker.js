@@ -68,9 +68,21 @@ window.MLB_DatePicker = (function() {
                             // Delay to allow visual feedback and ensure dates are set
                             setTimeout(function() {
                                 if (currentCallback && picker.getStartDate() && picker.getEndDate()) {
+                                    // Format dates using native JavaScript to ensure YYYY-MM-DD format
+                                    const startDate = new Date(picker.getStartDate());
+                                    const endDate = new Date(picker.getEndDate());
+                                    
+                                    const arrival = startDate.getFullYear() + '-' + 
+                                        String(startDate.getMonth() + 1).padStart(2, '0') + '-' + 
+                                        String(startDate.getDate()).padStart(2, '0');
+                                    
+                                    const departure = endDate.getFullYear() + '-' + 
+                                        String(endDate.getMonth() + 1).padStart(2, '0') + '-' + 
+                                        String(endDate.getDate()).padStart(2, '0');
+                                    
                                     const dates = {
-                                        arrival: picker.getStartDate().format('YYYY-MM-DD'),
-                                        departure: picker.getEndDate().format('YYYY-MM-DD')
+                                        arrival: arrival,
+                                        departure: departure
                                     };
                                     currentCallback(dates);
                                     close();
