@@ -49,6 +49,12 @@
                         selectedDates = dates;
                         dateInput.value = formatDateRange(dates.arrival, dates.departure);
                         
+                        // Update hidden input fields for form submission
+                        const checkinInput = form.querySelector('.mlb-checkin');
+                        const checkoutInput = form.querySelector('.mlb-checkout');
+                        if (checkinInput) checkinInput.value = dates.arrival;
+                        if (checkoutInput) checkoutInput.value = dates.departure;
+                        
                         if (submitBtn) {
                             submitBtn.disabled = false;
                             submitBtn.classList.remove('mlb-button-disabled');
