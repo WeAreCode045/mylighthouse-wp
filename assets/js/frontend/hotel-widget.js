@@ -66,7 +66,7 @@
                 dateInput.readOnly = true;
             }
 
-            // Handle form submission
+            // Handle form submission - prevent default and use JavaScript redirect
             if (submitBtn) {
                 // Disable initially
                 submitBtn.disabled = true;
@@ -91,6 +91,7 @@
                         return;
                     }
 
+                    // Use dates directly from picker (already in YYYY-MM-DD format)
                     window.MLB_BookingActions.checkHotelAvailability(
                         hotelId,
                         selectedDates.arrival,
@@ -99,7 +100,7 @@
                 });
             }
 
-            // Handle direct form submission
+            // Prevent form submission - handle everything via JavaScript
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 

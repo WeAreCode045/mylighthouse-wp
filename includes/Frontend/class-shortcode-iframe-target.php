@@ -69,9 +69,9 @@ class Mylighthouse_Booker_Shortcode_Iframe_Target
 			}
 		}
 
-		// Get URL parameters.
-		$arrival    = isset($_GET['Arrival']) ? sanitize_text_field(wp_unslash($_GET['Arrival'])) : '';
-		$departure  = isset($_GET['Departure']) ? sanitize_text_field(wp_unslash($_GET['Departure'])) : '';
+		// Get URL parameters and convert dates to YYYY-MM-DD format if needed.
+		$arrival    = isset($_GET['Arrival']) ? $this->convert_date_to_ymd(sanitize_text_field(wp_unslash($_GET['Arrival']))) : '';
+		$departure  = isset($_GET['Departure']) ? $this->convert_date_to_ymd(sanitize_text_field(wp_unslash($_GET['Departure']))) : '';
 		$hotel_id   = isset($_GET['hotel_id']) ? sanitize_text_field(wp_unslash($_GET['hotel_id'])) : '';
 		$room_id    = isset($_GET['room']) ? sanitize_text_field(wp_unslash($_GET['room'])) : '';
 		$rate_param = '';
@@ -142,5 +142,30 @@ class Mylighthouse_Booker_Shortcode_Iframe_Target
 		}
 
 		return $base_url;
+	}
+
+	/**
+	 * Convert date string to YYYY-MM-DD format
+	 *
+	 * @param string $date_str Date string in YYYY-MM-DD or dd-mm-yyyy format.
+	 * @return string Date in YYYY-MM-DD format
+	 */
+	private function convert_date_to_ymd($date_str)
+	{
+		if (empty($date_str)) {
+			return '';
+		}
+
+		// Check if already in YYYY-MM-DD format
+		if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date_str)) {
+			return $date_str;
+		}
+
+		// Convert from dd-mm-yyyy to YYYY-MM-DD
+		if (preg_match('/^(\d{2})-(\d{2})-(\d{4})$/', $date_str, $matches)) {
+			return $matches[3] . '-' . $matches[2] . '-' . $matches[1];
+		}
+
+		return $date_str;
 	}
 }
