@@ -150,7 +150,7 @@
         }
 
         redirectToBookingEngine(arrivalISO, departureISO) {
-            const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+            const bookingEngineBaseUrl = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
             let engineUrl = bookingEngineBaseUrl + encodeURIComponent(this.hotelId) + '/Rooms/GeneralAvailability';
             const params = [];
             if (this.rateId) params.push('Rate=' + encodeURIComponent(this.rateId));

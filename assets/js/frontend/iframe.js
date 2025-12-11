@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingMessage.classList.remove('mlb-iframe-loading--hidden');
     }
 
-    const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+    const bookingEngineBaseUrl = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
 
     let iframeSrc = '';
     if (hotelId && rateCode) {

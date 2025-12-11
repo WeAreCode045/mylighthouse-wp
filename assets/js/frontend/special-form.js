@@ -53,7 +53,7 @@
 
             // For redirect_engine target, navigate directly to the booking engine
             if (target === 'redirect_engine') {
-                var bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+                var bookingEngineBaseUrl = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
                 var engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/GeneralAvailability';
                 var params = [];
                 if (rateId) params.push('Rate=' + encodeURIComponent(rateId));

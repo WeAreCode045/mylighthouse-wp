@@ -203,7 +203,7 @@ window.MLB_Modal = window.MLB_Modal || {};
         overlay.appendChild(loader);
 
         // Build iframe URL (needed before wiring up "open in new tab" fallback)
-        const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+        const bookingEngineBaseUrl = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
         const pName = paramName || 'room';
 
         let iframeSrc = '';

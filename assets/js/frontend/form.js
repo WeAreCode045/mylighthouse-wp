@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // For redirect_engine target, navigate directly to the booking engine
         if (target === 'redirect_engine') {
-            const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+            const bookingEngineBaseUrl = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
             let engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/Select?Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
             
             const rateId = bookingForm.dataset.rateId || bookingForm.querySelector('input[name="rate"]')?.value;

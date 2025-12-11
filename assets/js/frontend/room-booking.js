@@ -192,7 +192,7 @@
          * Redirect directly to booking engine with parameters
          */
         redirectToBookingEngine(arrivalISO, departureISO) {
-            const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+            const bookingEngineBaseUrl = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
             let engineUrl = bookingEngineBaseUrl + encodeURIComponent(this.hotelId) + '/Rooms/Select?Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
             
             if (this.roomId) {
@@ -206,7 +206,7 @@
          * Redirect directly to booking engine with parameters
          */
         redirectToBookingEngine(arrivalISO, departureISO) {
-            const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+            const bookingEngineBaseUrl = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
             let engineUrl = bookingEngineBaseUrl + encodeURIComponent(this.hotelId) + '/Rooms/Select?Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
             
             if (this.roomId) {
