@@ -187,8 +187,8 @@
                     RangePlugin: {
                         tooltip: true,
                         locale: {
-                            one: 'night',
-                            other: 'nights'
+                            one: 'nacht',
+                            other: 'nachten'
                         }
                     },
                     LockPlugin: {

@@ -533,52 +533,63 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 	{
 		$settings = $this->get_settings_for_display();
 
-		// Ensure frontend assets are available (mirrors shortcode behavior)
+		// Ensure frontend assets are available
 		if (! wp_style_is('fontawesome', 'enqueued')) {
 			wp_enqueue_style('fontawesome');
 		}
+		if (! wp_style_is('easepick', 'enqueued')) {
+			wp_enqueue_style('easepick');
+		}
+		if (! wp_style_is('mylighthouse-booker-components', 'enqueued')) {
+			wp_enqueue_style('mylighthouse-booker-components');
+		}
+		// Enqueue legacy styles for backward compatibility
 		if (! wp_style_is('mylighthouse-booker-frontend', 'enqueued')) {
 			wp_enqueue_style('mylighthouse-booker-frontend');
 		}
 		if (! wp_style_is('mylighthouse-booker-modal', 'enqueued')) {
 			wp_enqueue_style('mylighthouse-booker-modal');
 		}
-		// Enqueue appropriate frontend form script depending on widget form type
-		$widget_form_type = isset($settings['form_type']) ? $settings['form_type'] : 'hotel';
-		// Map widget type to the primary initializer script for that form
-		switch ($widget_form_type) {
-			case 'room':
-				$script_handle = 'mylighthouse-booker-room-form';
-				break;
-			case 'special':
-				$script_handle = 'mylighthouse-booker-special-form';
-				break;
-			default:
-				// hotel (inline picker) uses the booking-form initializer
-				$script_handle = 'mylighthouse-booker-form';
-				break;
-		}
-		if (! wp_script_is($script_handle, 'enqueued')) {
-			wp_enqueue_script($script_handle);
-		}
 
-		// Ensure booking-form behaviors (inline picker) are loaded for hotel widgets
-		if ($widget_form_type === 'hotel') {
-			if (! wp_script_is('mylighthouse-booker-booking-form', 'enqueued')) {
-				wp_enqueue_script('mylighthouse-booker-booking-form');
-			}
-		}
-		if (! wp_script_is('mylighthouse-booker-form', 'enqueued')) {
-			wp_enqueue_script('mylighthouse-booker-form');
-		}
-		if (! wp_script_is('mylighthouse-booker-spinner', 'enqueued')) {
-			wp_enqueue_script('mylighthouse-booker-spinner');
-		}
-		if (! wp_style_is('easepick', 'enqueued')) {
-			wp_enqueue_style('easepick');
-		}
+		// Enqueue modular component scripts (already loaded globally, but ensure they're available)
 		if (! wp_script_is('easepick-wrapper', 'enqueued')) {
 			wp_enqueue_script('easepick-wrapper');
+		}
+		if (! wp_script_is('mylighthouse-booker-date-picker', 'enqueued')) {
+			wp_enqueue_script('mylighthouse-booker-date-picker');
+		}
+		if (! wp_script_is('mylighthouse-booker-booking-details', 'enqueued')) {
+			wp_enqueue_script('mylighthouse-booker-booking-details');
+		}
+		if (! wp_script_is('mylighthouse-booker-booking-actions', 'enqueued')) {
+			wp_enqueue_script('mylighthouse-booker-booking-actions');
+		}
+		if (! wp_script_is('mylighthouse-booker-booking-results-modal', 'enqueued')) {
+			wp_enqueue_script('mylighthouse-booker-booking-results-modal');
+		}
+
+		// Enqueue appropriate widget script based on form type
+		$widget_form_type = isset($settings['form_type']) ? $settings['form_type'] : 'hotel';
+		switch ($widget_form_type) {
+			case 'room':
+				if (! wp_script_is('mylighthouse-booker-room-widget', 'enqueued')) {
+					wp_enqueue_script('mylighthouse-booker-room-widget');
+				}
+				$script_handle = 'mylighthouse-booker-room-widget';
+				break;
+			case 'special':
+				if (! wp_script_is('mylighthouse-booker-special-widget', 'enqueued')) {
+					wp_enqueue_script('mylighthouse-booker-special-widget');
+				}
+				$script_handle = 'mylighthouse-booker-special-widget';
+				break;
+			default:
+				// hotel form
+				if (! wp_script_is('mylighthouse-booker-hotel-widget', 'enqueued')) {
+					wp_enqueue_script('mylighthouse-booker-hotel-widget');
+				}
+				$script_handle = 'mylighthouse-booker-hotel-widget';
+				break;
 		}
 
 		// Get hotels from database
@@ -856,7 +867,9 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 		}
 		$form_data['hotel_icon_html'] = $hotel_icon_html;
 		$form_data['date_icon_html'] = $date_icon_html;
-		Mylighthouse_Booker_Template_Loader::get_template('booking-form.php', $form_data);
+		
+		// Use new modular template for cleaner integration with component system
+		Mylighthouse_Booker_Template_Loader::get_template('booking-form-modular.php', $form_data);
 		echo ob_get_clean();
 		echo '</div>';
 	}

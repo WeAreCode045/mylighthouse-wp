@@ -1,3 +1,8 @@
+/*
+ Custom EasePick styles to match MyLighthouse Booker design
+Version: 1.2.1
+ */
+
 :host {
 	--color-bg-default: #fff;
 	--color-bg-secondary: #f9f9f9;

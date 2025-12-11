@@ -1,0 +1,353 @@
+/**
+ * Component Styles
+ * Styles for modular booking components
+ *
+ * @package Mylighthouse_Booker
+ */
+
+/* ==========================================================================
+   DATE PICKER MODAL
+   ========================================================================== */
+
+.mlb-date-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999999;
+    align-items: center;
+    justify-content: center;
+}
+
+.mlb-date-modal.mlb-modal-show {
+    display: flex;
+}
+
+.mlb-date-modal .mlb-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    animation: mlb-fade-in 0.3s ease-out;
+}
+
+.mlb-date-modal .mlb-modal-content {
+    position: relative;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 32px 24px 24px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1;
+    animation: mlb-scale-in 0.3s ease-out;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.mlb-date-modal .mlb-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    cursor: pointer;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.mlb-date-modal .mlb-modal-close:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.mlb-date-modal .mlb-modal-title {
+    margin: 0 0 20px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.mlb-date-picker-container {
+    margin-bottom: 24px;
+}
+
+.mlb-date-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.mlb-date-input:focus {
+    outline: none;
+    border-color: var(--mlb-btn-bg, #0073aa);
+}
+
+.mlb-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+/* ==========================================================================
+   BOOKING DETAILS
+   ========================================================================== */
+
+.mlb-booking-details {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    z-index: 999998;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.mlb-booking-details.mlb-booking-details-show {
+    display: block;
+    transform: translateY(0);
+}
+
+.mlb-booking-details-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.mlb-booking-dates {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.mlb-date-item {
+    flex: 1;
+    min-width: 120px;
+}
+
+.mlb-date-label {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mlb-date-value {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.mlb-date-separator {
+    color: #999;
+    flex-shrink: 0;
+}
+
+.mlb-change-dates {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.mlb-change-dates:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+.mlb-booking-details-meta {
+    margin-bottom: 16px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.mlb-nights-count strong {
+    color: #333;
+    font-size: 18px;
+}
+
+.mlb-check-availability {
+    width: 100%;
+    padding: 14px 24px;
+    background: var(--mlb-btn-bg, #0073aa);
+    color: var(--mlb-btn-text, #ffffff);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mlb-check-availability:hover {
+    background: var(--mlb-btn-bg-hover, #005a87);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.mlb-button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mlb-button-primary {
+    background: var(--mlb-btn-bg, #0073aa);
+    color: var(--mlb-btn-text, #ffffff);
+}
+
+.mlb-button-primary:hover:not(:disabled) {
+    background: var(--mlb-btn-bg-hover, #005a87);
+}
+
+.mlb-button-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.mlb-button-secondary {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.mlb-button-secondary:hover {
+    background: #e0e0e0;
+}
+
+.mlb-button-link {
+    background: transparent;
+    color: var(--mlb-btn-bg, #0073aa);
+    padding: 6px 12px;
+}
+
+.mlb-button-link:hover {
+    background: rgba(0, 115, 170, 0.1);
+}
+
+.mlb-button-full {
+    width: 100%;
+}
+
+.mlb-button-disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes mlb-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes mlb-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .mlb-date-modal .mlb-modal-content {
+        width: 95%;
+        padding: 24px 16px 16px;
+    }
+
+    .mlb-date-modal .mlb-modal-title {
+        font-size: 20px;
+    }
+
+    .mlb-booking-dates {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .mlb-date-item {
+        width: 100%;
+    }
+
+    .mlb-date-separator {
+        transform: rotate(90deg);
+    }
+
+    .mlb-change-dates {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .mlb-booking-details {
+        padding: 16px;
+    }
+
+    .mlb-modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .mlb-button {
+        width: 100%;
+    }
+}

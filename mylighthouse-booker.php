@@ -84,6 +84,12 @@ require_once __DIR__ . '/includes/Admin/hotels/class-admin-hotel-edit.php';
 require_once __DIR__ . '/includes/Admin/hotels/class-admin-hotel-rooms.php';
 require_once __DIR__ . '/includes/Admin/hotels/class-admin-hotel-specials.php';
 
+// Initialize Template Loader for modular components
+require_once __DIR__ . '/includes/Frontend/class-template-loader.php';
+if (class_exists('Mylighthouse_Booker\Frontend\Template_Loader')) {
+	Mylighthouse_Booker\Frontend\Template_Loader::instance();
+}
+
 add_action( 'admin_menu', function() {
     $dash = new Mylighthouse_Booker_Admin_Dashboard();
     $dash->register_admin_menu();

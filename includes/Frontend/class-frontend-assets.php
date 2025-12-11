@@ -41,9 +41,9 @@ class Mylighthouse_Booker_Frontend_Assets
 		);
 
 		// Register EasePick CSS from local vendor directory with our custom modifications
-		// Use file modification time for version to bust cache when we update the file
 		$easepick_css_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/vendor/easepick/easepick.css';
-		$easepick_css_ver = (file_exists($easepick_css_path)) ? filemtime($easepick_css_path) : '1.2.1';
+		$easepick_css_ver = file_exists($easepick_css_path) ? filemtime($easepick_css_path) : '1.2.1';
+		
 		wp_register_style(
 			'easepick',
 			plugins_url('assets/vendor/easepick/easepick.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
@@ -52,7 +52,19 @@ class Mylighthouse_Booker_Frontend_Assets
 			'all'
 		);
 
-		// Register plugin styles
+		// Register modular component styles (date picker, booking details, modals)
+		$components_css_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/css/frontend/components.css';
+		$components_css_ver = file_exists($components_css_path) ? filemtime($components_css_path) : '1.0.0';
+		
+		wp_register_style(
+			'mylighthouse-booker-components',
+			plugins_url('/assets/css/frontend/components.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array('easepick'),
+			$components_css_ver,
+			'all'
+		);
+
+		// Register legacy booking form styles (for backward compatibility)
 		wp_register_style(
 			'mylighthouse-booker-frontend',
 			plugins_url('/assets/css/frontend/booking-form.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
@@ -61,6 +73,7 @@ class Mylighthouse_Booker_Frontend_Assets
 			'all'
 		);
 
+		// Register legacy modal styles (for backward compatibility)
 		wp_register_style(
 			'mylighthouse-booker-modal',
 			plugins_url('/assets/css/frontend/modal.css', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
@@ -86,18 +99,18 @@ class Mylighthouse_Booker_Frontend_Assets
 			wp_enqueue_style('easepick');
 		}
 
-		// Enqueue styles (booking-form.css depends on easepick)
+		// Enqueue new modular component styles
+		if (!wp_style_is('mylighthouse-booker-components', 'enqueued')) {
+			wp_enqueue_style('mylighthouse-booker-components');
+		}
+
+		// Enqueue legacy styles for backward compatibility
 		if (!wp_style_is('mylighthouse-booker-frontend', 'enqueued')) {
 			wp_enqueue_style('mylighthouse-booker-frontend');
 		}
 
 		if (!wp_style_is('mylighthouse-booker-modal', 'enqueued')) {
 			wp_enqueue_style('mylighthouse-booker-modal');
-		}
-
-		// Enqueue easepick override CSS LAST to ensure it overrides CDN styles
-		if (!wp_style_is('mylighthouse-booker-easepick-override', 'enqueued')) {
-			wp_enqueue_style('mylighthouse-booker-easepick-override');
 		}
 
 		// Styling is handled by the Elementor widget; do not read legacy DB option here.
@@ -276,9 +289,110 @@ class Mylighthouse_Booker_Frontend_Assets
 			true
 		);
 
+		// Register new modular component scripts
+		$date_picker_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/date-picker.js';
+		$date_picker_ver = file_exists($date_picker_path) ? filemtime($date_picker_path) : '1.0.0';
+		wp_register_script(
+			'mylighthouse-booker-date-picker',
+			plugins_url('/assets/js/frontend/date-picker.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array('easepick-wrapper'),
+			$date_picker_ver,
+			true
+		);
+
+		$booking_details_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/booking-details.js';
+		$booking_details_ver = file_exists($booking_details_path) ? filemtime($booking_details_path) : '1.0.0';
+		wp_register_script(
+			'mylighthouse-booker-booking-details',
+			plugins_url('/assets/js/frontend/booking-details.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array(),
+			$booking_details_ver,
+			true
+		);
+
+		$booking_actions_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/booking-actions.js';
+		$booking_actions_ver = file_exists($booking_actions_path) ? filemtime($booking_actions_path) : '1.0.0';
+		wp_register_script(
+			'mylighthouse-booker-booking-actions',
+			plugins_url('/assets/js/frontend/booking-actions.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array(),
+			$booking_actions_ver,
+			true
+		);
+
+		$booking_results_modal_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/booking-results-modal.js';
+		$booking_results_modal_ver = file_exists($booking_results_modal_path) ? filemtime($booking_results_modal_path) : '1.0.0';
+		wp_register_script(
+			'mylighthouse-booker-booking-results-modal',
+			plugins_url('/assets/js/frontend/booking-results-modal.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array(),
+			$booking_results_modal_ver,
+			true
+		);
+
+		// Register modular widget scripts (depend on components)
+		$room_widget_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/room-widget.js';
+		$room_widget_ver = file_exists($room_widget_path) ? filemtime($room_widget_path) : '1.0.0';
+		wp_register_script(
+			'mylighthouse-booker-room-widget',
+			plugins_url('/assets/js/frontend/room-widget.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array(
+				'mylighthouse-booker-date-picker',
+				'mylighthouse-booker-booking-details',
+				'mylighthouse-booker-booking-actions'
+			),
+			$room_widget_ver,
+			true
+		);
+
+		$hotel_widget_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/hotel-widget.js';
+		$hotel_widget_ver = file_exists($hotel_widget_path) ? filemtime($hotel_widget_path) : '1.0.0';
+		wp_register_script(
+			'mylighthouse-booker-hotel-widget',
+			plugins_url('/assets/js/frontend/hotel-widget.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array(
+				'mylighthouse-booker-date-picker',
+				'mylighthouse-booker-booking-actions'
+			),
+			$hotel_widget_ver,
+			true
+		);
+
+		$special_widget_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/special-widget.js';
+		$special_widget_ver = file_exists($special_widget_path) ? filemtime($special_widget_path) : '1.0.0';
+		wp_register_script(
+			'mylighthouse-booker-special-widget',
+			plugins_url('/assets/js/frontend/special-widget.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array('mylighthouse-booker-booking-actions'),
+			$special_widget_ver,
+			true
+		);
+
 		// Enqueue the fallback so trigger buttons work even if other front-end form scripts aren't present
 		// Note: modal trigger script is registered here but will be enqueued
 		// only when a form/render path requires it (Elementor widget or shortcode).
+		
+		// Enqueue core modular scripts globally
+		wp_enqueue_script('mylighthouse-booker-date-picker');
+		wp_enqueue_script('mylighthouse-booker-booking-details');
+		wp_enqueue_script('mylighthouse-booker-booking-actions');
+		wp_enqueue_script('mylighthouse-booker-booking-results-modal');
+		
+		// Enqueue widget scripts globally (they check for elements before initializing)
+		wp_enqueue_script('mylighthouse-booker-room-widget');
+		wp_enqueue_script('mylighthouse-booker-hotel-widget');
+		wp_enqueue_script('mylighthouse-booker-special-widget');
+		
+		// Localize script with configuration
+		wp_localize_script('mylighthouse-booker-booking-actions', 'mlbConfig', array(
+			'bookingPageUrl' => get_option('mlb_booking_page_url', ''),
+			'displayModeMobile' => get_option('mlb_display_mode_mobile', 'modal'),
+			'displayModeTablet' => get_option('mlb_display_mode_tablet', 'modal'),
+			'displayModeDesktop' => get_option('mlb_display_mode_desktop', 'modal'),
+		));
+		
+		wp_localize_script('mylighthouse-booker-date-picker', 'MLBPluginUrl', plugins_url('/', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE));
+		wp_localize_script('mylighthouse-booker-booking-results-modal', 'MLBBookingEngineBase', 'https://bookingengine.mylighthouse.com/');
 	}
 
 	// Legacy generate_styles removed; styling should be handled by Elementor/theme.

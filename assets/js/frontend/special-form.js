@@ -584,7 +584,7 @@
                     css: ['https://new.differenthotels.be/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'],
                     inline: true,
                     plugins: [easepickRef.RangePlugin, easepickRef.LockPlugin],
-                    RangePlugin: { tooltip:true, locale:{ one:'night', other:'nights' } },
+                    RangePlugin: { tooltip:true, locale:{ one:'nacht', other:'nachten' } },
                     LockPlugin: { minDate: new Date() },
                     setup(picker){
                         setTimeout(function(){ const headerEl = calendarDiv.querySelector('.header'); if (headerEl) headerEl.remove(); }, 0);

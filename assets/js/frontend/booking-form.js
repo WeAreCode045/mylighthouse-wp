@@ -722,34 +722,12 @@
 							});
 						}
 				},
-				lang: 'en-GB',
+				lang: 'nl-NL',
 			};
 
 			const picker = new CoreClass(pickerConfig);
 
-				// Inject custom CSS into Shadow DOM
-				setTimeout(function() {
-					const shadowHost = calendarDiv.querySelector('.container');
-					if (shadowHost && shadowHost.shadowRoot) {
-						const shadowRoot = shadowHost.shadowRoot;
-						const customStyle = document.createElement('style');
-						customStyle.textContent = `
-							.container.range-plugin .calendar > .days-grid > .day.start,
-							.container.range-plugin .calendar > .days-grid > .day.end {
-								background-color: ${calendarColors.startend_bg} !important;
-								color: ${calendarColors.startend_color} !important;
-							}
-							.container.range-plugin .calendar > .days-grid > .day.in-range {
-								background-color: ${calendarColors.inrange_bg} !important;
-							}
-							.container.range-plugin .calendar > .days-grid > .day.start::after,
-							.container.range-plugin .calendar > .days-grid > .day.end::after {
-								background-color: ${calendarColors.startend_bg} !important;
-							}
-						`;
-						shadowRoot.appendChild(customStyle);
-					}
-				}, 100);
+			
 
 				$form.data('picker', picker);
 				if ($daterangeInput && $daterangeInput.length) $daterangeInput.data('picker', picker);
