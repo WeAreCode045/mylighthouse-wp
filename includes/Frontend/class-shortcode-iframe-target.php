@@ -49,7 +49,7 @@ class Mylighthouse_Booker_Shortcode_Iframe_Target
 		$atts = shortcode_atts(
 			array(
 				'width'  => '100%',
-				'height' => '100vh',
+				'height' => '90vh',
 			),
 			$atts,
 			'lighthouse_booking_results'
