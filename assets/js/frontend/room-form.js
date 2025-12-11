@@ -180,6 +180,10 @@
                 // Build inline picker configuration
                 const pickerConfig = {
                     element: $daterangeInput[0],
+                    css: [
+                        'https://cdn.jsdelivr.net/npm/@easepick/core@1.2.1/dist/index.css',
+                        '/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
+                    ],
                     plugins: [easepickRef.RangePlugin, easepickRef.LockPlugin],
                     RangePlugin: {
                         tooltip: true,
@@ -577,6 +581,10 @@
 
                 const pickerConfig = {
                     element: pickerElement,
+                    css: [
+                        'https://cdn.jsdelivr.net/npm/@easepick/core@1.2.1/dist/index.css',
+                        '/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
+                    ],
                     inline: true,
                     plugins: [easepickRef.RangePlugin, easepickRef.LockPlugin],
                     RangePlugin: {
