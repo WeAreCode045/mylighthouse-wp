@@ -42,6 +42,9 @@ window.MLB_DatePicker = (function() {
             picker = new easepick.create({
                 element: dateInput,
                 css: [(window.MLBPluginUrl && window.MLBPluginUrl.url || '') + 'assets/vendor/easepick/easepick.css'],
+                inline: true,
+                grid: 2,
+                calendars: 2,
                 plugins: ['RangePlugin', 'LockPlugin'],
                 RangePlugin: {
                     tooltipNumber(num) { 
@@ -57,10 +60,20 @@ window.MLB_DatePicker = (function() {
                     minDays: 1
                 },
                 setup(picker) {
-                    picker.on('select', function() {
-                        const confirmBtn = modal.querySelector('.mlb-date-confirm');
-                        if (confirmBtn && picker.getStartDate() && picker.getEndDate()) {
-                            confirmBtn.disabled = false;
+                    picker.on('select', function(e) {
+                        // Auto-submit when both dates are selected
+                        if (picker.getStartDate() && picker.getEndDate()) {
+                            // Small delay to allow visual feedback
+                            setTimeout(function() {
+                                if (currentCallback) {
+                                    const dates = {
+                                        arrival: picker.getStartDate().format('YYYY-MM-DD'),
+                                        departure: picker.getEndDate().format('YYYY-MM-DD')
+                                    };
+                                    currentCallback(dates);
+                                }
+                                close();
+                            }, 300);
                         }
                     });
                 }

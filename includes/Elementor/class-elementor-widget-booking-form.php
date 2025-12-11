@@ -790,45 +790,8 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 			'form_type' => $form_type,
 		);
 
-		// Load modal template for JS usage and localize script
-		ob_start();
-		include MYLIGHTHOUSE_BOOKER_ABSPATH . 'templates/modals/calendar-modal.php';
-		$modal_template = ob_get_clean();
-
-		// Prefer widget-specific style option, fall back to global admin setting
-		$spinner_image = '';
-		if (!empty($style_opts) && isset($style_opts['calendar']['spinner_image_url'])) {
-			$spinner_image = esc_url($style_opts['calendar']['spinner_image_url']);
-		}
-		if (empty($spinner_image)) {
-			$global_spinner_url = esc_url( get_option('mlb_spinner_image_url', '') );
-			if (!empty($global_spinner_url)) {
-				$spinner_image = $global_spinner_url;
-			}
-		}
-		if (empty($spinner_image)) {
-			$spinner_image_id = intval( get_option('mlb_spinner_image_id', 0) );
-			if ($spinner_image_id > 0) {
-				$spinner_image = esc_url( wp_get_attachment_image_url($spinner_image_id, 'full') );
-			}
-		}
-		// Ensure the modal-trigger fallback is enqueued for this widget render so
-		// elements with `data-trigger-modal` will open the modal when present.
-		if (! wp_script_is('mylighthouse-booker-modal-trigger', 'enqueued')) {
-			wp_enqueue_script('mylighthouse-booker-modal-trigger');
-		}
-
-		// Localize only essential runtime parameters. Translations are handled
-		// via gettext (.po/.mo) and wp-i18n; DB-based overrides were removed.
-		wp_localize_script($script_handle, 'cqb_params', array(
-			'booking_page_url' => $booking_page_url,
-			'modal_template' => $modal_template,
-			'result_target' => $result_target,
-			'display_mode_mobile' => $display_mode_mobile,
-			'display_mode_tablet' => $display_mode_tablet,
-			'display_mode_desktop' => $display_mode_desktop,
-			'spinner_image_url' => $spinner_image,
-		));
+		// Legacy modal template and modal-trigger script removed
+		// Using modular date picker component system instead
 
 		// Render the form template directly (not via shortcode)
 		$no_stack_class = (!empty($settings['prevent_auto_stack']) && $settings['prevent_auto_stack'] === 'yes') ? ' mlb-inline-no-stack' : '';
