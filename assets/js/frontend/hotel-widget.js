@@ -105,11 +105,20 @@
             // Prevent form submission - handle everything via JavaScript
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                
+                console.log('MLB: Form submit event prevented');
                 
                 if (submitBtn) {
                     submitBtn.click();
                 }
+                
+                return false;
             });
+            
+            // Remove form action to prevent accidental submission
+            form.removeAttribute('action');
         });
     }
 

@@ -74,8 +74,9 @@ $form_uid = 'mlb-form-' . $form_instance_counter;
                     data-departure-text="<?php echo esc_attr(isset($args['departure_text']) ? $args['departure_text'] : __('Select Departure Date', 'mylighthouse-booker')); ?>"
                     required
                     readonly />
-                <input type="hidden" id="<?php echo esc_attr($form_uid); ?>-checkin" class="mlb-checkin" name="Arrival" />
-                <input type="hidden" id="<?php echo esc_attr($form_uid); ?>-checkout" class="mlb-checkout" name="Departure" />
+                <!-- Hidden fields for JavaScript only - no name attribute to prevent form submission -->
+                <input type="hidden" id="<?php echo esc_attr($form_uid); ?>-checkin" class="mlb-checkin" />
+                <input type="hidden" id="<?php echo esc_attr($form_uid); ?>-checkout" class="mlb-checkout" />
             </div>
 
             <div class="form-actions">
