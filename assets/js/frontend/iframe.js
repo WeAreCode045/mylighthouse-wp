@@ -26,6 +26,26 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+    /**
+     * Convert date string to YYYY-MM-DD format
+     */
+    function convertDateToYMD(dateStr) {
+        if (!dateStr) return '';
+        
+        // Check if already in YYYY-MM-DD format
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+            return dateStr;
+        }
+        
+        // Convert from dd-mm-yyyy to YYYY-MM-DD
+        if (/^\d{2}-\d{2}-\d{4}$/.test(dateStr)) {
+            const [day, month, year] = dateStr.split('-');
+            return `${year}-${month}-${day}`;
+        }
+        
+        return dateStr;
+    }
+
     const params = new URLSearchParams(window.location.search);
     const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
     let arrival = params.get('Arrival');
@@ -41,6 +61,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!departure && iframeContainer.dataset.departure) departure = iframeContainer.dataset.departure;
         if (!rateCode && iframeContainer.dataset.rateId) rateCode = iframeContainer.dataset.rateId;
     }
+
+    // Convert dates to YYYY-MM-DD format if needed
+    arrival = convertDateToYMD(arrival);
+    departure = convertDateToYMD(departure);
 
     // Fallback: pull from storage only if this was a special form redirect (no dates + missing rate)
     // To prevent hotel/room bookings from picking up old rate values, only restore for special forms

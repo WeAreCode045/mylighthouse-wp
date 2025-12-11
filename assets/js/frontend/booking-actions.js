@@ -153,6 +153,9 @@ window.MLB_BookingActions = (function() {
         const arrivalYMD = convertToYMD(arrival);
         const departureYMD = convertToYMD(departure);
         
+        console.log('MLB: buildBookingUrl - arrival:', arrival, '→', arrivalYMD);
+        console.log('MLB: buildBookingUrl - departure:', departure, '→', departureYMD);
+        
         // Special handling for rate bookings
         if (paramName === 'rate' && identifier) {
             const params = new URLSearchParams({
@@ -195,8 +198,14 @@ window.MLB_BookingActions = (function() {
         // Only add dates if they are provided
         if (arrival && departure) {
             // Convert dates to YYYY-MM-DD format if needed
-            params.set('Arrival', convertToYMD(arrival));
-            params.set('Departure', convertToYMD(departure));
+            const arrivalYMD = convertToYMD(arrival);
+            const departureYMD = convertToYMD(departure);
+            
+            console.log('MLB: buildBookingPageUrl - arrival:', arrival, '→', arrivalYMD);
+            console.log('MLB: buildBookingPageUrl - departure:', departure, '→', departureYMD);
+            
+            params.set('Arrival', arrivalYMD);
+            params.set('Departure', departureYMD);
         }
         
         if (identifier && paramName) {

@@ -92,6 +92,8 @@
                     }
 
                     // Use dates directly from picker (already in YYYY-MM-DD format)
+                    console.log('MLB: hotel-widget submitting - arrival:', selectedDates.arrival, 'departure:', selectedDates.departure);
+                    
                     window.MLB_BookingActions.checkHotelAvailability(
                         hotelId,
                         selectedDates.arrival,
