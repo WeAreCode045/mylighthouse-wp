@@ -43,16 +43,18 @@ window.MLB_DatePicker = (function() {
                 element: dateInput,
                 css: [(window.MLBPluginUrl && window.MLBPluginUrl.url || '') + 'assets/vendor/easepick/easepick.css'],
                 inline: true,
-                grid: 2,
-                calendars: 2,
+                grid: 1,
+                calendars: 1,
+                lang: 'nl-NL',
+                format: 'YYYY-MM-DD',
                 plugins: ['RangePlugin', 'LockPlugin'],
                 RangePlugin: {
                     tooltipNumber(num) { 
                         return num - 1; 
                     },
-                    locale: { 
-                        one: 'night', 
-                        other: 'nights' 
+                    locale: {
+                        one: 'nacht',
+                        other: 'nachten'
                     }
                 },
                 LockPlugin: {
@@ -63,17 +65,17 @@ window.MLB_DatePicker = (function() {
                     picker.on('select', function(e) {
                         // Auto-submit when both dates are selected
                         if (picker.getStartDate() && picker.getEndDate()) {
-                            // Small delay to allow visual feedback
+                            // Delay to allow visual feedback and ensure dates are set
                             setTimeout(function() {
-                                if (currentCallback) {
+                                if (currentCallback && picker.getStartDate() && picker.getEndDate()) {
                                     const dates = {
                                         arrival: picker.getStartDate().format('YYYY-MM-DD'),
                                         departure: picker.getEndDate().format('YYYY-MM-DD')
                                     };
                                     currentCallback(dates);
+                                    close();
                                 }
-                                close();
-                            }, 300);
+                            }, 500);
                         }
                     });
                 }

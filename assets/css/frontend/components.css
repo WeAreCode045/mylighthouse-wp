@@ -37,16 +37,16 @@
 
 .mlb-date-modal .mlb-modal-content {
     position: relative;
-    background: #ffffff;
+    background: transparent;
     border-radius: 12px;
     padding: 32px 24px 24px;
-    max-width: 750px;
+    max-width: 420px;
     width: 90%;
     max-height: 90vh;
     overflow: visible;
     z-index: 999999;
     animation: mlb-scale-in 0.3s ease-out;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
 }
 
 .mlb-date-modal .mlb-modal-close {
