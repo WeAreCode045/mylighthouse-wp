@@ -160,7 +160,7 @@ window.MLB_Modal = window.MLB_Modal || {};
         }
 
         // Otherwise build from components
-        const bookingEngineBase = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+        const bookingEngineBase = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || 'https://bookingengine.mylighthouse.com/';
         
         // Special handling for rate bookings
         if (paramName === 'rate' && identifier) {

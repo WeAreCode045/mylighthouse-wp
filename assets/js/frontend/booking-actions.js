@@ -147,7 +147,7 @@ window.MLB_BookingActions = (function() {
      * @return {string} Booking URL
      */
     function buildBookingUrl(hotelId, arrival, departure, identifier, paramName) {
-        const baseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+        const baseUrl = (window.MLBBookingEngineBase && window.MLBBookingEngineBase.url) || 'https://bookingengine.mylighthouse.com/';
         
         // Special handling for rate bookings
         if (paramName === 'rate' && identifier) {

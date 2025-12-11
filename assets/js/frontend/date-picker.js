@@ -39,9 +39,9 @@ window.MLB_DatePicker = (function() {
 
         // Initialize easepick
         try {
-            picker = new easepick.create({
-                element: input,
-                css: [window.MLBPluginUrl + 'assets/vendor/easepick/easepick.css'],
+            const picker = new easepick.create({
+                element: dateInput,
+                css: [(window.MLBPluginUrl && window.MLBPluginUrl.url || '') + 'assets/vendor/easepick/easepick.css'],
                 plugins: ['RangePlugin', 'LockPlugin'],
                 RangePlugin: {
                     tooltipNumber(num) { 

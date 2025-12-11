@@ -391,8 +391,12 @@ class Mylighthouse_Booker_Frontend_Assets
 			'displayModeDesktop' => get_option('mlb_display_mode_desktop', 'modal'),
 		));
 		
-		wp_localize_script('mylighthouse-booker-date-picker', 'MLBPluginUrl', plugins_url('/', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE));
-		wp_localize_script('mylighthouse-booker-booking-results-modal', 'MLBBookingEngineBase', 'https://bookingengine.mylighthouse.com/');
+		wp_localize_script('mylighthouse-booker-date-picker', 'MLBPluginUrl', array(
+			'url' => plugins_url('/', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE)
+		));
+		wp_localize_script('mylighthouse-booker-booking-results-modal', 'MLBBookingEngineBase', array(
+			'url' => 'https://bookingengine.mylighthouse.com/'
+		));
 	}
 
 	// Legacy generate_styles removed; styling should be handled by Elementor/theme.
