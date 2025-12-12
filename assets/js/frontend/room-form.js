@@ -2,8 +2,17 @@
  * Frontend JavaScript for room booking forms with modal date picker
  */
 
-(function($) {
+(function() {
     'use strict';
+
+    // Wait for jQuery to be available
+    function initWhenReady() {
+        if (typeof jQuery === 'undefined') {
+            setTimeout(initWhenReady, 50);
+            return;
+        }
+        
+        var $ = jQuery;
 
     // JS gettext helper: prefer wp.i18n.__() when available
     function mlbGettext(str) {
@@ -729,5 +738,10 @@
         $form[0].submit();
     }
 
-})(jQuery);
+    } // End of initWhenReady function
+    
+    // Start initialization
+    initWhenReady();
+    
+})();
 
