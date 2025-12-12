@@ -109,6 +109,9 @@ class Mylighthouse_Booker_Frontend_Assets
 	 */
 	public function enqueue_scripts()
 	{
+		// Ensure jQuery is available (WordPress includes it by default)
+		wp_enqueue_script('jquery');
+
 		// Register EasePick datetime dependency first (in head for availability)
 		wp_register_script(
 			'easepick-datetime',
@@ -127,7 +130,7 @@ class Mylighthouse_Booker_Frontend_Assets
 			false  // Load in head
 		);
 
-		// Register EasePick core library from local vendor directory (depends on datetime)
+		// Register EasePick core library from local vendor directory (depends on datetime and base-plugin)
 		wp_register_script(
 			'easepick-core',
 			plugins_url('/assets/vendor/easepick/easepick.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
@@ -136,29 +139,31 @@ class Mylighthouse_Booker_Frontend_Assets
 			false  // Load in head to ensure availability before modal opens
 		);
 
-		// Register EasePick range plugin from local vendor (depends on core)
+		// Register EasePick range plugin from local vendor (MUST load after core and base-plugin)
 		wp_register_script(
 			'easepick-range',
 			plugins_url('/assets/vendor/easepick/easepick-range.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('easepick-core', 'easepick-base-plugin'),
+			array('easepick-datetime', 'easepick-base-plugin', 'easepick-core'),
 			'1.2.1',
 			false  // Load in head
 		);
 
+		// Register EasePick lock plugin (depends on core and base-plugin)
 		wp_register_script(
 			'easepick-lock',
 			'https://cdn.jsdelivr.net/npm/@easepick/lock-plugin@1.2.1/dist/index.umd.min.js',
-			array('easepick-core', 'easepick-base-plugin'),
+			array('easepick-datetime', 'easepick-base-plugin', 'easepick-core'),
 			'1.2.1',
-			true
+			false  // Load in head for consistency
 		);
 
+		// Register EasePick wrapper (depends on all plugins)
 		wp_register_script(
 			'easepick-wrapper',
 			plugins_url('/assets/vendor/easepick/easepick-wrapper.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('easepick-core', 'easepick-range', 'easepick-lock'),
+			array('easepick-datetime', 'easepick-base-plugin', 'easepick-core', 'easepick-range', 'easepick-lock'),
 			'1.0.0',
-			true
+			false  // Load in head to ensure it's ready
 		);
 
         // Use file modification times for script versions to help bust caches when files change.
