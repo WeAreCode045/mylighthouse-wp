@@ -161,18 +161,22 @@
 						if(typeof initModalDatePicker === 'function') initModalDatePicker($form);
 					}
 				}
-			}catch(e){ console.error('preselect hotel inference error', e); }
+		}catch(e){ console.error('preselect hotel inference error', e); }
 
-			const isRoomForm = $form.hasClass('mlb-room-form-type') || $form.find('[data-trigger-modal="true"]').length > 0;
-			if (isRoomForm) {
-				// Room forms use modal date picker
-				initModalDatePicker($form);
-			} else {
-				// Hotel forms use inline date picker
-				initInlineDatePicker($form);
-			}
+		// Skip initialization if this is a modular form (handled by widget scripts)
+		if ($form[0] && $form[0].hasAttribute('data-mlb-hotel-form')) {
+			console.log('MLB: Skipping legacy booking-form.js init - modular hotel-widget.js will handle this form');
+			return;
+		}
 
-			// Per-form handling for buttons that should open modal overlays
+		const isRoomForm = $form.hasClass('mlb-room-form-type') || $form.find('[data-trigger-modal="true"]').length > 0;
+		if (isRoomForm) {
+			// Room forms use modal date picker
+			initModalDatePicker($form);
+		} else {
+			// Hotel forms use inline date picker
+			initInlineDatePicker($form);
+		}			// Per-form handling for buttons that should open modal overlays
 			try {
 				// Do not attach generic booking-form handlers for special or room-specific forms
 				if ($form.hasClass('mlb-special-form-type') || $form.hasClass('mlb-room-form-type')) {
@@ -327,7 +331,7 @@
 				const pickerConfig = {
 					element: $daterangeInput[0],
 					css: [
-						'https://new.differenthotels.be/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
+						'/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
 					],
 					plugins: [easepickRef.RangePlugin, easepickRef.LockPlugin],
 					RangePlugin: {
@@ -633,7 +637,7 @@
 				const pickerConfig = {
 					element: pickerElement,
 					css: [
-						'https://new.differenthotels.be/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
+						'/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
 					],
 					inline: true,
 					plugins: [easepickRef.RangePlugin, easepickRef.LockPlugin],
@@ -722,34 +726,12 @@
 							});
 						}
 				},
-				lang: 'en-GB',
+				lang: 'nl-NL',
 			};
 
 			const picker = new CoreClass(pickerConfig);
 
-				// Inject custom CSS into Shadow DOM
-				setTimeout(function() {
-					const shadowHost = calendarDiv.querySelector('.container');
-					if (shadowHost && shadowHost.shadowRoot) {
-						const shadowRoot = shadowHost.shadowRoot;
-						const customStyle = document.createElement('style');
-						customStyle.textContent = `
-							.container.range-plugin .calendar > .days-grid > .day.start,
-							.container.range-plugin .calendar > .days-grid > .day.end {
-								background-color: ${calendarColors.startend_bg} !important;
-								color: ${calendarColors.startend_color} !important;
-							}
-							.container.range-plugin .calendar > .days-grid > .day.in-range {
-								background-color: ${calendarColors.inrange_bg} !important;
-							}
-							.container.range-plugin .calendar > .days-grid > .day.start::after,
-							.container.range-plugin .calendar > .days-grid > .day.end::after {
-								background-color: ${calendarColors.startend_bg} !important;
-							}
-						`;
-						shadowRoot.appendChild(customStyle);
-					}
-				}, 100);
+			
 
 				$form.data('picker', picker);
 				if ($daterangeInput && $daterangeInput.length) $daterangeInput.data('picker', picker);

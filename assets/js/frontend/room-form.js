@@ -181,14 +181,14 @@
                 const pickerConfig = {
                     element: $daterangeInput[0],
                     css: [
-                        'https://new.differenthotels.be/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
+                        '/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
                     ],
                     plugins: [easepickRef.RangePlugin, easepickRef.LockPlugin],
                     RangePlugin: {
                         tooltip: true,
                         locale: {
-                            one: 'night',
-                            other: 'nights'
+                            one: 'nacht',
+                            other: 'nachten'
                         }
                     },
                     LockPlugin: {
@@ -581,7 +581,7 @@
                 const pickerConfig = {
                     element: pickerElement,
                     css: [
-                        'https://new.differenthotels.be/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
+                        '/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
                     ],
                     inline: true,
                     plugins: [easepickRef.RangePlugin, easepickRef.LockPlugin],

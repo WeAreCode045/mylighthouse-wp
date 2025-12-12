@@ -1,3 +1,6 @@
+/* Import Poppins font for form - must be at the very top per CSS spec */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
 /**
  * Frontend styles for Mylighthouse Booker
  * Based on Cubilis Quickbooker styling system
@@ -6,9 +9,6 @@
 /* ==========================================================================
    1. CSS VARIABLES & FONT
    ========================================================================== */
-
-/* Import Poppins font for form */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
 
 /* Base form wrapper with CSS variables */
 .mlb-booking-form {

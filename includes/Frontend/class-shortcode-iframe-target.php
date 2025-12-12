@@ -22,6 +22,43 @@ class Mylighthouse_Booker_Shortcode_Iframe_Target
 	public function __construct()
 	{
 		add_action('init', array($this, 'register_shortcodes'));
+		add_action('template_redirect', array($this, 'add_csp_headers'), 1);
+	}
+
+	/**
+	 * Add Content Security Policy headers to allow booking engine resources
+	 * 
+	 * This adds CSP directives to allow the MyLighthouse booking engine iframe
+	 * and its required resources (fonts from app.userguest.com, styles, scripts)
+	 */
+	public function add_csp_headers()
+	{
+		// Only add CSP headers on pages with the booking results shortcode
+		global $post;
+		if (! is_a($post, 'WP_Post') || ! has_shortcode($post->post_content, 'lighthouse_booking_results')) {
+			return;
+		}
+
+		// Don't add headers if they've already been sent
+		if (headers_sent()) {
+			return;
+		}
+
+		// Build CSP directives for booking engine resources
+		$csp_directives = array(
+			"frame-src 'self' https://bookingengine.mylighthouse.com",
+			"font-src 'self' https://app.userguest.com https://fonts.gstatic.com data:",
+			"style-src 'self' 'unsafe-inline' https://bookingengine.mylighthouse.com https://app.userguest.com https://fonts.googleapis.com",
+			"script-src 'self' 'unsafe-inline' 'unsafe-eval' https://bookingengine.mylighthouse.com https://app.userguest.com",
+			"img-src 'self' https://bookingengine.mylighthouse.com https://app.userguest.com data:",
+			"connect-src 'self' https://bookingengine.mylighthouse.com https://app.userguest.com"
+		);
+
+		// Apply filter to allow customization
+		$csp_directives = apply_filters('mylighthouse_booker_csp_directives', $csp_directives);
+
+		// Send the CSP header
+		header('Content-Security-Policy: ' . implode('; ', $csp_directives), false);
 	}
 
 	/**
