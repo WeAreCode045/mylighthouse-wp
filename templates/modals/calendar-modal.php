@@ -15,6 +15,7 @@ if (! defined('ABSPATH')) {
 	<div class="mlb-calendar-modal-container">
 		<button type="button" class="mlb-calendar-modal-close" aria-label="<?php echo esc_attr__('Close calendar', 'mylighthouse-booker'); ?>">&times;</button>
 		<div class="mlb-modal-content-wrapper">
+			<div class="mlb-modal-calendar"></div>
 			<div class="mlb-modal-right-column" style="display:none;">
 				<div class="mlb-booking-details">
 					<h3><?php echo esc_html__('Booking Details', 'mylighthouse-booker'); ?></h3>

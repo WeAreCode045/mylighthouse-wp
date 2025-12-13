@@ -71,10 +71,6 @@
 }
 
 /* Calendar Container */
-.mlb-modal-calendar {
-    flex: 1;
-    min-width: 320px;
-}
 
 /* Right Column (Booking Details) */
 .mlb-modal-right-column {
