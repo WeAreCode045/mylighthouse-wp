@@ -16,6 +16,11 @@
     transition: opacity 0.3s ease;
 }
 
+/* Hide EasePick date range display text */
+.mlb-calendar-modal-overlay .range-plugin-tooltip {
+    display: none !important;
+}
+
 .mlb-calendar-modal-overlay.mlb-calendar-modal-show {
     display: flex;
     opacity: 1;
