@@ -84,21 +84,17 @@
 
 /* Right Column (Booking Details) */
 .mlb-modal-right-column {
-    flex: 0 0 340px;
+    width: 340px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    max-height: 500px;
+    max-height: calc(100% - 48px);
     overflow-y: auto;
     margin-left: 24px;
-    transform: translateX(calc(100% + 24px));
+    transform: translateX(100%);
     opacity: 0;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
     pointer-events: none;
-    position: absolute;
-    right: 24px;
-    top: 24px;
-    bottom: 24px;
 }
 
 .mlb-modal-right-column.mlb-visible {
