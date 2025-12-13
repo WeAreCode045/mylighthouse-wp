@@ -70,7 +70,7 @@
 .mlb-modal-content-wrapper {
     display: flex;
     flex-direction: row;
-    gap: 24px;
+    gap: 0;
     padding: 24px;
     min-height: 400px;
     position: relative;
@@ -79,7 +79,7 @@
 
 /* Calendar Container */
 .mlb-modal-calendar {
-display:none;
+    flex-shrink: 0;
 }
 
 /* Right Column (Booking Details) */
@@ -90,10 +90,15 @@ display:none;
     gap: 20px;
     max-height: 500px;
     overflow-y: auto;
-    transform: translateX(100%);
+    margin-left: 24px;
+    transform: translateX(calc(100% + 24px));
     opacity: 0;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
     pointer-events: none;
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    bottom: 24px;
 }
 
 .mlb-modal-right-column.mlb-visible {
