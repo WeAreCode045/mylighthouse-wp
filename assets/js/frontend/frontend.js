@@ -66,18 +66,17 @@
             // Set form ID
             this.overlay.setAttribute('data-form-id', this.formId);
             
-            // Show/hide booking details panel based on form type
+            // Setup booking details panel based on form type
             var rightColumn = this.overlay.querySelector('.mlb-modal-right-column');
             if (rightColumn) {
                 if (this.formType === 'room') {
-                    rightColumn.style.display = 'block';
-                    
                     // Populate hotel and room names
                     var hotelNameEl = this.overlay.querySelector('.mlb-hotel-name');
                     var roomNameEl = this.overlay.querySelector('.mlb-room-name');
                     if (hotelNameEl) hotelNameEl.textContent = this.hotelName || 'Hotel';
                     if (roomNameEl) roomNameEl.textContent = this.roomName || 'Room';
                 } else {
+                    // Hide for hotel forms
                     rightColumn.style.display = 'none';
                 }
             }
@@ -196,13 +195,22 @@
                 var datesRows = this.overlay.querySelectorAll('.mlb-dates-row');
                 var submitBtn = this.overlay.querySelector('.mlb-modal-submit-btn');
                 var rightColumn = this.overlay.querySelector('.mlb-modal-right-column');
+                var calendarDiv = this.overlay.querySelector('.mlb-modal-calendar');
 
                 if (arrivalSpan) arrivalSpan.textContent = arrivalStr;
                 if (departureSpan) departureSpan.textContent = departureStr;
                 datesRows.forEach(function(row) { row.style.display = 'flex'; });
                 if (submitBtn) submitBtn.disabled = false;
+                
+                // Slide in booking details from right (desktop) or replace calendar (mobile)
                 if (rightColumn) {
-                    setTimeout(function() { rightColumn.classList.add('mlb-expanded'); }, 50);
+                    setTimeout(function() { 
+                        rightColumn.classList.add('mlb-visible');
+                        // On mobile, hide calendar when showing details
+                        if (window.innerWidth <= 768 && calendarDiv) {
+                            calendarDiv.classList.add('mlb-hidden');
+                        }
+                    }, 50);
                 }
             }
         }
@@ -240,6 +248,18 @@
                             }
                         });
                         self.form.dispatchEvent(event);
+                    });
+                }
+                
+                // Back button for mobile
+                var backBtn = this.overlay.querySelector('.mlb-modal-back-btn');
+                if (backBtn) {
+                    backBtn.addEventListener('click', function() {
+                        var rightColumn = self.overlay.querySelector('.mlb-modal-right-column');
+                        var calendarDiv = self.overlay.querySelector('.mlb-modal-calendar');
+                        
+                        if (rightColumn) rightColumn.classList.remove('mlb-visible');
+                        if (calendarDiv) calendarDiv.classList.remove('mlb-hidden');
                     });
                 }
             }
