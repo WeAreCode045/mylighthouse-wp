@@ -260,56 +260,21 @@ document.addEventListener('DOMContentLoaded', function() {
             bookingPageUrl.searchParams.set('room', roomId);
         }
 
-        // Open in modal or redirect depending on configured result target.
-        // Use device-specific display mode if available, otherwise fall back to legacy result_target.
-        const target = getDisplayModeForDevice();
-
-        if (target === 'modal' && typeof window.MLB_Modal !== 'undefined' && window.MLB_Modal.openBookingModal) {
-            // Determine if this form uses a rate (special) or room
-            const rateId = bookingForm.dataset.rateId || bookingForm.querySelector('input[name="rate"]')?.value;
-            if (rateId) {
-                window.MLB_Modal.openBookingModal(bookingPageUrl, hotelId, arrivalISO, departureISO, rateId, 'rate');
-            } else {
-                // Pass a URL object and other details to the modal handler.
-                window.MLB_Modal.openBookingModal(bookingPageUrl, hotelId, arrivalISO, departureISO, roomId, 'room');
-            }
-            return;
+        // Always redirect to external booking engine
+        const bookingEngineBaseUrl = bookingPageUrl || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+        let engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/Select?Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
+        
+        const rateId = bookingForm.dataset.rateId || bookingForm.querySelector('input[name="rate"]')?.value;
+        if (rateId) {
+            engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/GeneralAvailability?Rate=' + encodeURIComponent(rateId) + '&Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
+        } else if (roomId) {
+            engineUrl += '&room=' + encodeURIComponent(roomId);
         }
-
-        // For redirect_engine target, navigate directly to the booking engine
-        if (target === 'redirect_engine') {
-            const bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
-            let engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/Select?Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
-            
-            const rateId = bookingForm.dataset.rateId || bookingForm.querySelector('input[name="rate"]')?.value;
-            if (rateId) {
-                engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/GeneralAvailability?Rate=' + encodeURIComponent(rateId) + '&Arrival=' + encodeURIComponent(arrivalISO) + '&Departure=' + encodeURIComponent(departureISO);
-            } else if (roomId) {
-                engineUrl += '&room=' + encodeURIComponent(roomId);
-            }
-            
-            try {
-                showBookingRedirectSpinner();
-            } catch (e) { /* ignore */ }
-            window.location.href = engineUrl;
-            return;
-        }
-
-        // For booking page targets (or any unknown target), navigate to the configured booking page.
-        // Support both 'booking_page' and legacy 'page' values.
-        if (target === 'booking_page' || target === 'page') {
-            try {
-                showBookingRedirectSpinner();
-            } catch (e) { /* ignore */ }
-            window.location.href = bookingPageUrl.href;
-            return;
-        }
-
-        // Fallback: if target is unexpected, default to redirecting to the booking page.
+        
         try {
             showBookingRedirectSpinner();
         } catch (e) { /* ignore */ }
-        window.location.href = bookingPageUrl.href;
+        window.location.href = engineUrl;
     }
 
     // Set up form submission handlers

@@ -543,42 +543,13 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 		if (! wp_style_is('mylighthouse-booker-modal', 'enqueued')) {
 			wp_enqueue_style('mylighthouse-booker-modal');
 		}
-		// Enqueue appropriate frontend form script depending on widget form type
-		$widget_form_type = isset($settings['form_type']) ? $settings['form_type'] : 'hotel';
-		// Map widget type to the primary initializer script for that form
-		switch ($widget_form_type) {
-			case 'room':
-				$script_handle = 'mylighthouse-booker-room-form';
-				break;
-			case 'special':
-				$script_handle = 'mylighthouse-booker-special-form';
-				break;
-			default:
-				// hotel (inline picker) uses the booking-form initializer
-				$script_handle = 'mylighthouse-booker-form';
-				break;
-		}
-		if (! wp_script_is($script_handle, 'enqueued')) {
-			wp_enqueue_script($script_handle);
-		}
-
-		// Ensure booking-form behaviors (inline picker) are loaded for hotel widgets
-		if ($widget_form_type === 'hotel') {
-			if (! wp_script_is('mylighthouse-booker-booking-form', 'enqueued')) {
-				wp_enqueue_script('mylighthouse-booker-booking-form');
-			}
-		}
-		if (! wp_script_is('mylighthouse-booker-form', 'enqueued')) {
-			wp_enqueue_script('mylighthouse-booker-form');
-		}
-		if (! wp_script_is('mylighthouse-booker-spinner', 'enqueued')) {
-			wp_enqueue_script('mylighthouse-booker-spinner');
-		}
 		if (! wp_style_is('easepick', 'enqueued')) {
 			wp_enqueue_style('easepick');
 		}
-		if (! wp_script_is('easepick-wrapper', 'enqueued')) {
-			wp_enqueue_script('easepick-wrapper');
+
+		// Enqueue consolidated frontend scripts
+		if (! wp_script_is('mylighthouse-booker-frontend', 'enqueued')) {
+			wp_enqueue_script('mylighthouse-booker-frontend');
 		}
 
 		// Get hotels from database
@@ -636,11 +607,6 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 				}
 				return;
 			}
-			
-			// Enqueue room booking script
-			if (!wp_script_is('mylighthouse-booker-room-booking', 'enqueued')) {
-				wp_enqueue_script('mylighthouse-booker-room-booking');
-			}
 		}
 
 		// Handle Special Form Type
@@ -660,15 +626,7 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 				}
 				return;
 			}
-
-		// Special forms: Don't enqueue special-booking.js if skip-dates (handled by special-form.js fallback)
-		// $show_date_picker is false for special forms (skip-dates), true for hotel forms
-		$show_date_picker_check = ($form_type === 'hotel');
-		if ($form_type === 'special' && !$show_date_picker_check) {
-			// This is a skip-dates special form, don't enqueue special-booking.js
-			// The skip-dates handler in special-form.js will handle the redirect
-		}
-	}		// Map settings to display logic
+		}		// Map settings to display logic
 		$display_hotels = $hotels;
 		$show_hotel_select = false;
 		$default_hotel_id = '';
@@ -706,12 +664,8 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 		$layout = $settings['layout'] ?? (isset($style_opts['form_layout']['layout']) ? $style_opts['form_layout']['layout'] : 'inline');
 		$placement = $settings['button_placement'] ?? (isset($style_opts['button_placement']) ? $style_opts['button_placement'] : 'after');
 
-		// Get device-specific display mode settings
-		$display_mode_mobile = get_option('mlb_display_mode_mobile', get_option('mlb_display_mode', 'modal'));
-		$display_mode_tablet = get_option('mlb_display_mode_tablet', get_option('mlb_display_mode', 'modal'));
-		$display_mode_desktop = get_option('mlb_display_mode_desktop', get_option('mlb_display_mode', 'modal'));
-		// Legacy result_target for backwards compatibility (use desktop as default)
-		$result_target = ($display_mode_desktop === 'modal') ? 'modal' : 'booking_page';
+		// Always redirect to external booking engine
+		$result_target = 'redirect_engine';
 
 		// Prepare room and hotel names
 		$hotel_name = '';
@@ -782,10 +736,10 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 			'form_type' => $form_type,
 		);
 
-		// Load modal template for JS usage and localize script
+		// Load calendar modal template for JavaScript
 		ob_start();
 		include MYLIGHTHOUSE_BOOKER_ABSPATH . 'templates/modals/calendar-modal.php';
-		$modal_template = ob_get_clean();
+		$calendar_modal_template = ob_get_clean();
 
 		// Prefer widget-specific style option, fall back to global admin setting
 		$spinner_image = '';
@@ -804,22 +758,11 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 				$spinner_image = esc_url( wp_get_attachment_image_url($spinner_image_id, 'full') );
 			}
 		}
-		// Ensure the modal-trigger fallback is enqueued for this widget render so
-		// elements with `data-trigger-modal` will open the modal when present.
-		if (! wp_script_is('mylighthouse-booker-modal-trigger', 'enqueued')) {
-			wp_enqueue_script('mylighthouse-booker-modal-trigger');
-		}
-
-		// Localize only essential runtime parameters. Translations are handled
-		// via gettext (.po/.mo) and wp-i18n; DB-based overrides were removed.
-		wp_localize_script($script_handle, 'cqb_params', array(
+		// Localize essential parameters for the frontend scripts
+		wp_localize_script('mylighthouse-booker-frontend', 'cqb_params', array(
 			'booking_page_url' => $booking_page_url,
-			'modal_template' => $modal_template,
-			'result_target' => $result_target,
-			'display_mode_mobile' => $display_mode_mobile,
-			'display_mode_tablet' => $display_mode_tablet,
-			'display_mode_desktop' => $display_mode_desktop,
 			'spinner_image_url' => $spinner_image,
+			'calendar_modal_template' => $calendar_modal_template,
 		));
 
 		// Render the form template directly (not via shortcode)

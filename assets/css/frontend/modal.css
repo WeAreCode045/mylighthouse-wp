@@ -1,87 +1,54 @@
 /**
- * Modal Styles for Mylighthouse Booker
- * Based on Cubilis Quickbooker modal system
+ * Calendar Modal Styles
+ * Styles for the date picker modal overlay
  */
 
-/* ==========================================================================
-   11. CALENDAR MODAL OVERLAY
-   ========================================================================== */
-
-/* Modal overlay for calendar popup */
+/* Calendar Modal Overlay */
 .mlb-calendar-modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-        /* Subtle black overlay behind the modal */
-        background-color: rgba(0, 0, 0, 0.6);
-    z-index: 9997;
-    display: flex;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 100vh;
-    opacity: 1;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-
-    /* Inherit button styling variables from form wrapper (set via inline styles) */
-    /* These defaults match the form wrapper defaults */
-    --mlb-form-bg: #dc143c;
-    --mlb-form-border: #dc143c;
-    --mlb-form-radius: 5px;
-    --mlb-btn-bg: #dc143c;
-    --mlb-btn-text: #ffffff;
-    --mlb-btn-bg-hover: #292929;
-    --mlb-btn-radius: 5px;
-    --mlb-input-text: #333;
-    --mlb-input-bg: #ffffff;
-    --mlb-field-radius: 4px;
-    --mlb-calendar-startend-bg: #dc143c;
-    --mlb-calendar-startend-color: #ffffff;
-
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .mlb-calendar-modal-overlay.mlb-calendar-modal-show {
-    visibility: visible;
+    display: flex;
+    opacity: 1;
 }
 
-/* Modal container for calendar */
+/* Calendar Modal Container */
 .mlb-calendar-modal-container {
     position: relative;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border-radius: 8px;
     max-width: 90vw;
     max-height: 90vh;
-    overflow: visible;
-    transform: scale(0.9);
-    transition: transform 0.3s ease,
-                width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 20px;
-    height: fit-content;
-		width: fit-content;
-    z-index: 9998;
+    overflow: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
-
-.mlb-calendar-modal-show .mlb-calendar-modal-container {
-    transform: scale(1);
-}
-
-/* Close button for modal */
+/* Close Button */
 .mlb-calendar-modal-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 16px;
+    right: 16px;
     background: transparent;
     border: none;
-    font-size: 24px;
+    font-size: 28px;
     line-height: 1;
     cursor: pointer;
     color: #666;
-    padding: 5px 10px;
     z-index: 10001;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: color 0.2s ease;
 }
 
@@ -89,99 +56,95 @@
     color: #000;
 }
 
-/* Two-column layout for room form modal */
+/* Modal Content Wrapper */
 .mlb-modal-content-wrapper {
     display: flex;
-    gap: 20px;
-    align-items: stretch;
-    transition: width 0.4s ease;
+    flex-direction: row;
+    gap: 24px;
+    padding: 24px;
+    min-height: 400px;
 }
 
-.mlb-modal-left-column {
-    flex: 0 0 auto;
+/* Calendar Container */
+.mlb-modal-calendar {
+    flex: 1;
+    min-width: 320px;
 }
 
+/* Right Column (Booking Details) */
 .mlb-modal-right-column {
-    flex: 0 0 0;
-    width: 0;
-    overflow: hidden;
-    transition: flex-basis 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-                   box-shadow: 0 7px 14px 0 rgba(65, 69, 88, 0.1),
-		0 3px 6px 0 rgba(0, 0, 0, 0.07);
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    transition: opacity 0.3s ease;
 }
 
 .mlb-modal-right-column.mlb-expanded {
-    flex: 0 0 320px;
-    width: 320px;
-}
-
-/* Hide booking details by default until dates are selected. The
-   JS will add the `mlb-expanded` class to reveal the details. */
-.mlb-modal-right-column .mlb-booking-details {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(6px);
-    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
-    pointer-events: none;
-}
-
-.mlb-modal-right-column.mlb-expanded .mlb-booking-details {
     opacity: 1;
-    visibility: visible;
-    transform: none;
-    pointer-events: auto;
 }
 
-/* Calendar container inside modal */
-.mlb-modal-calendar .header {
-    display: none !important;
+/* Booking Details */
+.mlb-booking-details {
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 6px;
 }
 
-.mlb-modal-calendar {
-    position: relative;
+.mlb-booking-details h3 {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.mlb-booking-info {
     display: flex;
-    align-items: stretch;
     flex-direction: column;
+    gap: 12px;
 }
 
-/* Hide easepick calendar elements when modal is not shown */
-.mlb-calendar-modal-overlay:not(.mlb-calendar-modal-show) .mlb-modal-calendar .container:not(.inline),
-.mlb-calendar-modal-overlay:not(.mlb-calendar-modal-show) .easepick-wrapper .container:not(.inline) {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
+.mlb-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
 }
 
-/* Ensure easepick calendar is visible when modal is shown */
-.mlb-calendar-modal-overlay.mlb-calendar-modal-show .mlb-modal-calendar .container:not(.inline),
-.mlb-calendar-modal-overlay.mlb-calendar-modal-show .easepick-wrapper .container:not(.inline) {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
+.mlb-info-row .mlb-label {
+    font-weight: 500;
+    color: #666;
 }
 
-/* Submit button in modal - inherits button styling from settings */
+.mlb-info-row span:not(.mlb-label) {
+    font-weight: 400;
+    color: #333;
+}
+
+/* Modal Actions */
+.mlb-modal-actions {
+    padding: 16px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .mlb-modal-submit-btn {
-    width: 100%;
-    /* Inherit all button styling variables */
-    background-color: var(--mlb-btn-bg);
-    color: var(--mlb-btn-text);
+    padding: 12px 24px;
+    background-color: var(--mlb-btn-bg, #dc143c);
+    color: var(--mlb-btn-text, #ffffff);
     border: none;
-    padding: var(--mlb-button-padding-vertical, 12px) var(--mlb-button-padding-horizontal, 8px);
-    font-size: var(--mlb-button-font-size, 12px);
-    font-weight: var(--mlb-button-font-weight, 700);
-    text-transform: var(--mlb-button-text-transform, uppercase);
-    border-radius: var(--mlb-btn-radius, 5px);
+    border-radius: var(--mlb-btn-radius, 4px);
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease;
 }
 
-.mlb-modal-submit-btn:hover {
-    background-color: var(--mlb-btn-bg-hover);
-    color: var(--mlb-btn-text-hover, var(--mlb-btn-text));
+.mlb-modal-submit-btn:hover:not(:disabled) {
+    background-color: var(--mlb-btn-bg-hover, #292929);
 }
 
 .mlb-modal-submit-btn:disabled {
@@ -189,354 +152,20 @@
     cursor: not-allowed;
 }
 
-/* ==========================================================================
-   12. BOOKING DETAILS SUMMARY (Room Form Modal)
-   ========================================================================== */
-
-.mlb-booking-details {
-    height: 100%;
-    min-width: 320px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-}
-
-.mlb-booking-details h3 {
-    margin: 0 0 20px 0;
-    font-size: 18px;
-    color: #333;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-family: 'Poppins', sans-serif;
-}
-
-.mlb-booking-info {
-    margin-bottom: 30px;
-}
-
-.mlb-info-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid #e9ecef;
-    font-family: 'Poppins';
-    font-size: 13px;
-}
-
-.mlb-info-row:last-child {
-    border-bottom: none;
-}
-
-.mlb-info-label {
-    font-weight: 500;
-    color: #666;
-}
-
-.mlb-info-value {
-    font-weight: 600;
-    color: #333;
-}
-
-/* Right-align the special name within booking details so long names wrap cleanly */
-.mlb-info-row .mlb-special-name {
-    display: inline-block;
-    max-width: 60%;
-    text-align: right;
-    word-break: break-word;
-}
-
-/* ==========================================================================
-   13. BOOKING RESULTS MODAL (when result_target === 'modal')
-   ========================================================================== */
-
-/* Overlay used for booking results modal (matches class added by JS) */
-.mlb-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /* Subtle black overlay behind the modal */
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 10000; /* sits above page content but under modal and loader */
-    display: flex;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 100vh;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.25s ease, visibility 0.25s ease;
-}
-
-.mlb-modal-overlay.mlb-modal-show {
-    opacity: 1;
-    visibility: visible;
-}
-
-
-.mlb-modal-loader {
-    /* Full-viewport transparent layer that centers the spinner box */
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    z-index: 10002; /* ensure loader sits above overlay */
-    transition: opacity 0.3s ease;
-    pointer-events: none; /* allow clicks to pass through except the spinner box */
-}
-
-.mlb-modal {
-    /* Keep the modal outside any wrapper by fixing it to the viewport */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    max-width: 1400px;
-    height: 85vh;
-    width: 90vw;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-        z-index: 10001; /* above overlay (10000) but below loader (10002) */
-}
-
-.mlb-modal iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    flex: 1;
-    min-height: 400px;
-}
-
-.mlb-modal iframe.mlb-iframe-show {
-    display: block;
-}
-
-.mlb-modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    line-height: 1;
-    cursor: pointer;
-    color: #666;
-    padding: 5px 10px;
-    z-index: 10;
-    transition: color 0.2s ease;
-}
-
-.mlb-modal-close:focus {
-    outline: 2px solid var(--mlb-btn-bg, #0073aa);
-    outline-offset: 2px;
-}
-
-/* NOTE: The full-viewport .mlb-modal-loader is defined earlier (fixed positioning) so
-   that the spinner cannot be clipped by modal containers. Keep a concise hide
-   utility here with a short transition. */
-.mlb-modal-loader--hide {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s ease;
-}
-
-.mlb-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid var(--mlb-btn-bg, #0073aa);
-    border-radius: 50%;
-    animation: mlb-spin 1s linear infinite;
-}
-
-@keyframes mlb-spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.mlb-spinner-image {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-/* White circular box that contains the spinner image / fallback (global) */
-.mlb-spinner-box {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffffff;
-    border-radius: 100%;
-    padding: 10px;
-    box-shadow: 0 12px 36px rgba(0,0,0,0.25);
-    width: 300px;
-    height: 300px;
-    max-width: 90vw;
-    max-height: 90vw;
-    min-width: 160px;
-    min-height: 160px;
-    aspect-ratio: 1 / 1;
-    pointer-events: auto;
-}
-
-.mlb-spinner-box .mlb-spinner-image {
-    width: calc(100% - 40px);
-    height: calc(100% - 40px);
-    max-width: 300px;
-    max-height: 300px;
-}
-
-.mlb-spinner-image::before {
-    content: '';
-    position: absolute;
-    inset: -20px;
-    border-radius: 50%;
-    padding: 10px;
-    /* Spinning border using conic gradient. Colors copied from Cubilis for parity. */
-    background: conic-gradient(from 0deg, #000000 0%, #ff0000 25%, #000000 50%, #000000 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    animation: mlb-spinner-rotate 1.5s linear infinite;
-}
-
-@keyframes mlb-spinner-rotate {
-    to { transform: rotate(360deg); }
-}
-
-/* Keep the modal hidden until JS removes the hidden class (global rule) */
-.mlb-modal.mlb-modal-hidden {
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-}
-
-/* ==========================================================================
-   14. RESPONSIVE OVERRIDES
-   ========================================================================== */
-
+/* Responsive Design */
 @media (max-width: 768px) {
-    .mlb-calendar-modal-container {
-        width: 95vw;
-        margin: 20px;
-        padding: 15px;
+    .mlb-modal-content-wrapper {
+        flex-direction: column;
+        padding: 16px;
     }
-
-    .mlb-modal {
+    
+    .mlb-modal-right-column {
+        flex: 1 1 auto;
+        max-height: none;
+    }
+    
+    .mlb-calendar-modal-container {
         max-width: 95vw;
         max-height: 95vh;
     }
-
-    .mlb-modal-iframe {
-        min-height: 300px;
-    }
-
-    /* White circular box that contains the spinner image / fallback */
-    .mlb-spinner-box {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: #ffffff;
-        border-radius: 100%;
-        padding: 10px;
-        box-shadow: 0 12px 36px rgba(0,0,0,0.25);
-        /* Size the white circle to 25% of the viewport width but cap it for very small/large screens */
-        aspect-ratio: 1 / 1; /* keep it perfectly round */
-    }
-
-    .mlb-spinner-box .mlb-spinner-image {
-        /* Take the available inner space minus the 20px padding on each side */
-        width: calc(90% - 10px);
-        height: calc(90% - 10px);
-        max-width: 220px;
-        max-height: 220px;
-    }
-
-    /* Keep the modal hidden until JS removes the hidden class */
-    .mlb-modal.mlb-modal-hidden {
-        visibility: hidden;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .mlb-modal-right-column.mlb-expanded {
-        flex: 0 0 100%;
-        width: 100%;
-    }
-
-    .mlb-booking-details {
-        min-width: 100%;
-        padding: 15px;
-    }
-
-    /* On small screens show booking details as a bottom drawer that slides up
-       from the viewport bottom. The calendar remains visible above; the
-       details overlay the lower portion when expanded. */
-
-    .mlb-modal-content-wrapper {
-        /* keep calendar and other left content stacked normally */
-        flex-direction: column;
-        align-items: stretch;
-        position: relative;
-    }
-
-    /* Prepare right column as an off-canvas drawer */
-    .mlb-modal-right-column {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        max-width: 100%;
-        transform: translateY(110%);
-        transition: transform 320ms cubic-bezier(0.2, 0.9, 0.2, 1);
-        z-index: 11005; /* above modal contents */
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.18);
-        background: transparent; /* inner .mlb-booking-details provides white background */
-        pointer-events: none; /* disabled until opened */
-    }
-
-    /* When expanded, slide into view and accept pointer events */
-    .mlb-modal-right-column.mlb-expanded {
-        transform: translateY(0);
-        pointer-events: auto;
-    }
-
-    /* Limit drawer height and allow scrolling inside details */
-    .mlb-modal-right-column .mlb-booking-details {
-        min-width: auto;
-        width: 100%;
-        max-height: 65vh;
-        overflow-y: auto;
-        padding: 16px;
-        background: #ffffff;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-    }
-
-    /* Small gap when drawer is shown so it doesn't touch screen edge unnecessarily */
-    .mlb-modal-right-column.mlb-expanded .mlb-booking-details {
-        margin-bottom: env(safe-area-inset-bottom, 12px);
-    }
-}
-
-.cc-window.cc-floating.floating-mb.cc-type-info.cc-theme-classic.cc-bottom.cc-left {
-    padding: 1.2em;
-    border-radius: 5px;
-    display: none!important;
-}
-
-.mlb-modal .wrapper>.container {
-    margin-top: 140px!important;
 }

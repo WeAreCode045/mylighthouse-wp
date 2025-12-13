@@ -26,10 +26,7 @@
 
     function handleSpecialFallback($form, detail, bookingPageUrl) {
         try {
-            // Use device-specific display mode if available
-            var target = (typeof window.mlbGetDisplayModeForDevice === 'function')
-                ? window.mlbGetDisplayModeForDevice()
-                : ((typeof cqb_params !== 'undefined' && cqb_params && cqb_params.result_target) ? cqb_params.result_target : 'booking_page');
+            // Always redirect to external booking engine
             var hotelId = detail && detail.hotel
                 ? detail.hotel
                 : ($form.data('hotel-id') || $form.find('input[name="hotel_id"]').val() || '');
@@ -48,48 +45,20 @@
                 } catch (ignore) {}
             }
 
-            console.log('[handleSpecialFallback] hotelId:', hotelId, 'rateId:', rateId, 'bookingPageUrl:', bookingPageUrl, 'target:', target);
+            console.log('[handleSpecialFallback] hotelId:', hotelId, 'rateId:', rateId, 'bookingPageUrl:', bookingPageUrl);
 
-            if (!bookingPageUrl && target !== 'redirect_engine') {
-                try { $form[0].submit(); } catch (err) {}
-                return;
-            }
-
-            if (target === 'modal' && typeof window.MLB_Modal !== 'undefined' && typeof window.MLB_Modal.openBookingModal === 'function') {
-                window.MLB_Modal.openBookingModal(bookingPageUrl, hotelId, detail && detail.arrivalISO, detail && detail.departureISO, rateId, 'rate');
-                return;
-            }
-
-            // For redirect_engine target, navigate directly to the booking engine
-            if (target === 'redirect_engine') {
-                var bookingEngineBaseUrl = window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
-                var engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/GeneralAvailability';
-                var params = [];
-                if (rateId) params.push('Rate=' + encodeURIComponent(rateId));
-                if (detail && detail.arrivalISO) params.push('Arrival=' + encodeURIComponent(detail.arrivalISO));
-                if (detail && detail.departureISO) params.push('Departure=' + encodeURIComponent(detail.departureISO));
-                if (params.length > 0) engineUrl += '?' + params.join('&');
-                console.log('[handleSpecialFallback] Redirecting to engine:', engineUrl);
-                window.location.href = engineUrl;
-                return;
-            }
-
-            try {
-                var redirectUrl = new URL(bookingPageUrl, window.location.origin);
-                if (detail && detail.arrivalISO) redirectUrl.searchParams.set('Arrival', detail.arrivalISO);
-                if (detail && detail.departureISO) redirectUrl.searchParams.set('Departure', detail.departureISO);
-                if (hotelId) redirectUrl.searchParams.set('hotel_id', hotelId);
-                if (rateId) {
-                    redirectUrl.searchParams.delete('rate');
-                    redirectUrl.searchParams.delete('special_id');
-                    redirectUrl.searchParams.set('Rate', rateId);
-                }
-                console.log('[handleSpecialFallback] Final redirectUrl:', redirectUrl.toString());
-                window.location.href = redirectUrl.toString();
-            } catch (err) {
-                window.location.href = bookingPageUrl;
-            }
+            // Always redirect to external booking engine
+            var bookingEngineBaseUrl = bookingPageUrl || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+            var engineUrl = bookingEngineBaseUrl + encodeURIComponent(hotelId) + '/Rooms/GeneralAvailability';
+            var params = [];
+            if (rateId) params.push('Rate=' + encodeURIComponent(rateId));
+            if (detail && detail.arrivalISO) params.push('Arrival=' + encodeURIComponent(detail.arrivalISO));
+            if (detail && detail.departureISO) params.push('Departure=' + encodeURIComponent(detail.departureISO));
+            if (params.length > 0) engineUrl += '?' + params.join('&');
+            console.log('[handleSpecialFallback] Redirecting to engine:', engineUrl);
+            window.location.href = engineUrl;
         } catch (fallbackErr) {
+            console.error('[handleSpecialFallback] Error:', fallbackErr);
             try { $form[0].submit(); } catch (ignore) {}
         }
     }

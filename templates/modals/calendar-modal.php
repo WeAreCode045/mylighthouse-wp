@@ -1,54 +1,47 @@
 <?php
-
 /**
- * Calendar Modal Component
- *
- * Template for the calendar modal overlay and structure.
- * This template is loaded into JavaScript as a string template.
+ * Calendar Modal Template
+ * 
+ * Template for the calendar modal overlay. Used by calendar.js
+ * 
+ * @package Mylighthouse_Booker
  */
 
-// Security check
 if (! defined('ABSPATH')) {
-	die;
+	exit;
 }
 ?>
-
-<div class="mlb-calendar-modal-overlay" data-form-id="{{FORM_ID}}">
+<div class="mlb-calendar-modal-overlay">
 	<div class="mlb-calendar-modal-container">
-		<button type="button" class="mlb-calendar-modal-close" aria-label="<?php echo esc_attr__( 'Close calendar', 'mylighthouse-booker' ); ?>">&times;</button>
+		<button type="button" class="mlb-calendar-modal-close" aria-label="<?php echo esc_attr__('Close calendar', 'mylighthouse-booker'); ?>">&times;</button>
 		<div class="mlb-modal-content-wrapper">
 			<div class="mlb-modal-calendar"></div>
-			<div class="mlb-modal-right-column">
+			<div class="mlb-modal-right-column" style="display:none;">
 				<div class="mlb-booking-details">
-					<h3><?php echo esc_html__( 'Booking Details', 'mylighthouse-booker' ); ?></h3>
+					<h3><?php echo esc_html__('Booking Details', 'mylighthouse-booker'); ?></h3>
 					<div class="mlb-booking-info">
-					<div class="mlb-info-row">
-						<span class="mlb-label"><?php echo esc_html__( 'Hotel:', 'mylighthouse-booker' ); ?></span>
-						<span class="mlb-hotel-name">Hotel Name</span>
-					</div>
-					<div class="mlb-info-row mlb-room-row" style="display:none;">
-						<span class="mlb-label"><?php echo esc_html__( 'Room:', 'mylighthouse-booker' ); ?></span>
-						<span class="mlb-room-name">Room Name</span>
-					</div>
-					<div class="mlb-info-row mlb-special-row" style="display:none;">
-						<span class="mlb-label"><?php echo esc_html__( 'Special:', 'mylighthouse-booker' ); ?></span>
-						<span class="mlb-special-name">Special Name</span>
-					</div>
 						<div class="mlb-info-row">
-							<span class="mlb-label"><?php echo esc_html__( 'Check-in:', 'mylighthouse-booker' ); ?></span>
-							<span class="mlb-arrival-date"><?php echo esc_html__( 'Select dates', 'mylighthouse-booker' ); ?></span>
+							<span class="mlb-label"><?php echo esc_html__('Hotel:', 'mylighthouse-booker'); ?></span>
+							<span class="mlb-hotel-name"></span>
 						</div>
-						<div class="mlb-info-row">
-							<span class="mlb-label"><?php echo esc_html__( 'Check-out:', 'mylighthouse-booker' ); ?></span>
-							<span class="mlb-departure-date"><?php echo esc_html__( 'Select dates', 'mylighthouse-booker' ); ?></span>
+						<div class="mlb-info-row mlb-room-row">
+							<span class="mlb-label"><?php echo esc_html__('Room:', 'mylighthouse-booker'); ?></span>
+							<span class="mlb-room-name"></span>
+						</div>
+						<div class="mlb-info-row mlb-dates-row" style="display:none;">
+							<span class="mlb-label"><?php echo esc_html__('Arrival:', 'mylighthouse-booker'); ?></span>
+							<span class="mlb-arrival-date">-</span>
+						</div>
+						<div class="mlb-info-row mlb-dates-row" style="display:none;">
+							<span class="mlb-label"><?php echo esc_html__('Departure:', 'mylighthouse-booker'); ?></span>
+							<span class="mlb-departure-date">-</span>
 						</div>
 					</div>
-					<div class="mlb-modal-actions">
-						<button type="button" class="mlb-modal-submit-btn" disabled>
-							<span class="mlb-modal-cta-room"><?php echo esc_html__( 'Book This Room', 'mylighthouse-booker' ); ?></span>
-							<span class="mlb-modal-cta-special" style="display:none;"><?php echo esc_html__( 'Book Special', 'mylighthouse-booker' ); ?></span>
-						</button>
-					</div>
+				</div>
+				<div class="mlb-modal-actions">
+					<button type="button" class="mlb-modal-submit-btn" disabled>
+						<span class="mlb-modal-cta-room"><?php echo esc_html__('Book This Room', 'mylighthouse-booker'); ?></span>
+					</button>
 				</div>
 			</div>
 		</div>

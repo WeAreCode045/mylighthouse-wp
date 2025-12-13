@@ -166,80 +166,7 @@ class Mylighthouse_Booker_Frontend_Assets
 			false  // Load in head to ensure it's ready
 		);
 
-        // Use file modification times for script versions to help bust caches when files change.
-        $room_form_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/room-form.js';
-        $special_form_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/special-form.js';
-        $room_form_ver = (file_exists($room_form_path)) ? filemtime($room_form_path) : '1.0.1';
-        $special_form_ver = (file_exists($special_form_path)) ? filemtime($special_form_path) : '1.0.1';
-
-		wp_register_script(
-			'mylighthouse-booker-room-form',
-			plugins_url('/assets/js/frontend/room-form.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('jquery', 'easepick-wrapper', 'wp-i18n'),
-			$room_form_ver,
-			true
-		);
-		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'mylighthouse-booker-room-form', 'mylighthouse-booker', plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'languages' );
-		}
-
-		wp_register_script(
-			'mylighthouse-booker-special-form',
-			plugins_url('/assets/js/frontend/special-form.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('jquery', 'easepick-wrapper', 'wp-i18n'),
-			$special_form_ver,
-			true
-		);
-		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'mylighthouse-booker-special-form', 'mylighthouse-booker', plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'languages' );
-		}
-
-		wp_register_script(
-			'mylighthouse-booker-booking-modal',
-			plugins_url('/assets/js/frontend/booking-modal.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('wp-i18n'),
-			'1.0.0',
-			true
-		);
-		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'mylighthouse-booker-booking-modal', 'mylighthouse-booker', plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'languages' );
-		}
-
-		wp_register_script(
-			'mylighthouse-booker-form',
-			plugins_url('/assets/js/frontend/form.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('mylighthouse-booker-booking-modal', 'wp-i18n'),
-			'1.0.0',
-			true
-		);
-		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'mylighthouse-booker-form', 'mylighthouse-booker', plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'languages' );
-		}
-
-		// Booking form behaviors (handles inline pickers and modal dispatching)
-		$booking_form_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/booking-form.js';
-		$booking_form_ver = (file_exists($booking_form_path)) ? filemtime($booking_form_path) : '1.0.0';
-		wp_register_script(
-			'mylighthouse-booker-booking-form',
-			plugins_url('/assets/js/frontend/booking-form.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('jquery', 'easepick-wrapper', 'mylighthouse-booker-booking-modal', 'wp-i18n'),
-			$booking_form_ver,
-			true
-		);
-		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'mylighthouse-booker-booking-form', 'mylighthouse-booker', plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'languages' );
-		}
-
-		$iframe_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/iframe.js';
-		$iframe_ver = (file_exists($iframe_path)) ? filemtime($iframe_path) : '1.0.0';
-		wp_register_script(
-			'mylighthouse-booker-iframe',
-			plugins_url('/assets/js/frontend/iframe.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('jquery'),
-			$iframe_ver,
-			true
-		);
-
+		// Register spinner utility
 		wp_register_script(
 			'mylighthouse-booker-spinner',
 			plugins_url('/assets/js/frontend/spinner.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
@@ -248,36 +175,14 @@ class Mylighthouse_Booker_Frontend_Assets
 			true
 		);
 
+		// Register Frontend - unified form handlers with calendar modal (hotel, room, special)
+		$frontend_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/frontend.js';
+		$frontend_ver = (file_exists($frontend_path)) ? filemtime($frontend_path) : '1.0.0';
 		wp_register_script(
-			'mylighthouse-booker-room-booking',
-			plugins_url('/assets/js/frontend/room-booking.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('jquery', 'mylighthouse-booker-booking-modal', 'wp-i18n'),
-			'1.0.0',
-			true
-		);
-		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'mylighthouse-booker-room-booking', 'mylighthouse-booker', plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'languages' );
-		}
-
-		wp_register_script(
-			'mylighthouse-booker-special-booking',
-			plugins_url('/assets/js/frontend/special-booking.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array('jquery', 'mylighthouse-booker-booking-modal', 'wp-i18n'),
-			'1.0.0',
-			true
-		);
-		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'mylighthouse-booker-special-booking', 'mylighthouse-booker', plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'languages' );
-		}
-
-		// Fallback modal trigger script: ensures elements with `data-trigger-modal` open the modal
-		$modal_trigger_path = plugin_dir_path(MYLIGHTHOUSE_BOOKER_PLUGIN_FILE) . 'assets/js/frontend/modal-trigger-fallback.js';
-		$modal_trigger_ver = (file_exists($modal_trigger_path)) ? filemtime($modal_trigger_path) : '1.0.0';
-		wp_register_script(
-			'mylighthouse-booker-modal-trigger',
-			plugins_url('/assets/js/frontend/modal-trigger-fallback.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
-			array(),
-			$modal_trigger_ver,
+			'mylighthouse-booker-frontend',
+			plugins_url('/assets/js/frontend/frontend.js', MYLIGHTHOUSE_BOOKER_PLUGIN_FILE),
+			array('jquery', 'easepick-datetime', 'easepick-base-plugin', 'easepick-core', 'easepick-range', 'easepick-lock', 'mylighthouse-booker-spinner'),
+			$frontend_ver,
 			true
 		);
 

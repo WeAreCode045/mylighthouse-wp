@@ -7,7 +7,7 @@ if (! defined('ABSPATH')) {
 }
 ?>
 <div class="mlb-booking-form mlb-layout-<?php echo esc_attr($layout); ?> mlb-placement-<?php echo esc_attr($placement); ?>" data-layout="<?php echo esc_attr($layout); ?>" data-button-placement="<?php echo esc_attr($placement); ?>">
-    <form id="<?php echo esc_attr($form_uid); ?>" class="mlb-form" method="GET" action="<?php echo esc_url($booking_page_url); ?>" data-hotel-name="<?php echo esc_attr($hotel_name); ?>">
+    <form id="<?php echo esc_attr($form_uid); ?>" class="mlb-form" data-hotel-name="<?php echo esc_attr($hotel_name); ?>" data-form-type="hotel">
 
         <?php if ($show_hotel_select) : ?>
             <div class="form-field hotel-selector has-icon">

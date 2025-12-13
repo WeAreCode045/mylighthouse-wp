@@ -167,16 +167,9 @@ class Mylighthouse_Booker_Ajax_Handlers
 
 		// Sanitize and save options
 		$booking_page = isset($_POST['mlb_booking_page_url']) ? sanitize_text_field($_POST['mlb_booking_page_url']) : '';
-		$valid_modes = array('modal','booking_page','redirect_engine');
-		$display_mode_mobile = isset($_POST['mlb_display_mode_mobile']) && in_array($_POST['mlb_display_mode_mobile'], $valid_modes) ? sanitize_text_field($_POST['mlb_display_mode_mobile']) : 'modal';
-		$display_mode_tablet = isset($_POST['mlb_display_mode_tablet']) && in_array($_POST['mlb_display_mode_tablet'], $valid_modes) ? sanitize_text_field($_POST['mlb_display_mode_tablet']) : 'modal';
-		$display_mode_desktop = isset($_POST['mlb_display_mode_desktop']) && in_array($_POST['mlb_display_mode_desktop'], $valid_modes) ? sanitize_text_field($_POST['mlb_display_mode_desktop']) : 'modal';
 		$spinner_image_url = isset($_POST['mlb_spinner_image_url']) ? esc_url_raw(trim($_POST['mlb_spinner_image_url'])) : '';
 
 		update_option('mlb_booking_page_url', $booking_page);
-		update_option('mlb_display_mode_mobile', $display_mode_mobile);
-		update_option('mlb_display_mode_tablet', $display_mode_tablet);
-		update_option('mlb_display_mode_desktop', $display_mode_desktop);
 		update_option('mlb_spinner_image_url', $spinner_image_url);
 
 		// Redirect back to the settings fragment inside the dashboard

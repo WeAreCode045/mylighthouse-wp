@@ -1,53 +1,56 @@
 /**
- * Global Date Picker Controller
- * Controls the date picker modal rendered by PHP
+ * Calendar Modal Class
+ * Handles date range picker modal with EasePick
  *
  * @package Mylighthouse_Booker
  */
 
-window.MLB_DatePicker = (function() {
+(function() {
     'use strict';
 
-    let modal = null;
-    let picker = null;
-    let currentCallback = null;
-    let initialized = false;
-
-    /**
-     * Initialize date picker
-     */
-    function init() {
-        if (initialized) return;
-
-        modal = document.getElementById('mlb-date-picker-modal');
-        if (!modal) {
-            console.error('MLB: Date picker modal not found in DOM');
-            return;
+    class CalendarModal {
+        constructor(formElement, options = {}) {
+            this.form = formElement;
+            this.formId = formElement.id || 'mlb-form-' + Math.random().toString(36).substr(2, 9);
+            this.formType = options.formType || 'hotel';
+            this.onDateSelect = options.onDateSelect || null;
+            
+            // Get form data
+            this.hotelId = formElement.dataset.hotelId || '';
+            this.hotelName = formElement.dataset.hotelName || '';
+            this.roomId = formElement.dataset.roomId || '';
+            this.roomName = formElement.dataset.roomName || '';
+            this.rateId = formElement.dataset.rateId || formElement.dataset.specialId || '';
+            
+            // Hidden date inputs
+            this.checkinInput = formElement.querySelector('.mlb-checkin');
+            this.checkoutInput = formElement.querySelector('.mlb-checkout');
+            
+            this.overlay = null;
+            this.picker = null;
+            this.isInitialized = false;
         }
 
-        const dateInput = document.getElementById('mlb-global-datepicker');
-        if (!dateInput) {
-            console.error('MLB: Date picker input not found');
-            return;
+        init() {
+            if (this.isInitialized) return;
+            this.createModalOverlay();
+            this.initializePicker();
+            this.attachEventListeners();
+            this.isInitialized = true;
         }
 
-        // Check if easepick is loaded
-        if (typeof easepick === 'undefined' || typeof easepick.create !== 'function') {
-            console.error('MLB: Easepick library not loaded');
-            return;
-        }
+        createModalOverlay() {
+            // Check if overlay already exists
+            this.overlay = document.querySelector(`.mlb-calendar-modal-overlay[data-form-id="${this.formId}"]`);
+            if (this.overlay) return;
 
-        // Initialize easepick
-        try {
-            picker = new easepick.create({
-                element: dateInput,
-                css: [(window.MLBPluginUrl && window.MLBPluginUrl.url || '') + 'assets/vendor/easepick/easepick.css'],
-                inline: true,
-                grid: 1,
-                calendars: 1,
-                lang: 'nl-NL',
-                format: 'YYYY-MM-DD',
-                plugins: ['RangePlugin', 'LockPlugin'],
+            // Create overlay
+            this.overlay = document.createElement('div');
+            this.overlay.className = 'mlb-calendar-modal-overlay';
+            this.overlay.setAttribute('data-form-id', this.formId);
+            
+            this.overlay.innerHTML = `
+                <div class="mlb-calendar-modal-container
                 RangePlugin: {
                     tooltipNumber(num) { 
                         return num - 1; 
