@@ -35,6 +35,11 @@
     max-height: 90vh;
     overflow: auto;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mlb-calendar-modal-container.mlb-expanded {
+    max-width: min(1000px, 90vw);
 }
 
 /* Close Button */

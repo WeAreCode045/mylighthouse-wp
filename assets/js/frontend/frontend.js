@@ -204,6 +204,12 @@
                 
                 // Slide in booking details from right (desktop) or replace calendar (mobile)
                 if (rightColumn) {
+                    // Expand modal container on desktop
+                    var modalContainer = self.overlay.querySelector('.mlb-calendar-modal-container');
+                    if (modalContainer) {
+                        modalContainer.classList.add('mlb-expanded');
+                    }
+                    
                     setTimeout(function() { 
                         rightColumn.classList.add('mlb-visible');
                         // On mobile, hide calendar when showing details
