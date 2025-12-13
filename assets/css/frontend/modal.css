@@ -45,8 +45,8 @@
 /* Close Button */
 .mlb-calendar-modal-close {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 5px;
+    right: 5px;
     background: transparent;
     border: none;
     font-size: 28px;
@@ -54,8 +54,8 @@
     cursor: pointer;
     color: #666;
     z-index: 10001;
-    width: 32px;
-    height: 32px;
+    width: 25px;
+    height: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
