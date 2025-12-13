@@ -113,6 +113,9 @@
                     element: calendarDiv,
                     inline: true,
                     plugins: [RangePlugin, LockPlugin],
+                    css: [
+                        '/wp-content/plugins/mylighthouse-booker/assets/vendor/easepick/easepick.css'
+                    ],
                     RangePlugin: {
                         tooltip: true,
                         locale: {
@@ -500,7 +503,7 @@
     }
 
     // Re-initialize on Elementor preview changes
-    if (typeof elementorFrontend !== 'undefined') {
+    if (typeof elementorFrontend !== 'undefined' && elementorFrontend.hooks) {
         elementorFrontend.hooks.addAction('frontend/element_ready/widget', function() {
             setTimeout(initializeForms, 100);
         });
