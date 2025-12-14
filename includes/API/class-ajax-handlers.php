@@ -46,10 +46,6 @@ class Mylighthouse_Booker_Ajax_Handlers
 		add_action('admin_post_mlb_save_admin_settings', array($this, 'handle_save_admin_settings'));
 		// AJAX save for settings (SPA-friendly)
 		add_action('wp_ajax_mlb_save_admin_settings', array($this, 'ajax_save_admin_settings'));
-		
-		// AJAX get booking details component
-		add_action('wp_ajax_mlb_get_booking_details', array($this, 'ajax_get_booking_details'));
-		add_action('wp_ajax_nopriv_mlb_get_booking_details', array($this, 'ajax_get_booking_details'));
 
 		// Legacy DB-based Text & Translations have been removed; translations
 		// are now provided via gettext (.po/.mo) and wp_set_script_translations.
@@ -928,23 +924,5 @@ class Mylighthouse_Booker_Ajax_Handlers
 		}
 	}
 
-	/**
-	 * AJAX handler to get booking details component HTML
-	 */
-	public function ajax_get_booking_details()
-	{
-		// Verify nonce
-		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'cqb_nonce')) {
-			wp_send_json_error(array('message' => 'Invalid nonce'));
-			return;
-		}
-
-		// Load the component template
-		ob_start();
-		include MYLIGHTHOUSE_BOOKER_ABSPATH . 'templates/modals/modal-booking-details.php';
-		$html = ob_get_clean();
-
-		wp_send_json_success(array('html' => $html));
-	}
 
 }

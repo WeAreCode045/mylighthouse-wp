@@ -758,26 +758,12 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 				$spinner_image = esc_url( wp_get_attachment_image_url($spinner_image_id, 'full') );
 			}
 		}
-		// Store params in data attributes for CSP compliance (no inline scripts)
-		$params_data = array(
-			'ajax-url' => admin_url('admin-ajax.php'),
-			'nonce' => wp_create_nonce('cqb_nonce'),
-			'spinner-image-url' => $spinner_image,
-		);
-		
-		// Add data attributes to body or a hidden element
-		add_filter('body_class', function($classes) use ($params_data, $calendar_modal_template) {
-			// Store template in a hidden div
-			add_action('wp_footer', function() use ($calendar_modal_template) {
-				echo '<div id="mlb-calendar-template" style="display:none;">' . $calendar_modal_template . '</div>';
-			}, 1);
-			return $classes;
-		});
-		
-		// Add data attributes to the widget wrapper
-		foreach ($params_data as $key => $value) {
-			echo '<div class="mlb-data-params" data-' . esc_attr($key) . '="' . esc_attr($value) . '" style="display:none;"></div>';
-		}
+		// Localize essential parameters for the frontend scripts
+		wp_localize_script('mylighthouse-booker-frontend', 'cqb_params', array(
+			'booking_page_url' => $booking_page_url,
+			'spinner_image_url' => $spinner_image,
+			'calendar_modal_template' => $calendar_modal_template,
+		));
 
 		// Render the form template directly (not via shortcode)
 		$no_stack_class = (!empty($settings['prevent_auto_stack']) && $settings['prevent_auto_stack'] === 'yes') ? ' mlb-inline-no-stack' : '';
