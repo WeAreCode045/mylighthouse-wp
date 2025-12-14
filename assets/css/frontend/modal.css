@@ -220,10 +220,14 @@
         flex-direction: column;
         padding: 16px;
         gap: 0;
+        display: flex;
+        position: relative;
+        min-height: 400px;
     }
     
     .mlb-modal-calendar {
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        display: block;
     }
     
     .mlb-modal-calendar.mlb-hidden {
@@ -231,26 +235,26 @@
         opacity: 0;
         position: absolute;
         pointer-events: none;
+        left: 0;
+        top: 0;
     }
     
     .mlb-modal-right-column {
-        flex: 1 1 auto;
-        max-height: none;
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: 16px;
+        top: 16px;
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        width: auto;
+        margin-left: 0;
         background: #fff;
         transform: translateX(100%);
-        opacity: 0;
+        overflow-y: auto;
     }
     
     .mlb-modal-right-column.mlb-visible {
         transform: translateX(0);
         opacity: 1;
-        position: relative;
     }
     
     .mlb-modal-back-btn {
