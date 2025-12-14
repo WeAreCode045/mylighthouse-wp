@@ -760,6 +760,8 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 		}
 		// Localize essential parameters for the frontend scripts
 		wp_localize_script('mylighthouse-booker-frontend', 'cqb_params', array(
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'nonce' => wp_create_nonce('cqb_nonce'),
 			'booking_page_url' => $booking_page_url,
 			'spinner_image_url' => $spinner_image,
 			'calendar_modal_template' => $calendar_modal_template,
