@@ -93,6 +93,11 @@
 .container > main {
 	background-color: var(--color-bg-default);
 }
+
+.mlb-modal-calendar.mlb-hidden .easepick-wrapper {
+        display: none !important;
+    }
+
 .container > footer,
 .container > header {
 	background-color: var(--color-bg-secondary);
