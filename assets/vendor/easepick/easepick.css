@@ -77,8 +77,8 @@
     transform: translate(-50%, -50%) scale(1) !important;
     transform-origin: center !important;
     z-index: 9999 !important;
-    max-width: 90vw;
-    max-height: 90vh;
+    max-width: 98vw;
+    max-height: 98vh;
     overflow: auto;
 }
 .container.inline {
