@@ -340,7 +340,7 @@
 	}
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
 	.container:not(.inline) {
 		transform: scaleY(0) !important;
 		transform-origin: bottom center !important;
