@@ -81,12 +81,11 @@
 /* Calendar Container */
 .mlb-modal-calendar {
     flex-shrink: 0;
-    line-height: 0;
-    display: none;
+    display: block;
 }
 
 .mlb-modal-calendar > * {
-    line-height: normal;
+    display: block;
 }
 
 /* Right Column (Booking Details) */
