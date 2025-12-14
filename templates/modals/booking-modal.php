@@ -19,16 +19,10 @@ if (! defined('ABSPATH')) {
 			<div class="mlb-modal-calendar-section">
 				<?php include plugin_dir_path(__FILE__) . 'modal-calendar.php'; ?>
 			</div>
-			<!-- Details View Section (loaded dynamically) -->
+			<!-- Details View Section -->
 			<div class="mlb-modal-details-section">
-				<!-- Content will be injected by JavaScript -->
+				<?php include plugin_dir_path(__FILE__) . 'modal-booking-details.php'; ?>
 			</div>
 		</div>
 	</div>
-</div>
-
-<!-- Booking Details Template (hidden, used by JS) -->
-<template id="mlb-booking-details-template">
-	<?php include plugin_dir_path(__FILE__) . 'modal-booking-details.php'; ?>
-</template><div style="display:none;" id="mlb-calendar-modal-wrapper">
 </div>
