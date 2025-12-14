@@ -19,10 +19,8 @@ if (! defined('ABSPATH')) {
 			<div class="mlb-modal-calendar-section">
 				<?php include plugin_dir_path(__FILE__) . 'modal-calendar.php'; ?>
 			</div>
-			<!-- Details View Section -->
-			<div class="mlb-modal-details-section">
-				<?php include plugin_dir_path(__FILE__) . 'modal-booking-details.php'; ?>
-			</div>
+			<!-- Details View Section (loaded dynamically) -->
+			<div class="mlb-modal-details-section"></div>
 		</div>
 	</div>
 </div>

@@ -191,34 +191,89 @@
                 return;
             }
             
-            // Populate with data
-            var hotelNameEl = this.detailsSection.querySelector('.mlb-hotel-name');
-            var roomNameEl = this.detailsSection.querySelector('.mlb-room-name');
-            var arrivalSpan = this.detailsSection.querySelector('.mlb-arrival-date');
-            var departureSpan = this.detailsSection.querySelector('.mlb-departure-date');
+            // Load the details component via AJAX
+            jQuery.ajax({
+                url: cqb_params.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'mlb_get_booking_details',
+                    nonce: cqb_params.nonce
+                },
+                success: function(response) {
+                    if (response.success && response.data.html) {
+                        // Inject the component HTML
+                        self.detailsSection.innerHTML = response.data.html;
+                        
+                        // Populate with data
+                        var hotelNameEl = self.detailsSection.querySelector('.mlb-hotel-name');
+                        var roomNameEl = self.detailsSection.querySelector('.mlb-room-name');
+                        var arrivalSpan = self.detailsSection.querySelector('.mlb-arrival-date');
+                        var departureSpan = self.detailsSection.querySelector('.mlb-departure-date');
+                        var submitBtn = self.detailsSection.querySelector('.mlb-modal-submit-btn');
+                        
+                        if (hotelNameEl) hotelNameEl.textContent = self.hotelName || 'Hotel';
+                        if (roomNameEl) roomNameEl.textContent = self.roomName || 'Room';
+                        if (arrivalSpan) arrivalSpan.textContent = arrivalStr;
+                        if (departureSpan) departureSpan.textContent = departureStr;
+                        if (submitBtn) submitBtn.disabled = false;
+                        
+                        // Attach event listeners to new elements
+                        self.attachDetailsEventListeners();
+                        
+                        // Expand modal container
+                        var modalContainer = self.overlay.querySelector('.mlb-calendar-modal-container');
+                        if (modalContainer) {
+                            modalContainer.classList.add('mlb-expanded');
+                        }
+                        
+                        // Show details section with animation
+                        setTimeout(function() {
+                            self.detailsSection.classList.add('mlb-visible');
+                            
+                            // On mobile, hide calendar
+                            if (window.innerWidth <= 768 && self.calendarSection) {
+                                self.calendarSection.classList.add('mlb-hidden');
+                            }
+                        }, 50);
+                    }
+                },
+                error: function() {
+                    console.error('MLB: Failed to load booking details');
+                }
+            });
+        }
+        
+        attachDetailsEventListeners() {
+            var self = this;
+            
+            // Submit button
             var submitBtn = this.detailsSection.querySelector('.mlb-modal-submit-btn');
-            
-            if (hotelNameEl) hotelNameEl.textContent = this.hotelName || 'Hotel';
-            if (roomNameEl) roomNameEl.textContent = this.roomName || 'Room';
-            if (arrivalSpan) arrivalSpan.textContent = arrivalStr;
-            if (departureSpan) departureSpan.textContent = departureStr;
-            if (submitBtn) submitBtn.disabled = false;
-            
-            // Expand modal container
-            var modalContainer = this.overlay.querySelector('.mlb-calendar-modal-container');
-            if (modalContainer) {
-                modalContainer.classList.add('mlb-expanded');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function() {
+                    self.close();
+                    var event = new CustomEvent('mlb-modal-submit', {
+                        bubbles: true,
+                        detail: {
+                            arrivalDMY: self.checkinInput ? self.checkinInput.value : '',
+                            departureDMY: self.checkoutInput ? self.checkoutInput.value : '',
+                            arrivalISO: self.toISO(self.checkinInput ? self.checkinInput.value : ''),
+                            departureISO: self.toISO(self.checkoutInput ? self.checkoutInput.value : '')
+                        }
+                    });
+                    self.form.dispatchEvent(event);
+                });
             }
             
-            // Show details section with animation
-            setTimeout(function() {
-                self.detailsSection.classList.add('mlb-visible');
-                
-                // On mobile, hide calendar
-                if (window.innerWidth <= 768 && self.calendarSection) {
-                    self.calendarSection.classList.add('mlb-hidden');
-                }
-            }, 50);
+            // Back button
+            var backBtn = this.detailsSection.querySelector('.mlb-modal-back-btn');
+            if (backBtn) {
+                backBtn.addEventListener('click', function() {
+                    self.detailsSection.classList.remove('mlb-visible');
+                    if (self.calendarSection) {
+                        self.calendarSection.classList.remove('mlb-hidden');
+                    }
+                });
+            }
         }
 
         attachEventListeners() {
@@ -236,38 +291,6 @@
                     self.close();
                 }
             });
-
-            // Submit button for room forms
-            if (this.formType === 'room') {
-                var submitBtn = this.detailsSection.querySelector('.mlb-modal-submit-btn');
-                if (submitBtn) {
-                    submitBtn.addEventListener('click', function() {
-                        self.close();
-                        // Trigger form submission
-                        var event = new CustomEvent('mlb-modal-submit', {
-                            bubbles: true,
-                            detail: {
-                                arrivalDMY: self.checkinInput ? self.checkinInput.value : '',
-                                departureDMY: self.checkoutInput ? self.checkoutInput.value : '',
-                                arrivalISO: self.toISO(self.checkinInput ? self.checkinInput.value : ''),
-                                departureISO: self.toISO(self.checkoutInput ? self.checkoutInput.value : '')
-                            }
-                        });
-                        self.form.dispatchEvent(event);
-                    });
-                }
-                
-                // Back button for mobile
-                var backBtn = this.detailsSection.querySelector('.mlb-modal-back-btn');
-                if (backBtn) {
-                    backBtn.addEventListener('click', function() {
-                        self.detailsSection.classList.remove('mlb-visible');
-                        if (self.calendarSection) {
-                            self.calendarSection.classList.remove('mlb-hidden');
-                        }
-                    });
-                }
-            }
         }
 
         open() {
