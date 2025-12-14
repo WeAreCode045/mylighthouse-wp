@@ -209,6 +209,13 @@
         width: 100%;
     }
     
+    .mlb-modal-calendar .easepick-wrapper,
+    .mlb-modal-calendar .easepick-wrapper > *,
+    .mlb-modal-calendar .container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
     .mlb-modal-right-column {
         width: 100% !important;
         margin-left: 0 !important;
