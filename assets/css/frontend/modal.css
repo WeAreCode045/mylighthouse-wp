@@ -76,7 +76,7 @@
     position: relative;
     align-items: flex-start;
     vertical-align: middle;
-    max-height: 350px
+    height: 350px;
 }
 
 /* Calendar Container */
