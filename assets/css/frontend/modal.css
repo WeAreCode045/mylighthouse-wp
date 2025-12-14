@@ -69,19 +69,24 @@
 
 /* Modal Content Wrapper */
 .mlb-modal-content-wrapper {
-    display: inline-flex;
+    display: flex;
     flex-direction: row;
     gap: 0;
-    padding: 30px;
+    padding: 16px;
     position: relative;
     align-items: flex-start;
-    vertical-align: middle;
-    height: 350px;
 }
 
-/* Calendar Container */
-.mlb-modal-calendar {
+/* Calendar Section */
+.mlb-modal-calendar-section {
     flex-shrink: 0;
+}
+
+.mlb-modal-calendar-section.mlb-hidden {
+    display: none;
+}
+
+.mlb-modal-calendar {
     line-height: 0;
 }
 
@@ -89,12 +94,8 @@
     line-height: normal;
 }
 
-.mlb-modal-calendar.mlb-hidden {
-    display: none;
-}
-
-/* Right Column (Booking Details) */
-.mlb-modal-right-column {
+/* Details Section */
+.mlb-modal-details-section {
     width: 0;
     display: flex;
     flex-direction: column;
@@ -103,10 +104,9 @@
     opacity: 0;
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
-    align-self: flex-start;
 }
 
-.mlb-modal-right-column.mlb-visible {
+.mlb-modal-details-section.mlb-visible {
     width: 340px;
     margin-left: 24px;
     opacity: 1;
@@ -223,26 +223,19 @@
         flex-direction: column;
         padding: 16px;
         gap: 0;
-        display: flex;
-        position: relative;
-        min-height: 400px;
     }
     
-    .mlb-modal-calendar {
-        width: 100%;
-    }
-    
-    .mlb-modal-calendar.mlb-hidden {
+    .mlb-modal-calendar-section.mlb-hidden {
         display: none;
     }
     
-    .mlb-modal-right-column {
+    .mlb-modal-details-section {
         width: 100%;
         margin-left: 0;
         display: none;
     }
     
-    .mlb-modal-right-column.mlb-visible {
+    .mlb-modal-details-section.mlb-visible {
         display: flex;
         opacity: 1;
     }
@@ -254,9 +247,5 @@
     .mlb-calendar-modal-container {
         max-width: 95vw;
         max-height: 95vh;
-    }
-    
-    .mlb-modal-content-wrapper {
-        position: relative;
     }
 }
