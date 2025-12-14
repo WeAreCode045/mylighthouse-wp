@@ -237,6 +237,10 @@
         display: none;
     }
     
+    .mlb-modal-calendar.mlb-hidden .easepick-wrapper {
+        display: none !important;
+    }
+    
     .mlb-modal-right-column {
         width: 100%;
         margin-left: 0;
