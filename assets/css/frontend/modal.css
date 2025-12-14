@@ -83,11 +83,14 @@
 .mlb-modal-calendar {
     flex-shrink: 0;
     line-height: 0;
-    display: none;
 }
 
 .mlb-modal-calendar > * {
     line-height: normal;
+}
+
+.mlb-modal-calendar.mlb-hidden {
+    display: none;
 }
 
 /* Right Column (Booking Details) */
@@ -226,34 +229,21 @@
     }
     
     .mlb-modal-calendar {
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-        display: block;
+        width: 100%;
     }
     
     .mlb-modal-calendar.mlb-hidden {
-        transform: translateX(-100%);
-        opacity: 0;
-        position: absolute;
-        pointer-events: none;
-        left: 0;
-        top: 0;
+        display: none;
     }
     
     .mlb-modal-right-column {
-        position: absolute;
-        top: 16px;
-        left: 16px;
-        right: 16px;
-        bottom: 16px;
-        width: auto;
+        width: 100%;
         margin-left: 0;
-        background: #fff;
-        transform: translateX(100%);
-        overflow-y: auto;
+        display: none;
     }
     
     .mlb-modal-right-column.mlb-visible {
-        transform: translateX(0);
+        display: flex;
         opacity: 1;
     }
     
