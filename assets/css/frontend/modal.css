@@ -203,8 +203,7 @@
         gap: 16px;
         display: flex;
         position: relative;
-        max-height: calc(95vh - 32px);
-        overflow-y: auto;
+        height: auto;
     }
     
     .mlb-modal-calendar {
@@ -227,6 +226,7 @@
     .mlb-calendar-modal-container {
         max-width: 95vw;
         max-height: 95vh;
-        overflow: visible;
+        overflow-y: auto;
+        height: auto;
     }
 }
