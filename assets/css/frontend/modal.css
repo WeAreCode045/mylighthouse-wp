@@ -223,6 +223,8 @@
     }
     
     .mlb-calendar-modal-container {
+        max-width: 95vw !important;
+        width: 95vw;
         max-height: 95vh;
         overflow-y: auto;
         height: auto;
