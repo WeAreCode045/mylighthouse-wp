@@ -69,12 +69,13 @@
 
 /* Modal Content Wrapper */
 .mlb-modal-content-wrapper {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     gap: 0;
     padding: 16px;
     position: relative;
     align-items: flex-start;
+    vertical-align: top;
 }
 
 /* Calendar Container */
