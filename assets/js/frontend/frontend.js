@@ -9,6 +9,51 @@
 (function() {
     'use strict';
 
+    // Global config cache
+    let mlbConfig = null;
+    let mlbModalTemplate = null;
+
+    // Fetch config from REST API
+    async function fetchConfig() {
+        if (mlbConfig) return mlbConfig;
+        
+        try {
+            const response = await fetch('/wp-json/mylighthouse-booker/v1/config');
+            if (!response.ok) throw new Error('Failed to fetch config');
+            mlbConfig = await response.json();
+            return mlbConfig;
+        } catch (error) {
+            console.error('MLB: Failed to load config:', error);
+            // Fallback to legacy cqb_params if available
+            if (typeof cqb_params !== 'undefined') {
+                mlbConfig = cqb_params;
+                return mlbConfig;
+            }
+            return {};
+        }
+    }
+
+    // Fetch modal template from REST API
+    async function fetchModalTemplate() {
+        if (mlbModalTemplate) return mlbModalTemplate;
+        
+        try {
+            const response = await fetch('/wp-json/mylighthouse-booker/v1/modal-template');
+            if (!response.ok) throw new Error('Failed to fetch modal template');
+            const data = await response.json();
+            mlbModalTemplate = data.html;
+            return mlbModalTemplate;
+        } catch (error) {
+            console.error('MLB: Failed to load modal template:', error);
+            // Fallback to legacy cqb_params if available
+            if (typeof cqb_params !== 'undefined' && cqb_params.calendar_modal_template) {
+                mlbModalTemplate = cqb_params.calendar_modal_template;
+                return mlbModalTemplate;
+            }
+            return '';
+        }
+    }
+
     // Calendar Modal Class
     class CalendarModal {
         constructor(formElement, options = {}) {
@@ -33,19 +78,17 @@
             this.isInitialized = false;
         }
 
-        init() {
+        async init() {
             if (this.isInitialized) return;
-            this.createModalOverlay();
+            await this.createModalOverlay();
             this.initializePicker();
             this.attachEventListeners();
             this.isInitialized = true;
         }
 
-        createModalOverlay() {
-            // Get template from localized data
-            var template = (typeof cqb_params !== 'undefined' && cqb_params.calendar_modal_template) 
-                ? cqb_params.calendar_modal_template 
-                : '';
+        async createModalOverlay() {
+            // Get template from REST API
+            var template = await fetchModalTemplate();
             
             if (!template) {
                 console.error('MLB Calendar: Modal template not found');
@@ -313,9 +356,9 @@
             }
         }
 
-        open() {
+        async open() {
             if (!this.isInitialized) {
-                this.init();
+                await this.init();
             }
             this.overlay.classList.add('mlb-calendar-modal-show');
             document.body.style.overflow = 'hidden';
@@ -342,10 +385,9 @@
     }
 
     // Get booking engine base URL
-    function getBookingEngineURL() {
-        return (typeof cqb_params !== 'undefined' && cqb_params.booking_page_url) 
-            ? cqb_params.booking_page_url 
-            : (window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/');
+    async function getBookingEngineURL() {
+        const config = await fetchConfig();
+        return config.booking_page_url || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
     }
 
     // Show loading spinner

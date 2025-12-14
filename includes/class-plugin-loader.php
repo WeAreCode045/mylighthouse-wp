@@ -94,6 +94,7 @@ class Mylighthouse_Booker_Plugin_Loader
 
 		// API classes
 		require_once MYLIGHTHOUSE_BOOKER_ABSPATH . 'includes/API/class-ajax-handlers.php';
+		require_once MYLIGHTHOUSE_BOOKER_ABSPATH . 'includes/API/class-rest-api.php';
 
 		// Helpers
 		require_once MYLIGHTHOUSE_BOOKER_ABSPATH . 'includes/Helpers/class-template-loader.php';
@@ -113,6 +114,9 @@ class Mylighthouse_Booker_Plugin_Loader
 
 		// AJAX components (always load for both admin and frontend)
 		$this->components[] = new Mylighthouse_Booker_Ajax_Handlers();
+
+		// REST API components (for CSP-safe frontend data)
+		$this->components[] = new Mylighthouse_Booker_REST_API();
 
 		// Elementor components (load regardless of admin/frontend; widget will self-guard)
 		$this->components[] = new Mylighthouse_Booker_Elementor_Loader();
