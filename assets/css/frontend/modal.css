@@ -96,7 +96,7 @@
 /* Right Column (Booking Details) */
 .mlb-modal-right-column {
     width: 0;
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 20px;
     overflow: hidden;
@@ -107,6 +107,7 @@
 }
 
 .mlb-modal-right-column.mlb-visible {
+    display: flex;
     width: 340px;
     margin-left: 24px;
     opacity: 1;
