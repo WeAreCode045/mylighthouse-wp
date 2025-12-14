@@ -738,7 +738,7 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 
 		// Load calendar modal template for JavaScript
 		ob_start();
-		include MYLIGHTHOUSE_BOOKER_ABSPATH . 'templates/modals/booking-modal.php';
+		include MYLIGHTHOUSE_BOOKER_ABSPATH . 'templates/modals/calendar-modal.php';
 		$calendar_modal_template = ob_get_clean();
 
 		// Prefer widget-specific style option, fall back to global admin setting

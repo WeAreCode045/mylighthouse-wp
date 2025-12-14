@@ -9,51 +9,6 @@
 (function() {
     'use strict';
 
-    // Global config cache
-    let mlbConfig = null;
-    let mlbModalTemplate = null;
-
-    // Fetch config from REST API
-    async function fetchConfig() {
-        if (mlbConfig) return mlbConfig;
-        
-        try {
-            const response = await fetch('/wp-json/mylighthouse-booker/v1/config');
-            if (!response.ok) throw new Error('Failed to fetch config');
-            mlbConfig = await response.json();
-            return mlbConfig;
-        } catch (error) {
-            console.error('MLB: Failed to load config:', error);
-            // Fallback to legacy cqb_params if available
-            if (typeof cqb_params !== 'undefined') {
-                mlbConfig = cqb_params;
-                return mlbConfig;
-            }
-            return {};
-        }
-    }
-
-    // Fetch modal template from REST API
-    async function fetchModalTemplate() {
-        if (mlbModalTemplate) return mlbModalTemplate;
-        
-        try {
-            const response = await fetch('/wp-json/mylighthouse-booker/v1/modal-template');
-            if (!response.ok) throw new Error('Failed to fetch modal template');
-            const data = await response.json();
-            mlbModalTemplate = data.html;
-            return mlbModalTemplate;
-        } catch (error) {
-            console.error('MLB: Failed to load modal template:', error);
-            // Fallback to legacy cqb_params if available
-            if (typeof cqb_params !== 'undefined' && cqb_params.calendar_modal_template) {
-                mlbModalTemplate = cqb_params.calendar_modal_template;
-                return mlbModalTemplate;
-            }
-            return '';
-        }
-    }
-
     // Calendar Modal Class
     class CalendarModal {
         constructor(formElement, options = {}) {
@@ -78,17 +33,19 @@
             this.isInitialized = false;
         }
 
-        async init() {
+        init() {
             if (this.isInitialized) return;
-            await this.createModalOverlay();
+            this.createModalOverlay();
             this.initializePicker();
             this.attachEventListeners();
             this.isInitialized = true;
         }
 
-        async createModalOverlay() {
-            // Get template from REST API
-            var template = await fetchModalTemplate();
+        createModalOverlay() {
+            // Get template from localized data
+            var template = (typeof cqb_params !== 'undefined' && cqb_params.calendar_modal_template) 
+                ? cqb_params.calendar_modal_template 
+                : '';
             
             if (!template) {
                 console.error('MLB Calendar: Modal template not found');
@@ -109,9 +66,20 @@
             // Set form ID
             this.overlay.setAttribute('data-form-id', this.formId);
             
-            // Store hotel and room info for later use
-            this.detailsSection = this.overlay.querySelector('.mlb-modal-details-section');
-            this.calendarSection = this.overlay.querySelector('.mlb-modal-calendar-section');
+            // Setup booking details panel based on form type
+            var rightColumn = this.overlay.querySelector('.mlb-modal-right-column');
+            if (rightColumn) {
+                if (this.formType === 'room') {
+                    // Populate hotel and room names
+                    var hotelNameEl = this.overlay.querySelector('.mlb-hotel-name');
+                    var roomNameEl = this.overlay.querySelector('.mlb-room-name');
+                    if (hotelNameEl) hotelNameEl.textContent = this.hotelName || 'Hotel';
+                    if (roomNameEl) roomNameEl.textContent = this.roomName || 'Room';
+                } else {
+                    // Hide for hotel forms
+                    rightColumn.style.display = 'none';
+                }
+            }
             
             document.body.appendChild(this.overlay);
             
@@ -220,89 +188,36 @@
                 this.close();
             }
 
-            // For room forms, load and show booking details
+            // For room forms, show booking details
             if (this.formType === 'room') {
-                this.loadBookingDetails(arrivalStr, departureStr);
-            }
-        }
+                var arrivalSpan = this.overlay.querySelector('.mlb-arrival-date');
+                var departureSpan = this.overlay.querySelector('.mlb-departure-date');
+                var datesRows = this.overlay.querySelectorAll('.mlb-dates-row');
+                var submitBtn = this.overlay.querySelector('.mlb-modal-submit-btn');
+                var rightColumn = this.overlay.querySelector('.mlb-modal-right-column');
+                var calendarDiv = this.overlay.querySelector('.mlb-modal-calendar');
 
-        loadBookingDetails(arrivalStr, departureStr) {
-            var self = this;
-            
-            // Get the template
-            var template = document.getElementById('mlb-booking-details-template');
-            if (!template) return;
-            
-            // Clone template content
-            var content = template.content.cloneNode(true);
-            
-            // Populate with data
-            var hotelNameEl = content.querySelector('.mlb-hotel-name');
-            var roomNameEl = content.querySelector('.mlb-room-name');
-            var arrivalSpan = content.querySelector('.mlb-arrival-date');
-            var departureSpan = content.querySelector('.mlb-departure-date');
-            var submitBtn = content.querySelector('.mlb-modal-submit-btn');
-            
-            if (hotelNameEl) hotelNameEl.textContent = this.hotelName || 'Hotel';
-            if (roomNameEl) roomNameEl.textContent = this.roomName || 'Room';
-            if (arrivalSpan) arrivalSpan.textContent = arrivalStr;
-            if (departureSpan) departureSpan.textContent = departureStr;
-            if (submitBtn) submitBtn.disabled = false;
-            
-            // Clear and inject into details section
-            this.detailsSection.innerHTML = '';
-            this.detailsSection.appendChild(content);
-            
-            // Expand modal container
-            var modalContainer = this.overlay.querySelector('.mlb-calendar-modal-container');
-            if (modalContainer) {
-                modalContainer.classList.add('mlb-expanded');
-            }
-            
-            // Show details section with animation
-            setTimeout(function() {
-                self.detailsSection.classList.add('mlb-visible');
+                if (arrivalSpan) arrivalSpan.textContent = arrivalStr;
+                if (departureSpan) departureSpan.textContent = departureStr;
+                datesRows.forEach(function(row) { row.style.display = 'flex'; });
+                if (submitBtn) submitBtn.disabled = false;
                 
-                // On mobile, hide calendar
-                if (window.innerWidth <= 768 && self.calendarSection) {
-                    self.calendarSection.classList.add('mlb-hidden');
-                }
-            }, 50);
-            
-            // Attach event listeners to newly created elements
-            this.attachDetailsEventListeners();
-        }
-
-        attachDetailsEventListeners() {
-            var self = this;
-            
-            // Submit button
-            var submitBtn = this.detailsSection.querySelector('.mlb-modal-submit-btn');
-            if (submitBtn) {
-                submitBtn.addEventListener('click', function() {
-                    self.close();
-                    var event = new CustomEvent('mlb-modal-submit', {
-                        bubbles: true,
-                        detail: {
-                            arrivalDMY: self.checkinInput ? self.checkinInput.value : '',
-                            departureDMY: self.checkoutInput ? self.checkoutInput.value : '',
-                            arrivalISO: self.toISO(self.checkinInput ? self.checkinInput.value : ''),
-                            departureISO: self.toISO(self.checkoutInput ? self.checkoutInput.value : '')
-                        }
-                    });
-                    self.form.dispatchEvent(event);
-                });
-            }
-            
-            // Back button
-            var backBtn = this.detailsSection.querySelector('.mlb-modal-back-btn');
-            if (backBtn) {
-                backBtn.addEventListener('click', function() {
-                    self.detailsSection.classList.remove('mlb-visible');
-                    if (self.calendarSection) {
-                        self.calendarSection.classList.remove('mlb-hidden');
+                // Slide in booking details from right (desktop) or replace calendar (mobile)
+                if (rightColumn) {
+                    // Expand modal container on desktop
+                    var modalContainer = this.overlay.querySelector('.mlb-calendar-modal-container');
+                    if (modalContainer) {
+                        modalContainer.classList.add('mlb-expanded');
                     }
-                });
+                    
+                    setTimeout(function() { 
+                        rightColumn.classList.add('mlb-visible');
+                        // On mobile, hide calendar when showing details
+                        if (window.innerWidth <= 768 && calendarDiv) {
+                            calendarDiv.classList.add('mlb-hidden');
+                        }
+                    }, 50);
+                }
             }
         }
 
@@ -356,9 +271,9 @@
             }
         }
 
-        async open() {
+        open() {
             if (!this.isInitialized) {
-                await this.init();
+                this.init();
             }
             this.overlay.classList.add('mlb-calendar-modal-show');
             document.body.style.overflow = 'hidden';
@@ -385,9 +300,10 @@
     }
 
     // Get booking engine base URL
-    async function getBookingEngineURL() {
-        const config = await fetchConfig();
-        return config.booking_page_url || window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/';
+    function getBookingEngineURL() {
+        return (typeof cqb_params !== 'undefined' && cqb_params.booking_page_url) 
+            ? cqb_params.booking_page_url 
+            : (window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/');
     }
 
     // Show loading spinner
