@@ -73,12 +73,17 @@
     gap: 0;
     padding: 16px;
     position: relative;
-    align-items: baseline;
+    align-items: flex-start;
 }
 
 /* Calendar Container */
 .mlb-modal-calendar {
-    display:none;
+    flex-shrink: 0;
+    line-height: 0;
+}
+
+.mlb-modal-calendar > * {
+    line-height: normal;
 }
 
 /* Right Column (Booking Details) */
