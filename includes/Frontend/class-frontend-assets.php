@@ -109,9 +109,6 @@ class Mylighthouse_Booker_Frontend_Assets
 	 */
 	public function enqueue_scripts()
 	{
-		// Ensure jQuery is available (WordPress includes it by default)
-		wp_enqueue_script('jquery');
-
 		// Register EasePick datetime dependency first (in head for availability)
 		wp_register_script(
 			'easepick-datetime',
