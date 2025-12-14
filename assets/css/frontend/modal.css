@@ -33,9 +33,10 @@
     border-radius: 8px;
     max-width: 90vw;
     max-height: 90vh;
-    overflow: auto;
+    overflow: visible;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
 }
 
 .mlb-calendar-modal-container.mlb-expanded {
