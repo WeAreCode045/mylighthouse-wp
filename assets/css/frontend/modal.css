@@ -144,8 +144,9 @@
 
 .mlb-booking-details h3 {
     margin: 0 0 20px 0;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #1f2937;
     border-bottom: 2px solid #e5e7eb;
     padding-bottom: 12px;
@@ -168,12 +169,14 @@
 .mlb-info-row .mlb-label {
     font-size: 13px;
     font-weight: 600;
-    color: #6b7280;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #000;
 }
 
 .mlb-info-row span:not(.mlb-label) {
     font-size: 15px;
     font-weight: 500;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #1f2937;
     text-align: right;
 }
