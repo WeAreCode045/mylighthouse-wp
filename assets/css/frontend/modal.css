@@ -78,7 +78,7 @@
 
 /* Calendar Container */
 .mlb-modal-calendar {
-    flex-shrink: 0;
+display:none;
 }
 
 /* Right Column (Booking Details) */
