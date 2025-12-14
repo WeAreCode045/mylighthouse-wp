@@ -202,7 +202,7 @@
                 datesRows.forEach(function(row) { row.style.display = 'flex'; });
                 if (submitBtn) submitBtn.disabled = false;
                 
-                // Slide in booking details from right (desktop) or replace calendar (mobile)
+                // Slide in booking details from right (desktop) or show below calendar (mobile)
                 if (rightColumn) {
                     // Expand modal container on desktop
                     var modalContainer = this.overlay.querySelector('.mlb-calendar-modal-container');
@@ -212,10 +212,6 @@
                     
                     setTimeout(function() { 
                         rightColumn.classList.add('mlb-visible');
-                        // On mobile, hide calendar when showing details
-                        if (window.innerWidth <= 768 && calendarDiv) {
-                            calendarDiv.classList.add('mlb-hidden');
-                        }
                     }, 50);
                 }
             }
@@ -254,18 +250,6 @@
                             }
                         });
                         self.form.dispatchEvent(event);
-                    });
-                }
-                
-                // Back button for mobile
-                var backBtn = this.overlay.querySelector('.mlb-modal-back-btn');
-                if (backBtn) {
-                    backBtn.addEventListener('click', function() {
-                        var rightColumn = self.overlay.querySelector('.mlb-modal-right-column');
-                        var calendarDiv = self.overlay.querySelector('.mlb-modal-calendar');
-                        
-                        if (rightColumn) rightColumn.classList.remove('mlb-visible');
-                        if (calendarDiv) calendarDiv.classList.remove('mlb-hidden');
                     });
                 }
             }
