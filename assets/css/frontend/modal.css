@@ -212,14 +212,16 @@
     }
     
     .mlb-modal-right-column {
-        width: 100%;
-        margin-left: 0;
+        width: 100% !important;
+        margin-left: 0 !important;
         display: none;
+        overflow: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
     }
     
     .mlb-modal-right-column.mlb-visible {
-        display: flex;
-        opacity: 1;
+        display: flex !important;
     }
     
     .mlb-calendar-modal-container {
