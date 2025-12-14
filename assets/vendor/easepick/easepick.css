@@ -318,6 +318,28 @@
 	cursor: not-allowed;
 }
 
+@media (max-width: 768px) {
+	.mlb-modal-calendar .easepick-wrapper,
+	.mlb-modal-calendar .easepick-wrapper > *,
+	.mlb-modal-calendar .container,
+	.mlb-modal-calendar .calendars,
+	.mlb-modal-calendar .calendar {
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+	}
+	
+	.mlb-modal-calendar .calendars {
+		grid-template-columns: 1fr !important;
+	}
+	
+	.mlb-modal-calendar .calendar > .days-grid > .day {
+		width: calc(100% / 7) !important;
+		max-width: none !important;
+		min-width: 0 !important;
+	}
+}
+
 @media (max-width: 480px) {
 	.container:not(.inline) {
 		transform: scaleY(0) !important;
