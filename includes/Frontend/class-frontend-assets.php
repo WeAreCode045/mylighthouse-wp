@@ -24,6 +24,7 @@ class Mylighthouse_Booker_Frontend_Assets
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 		add_action('init', array($this, 'register_styles'));
+		add_filter('script_loader_tag', array($this, 'add_script_attributes'), 10, 3);
 	}
 
 	/**
@@ -192,4 +193,32 @@ class Mylighthouse_Booker_Frontend_Assets
 	}
 
 	// Legacy generate_styles removed; styling should be handled by Elementor/theme.
+
+	/**
+	 * Add attributes to script tags for CSP compatibility
+	 * Adds data-cfasync="false" to prevent issues with inline scripts
+	 *
+	 * @param string $tag    The script tag
+	 * @param string $handle The script handle
+	 * @param string $src    The script source URL
+	 * @return string Modified script tag
+	 */
+	public function add_script_attributes($tag, $handle, $src)
+	{
+		// List of our plugin script handles
+		$plugin_handles = array(
+			'mylighthouse-booker-frontend',
+			'mylighthouse-booker-spinner',
+			'easepick-core',
+			'easepick-range',
+			'easepick-wrapper'
+		);
+
+		// Add data-cfasync="false" to our scripts to prevent CSP issues
+		if (in_array($handle, $plugin_handles, true)) {
+			$tag = str_replace(' src=', ' data-cfasync="false" src=', $tag);
+		}
+
+		return $tag;
+	}
 }
