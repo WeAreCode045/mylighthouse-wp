@@ -150,22 +150,23 @@ display:none;
 
 .mlb-info-row {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
 }
 
 .mlb-info-row .mlb-label {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .mlb-info-row span:not(.mlb-label) {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     color: #1f2937;
+    text-align: right;
 }
 
 /* Modal Actions */
