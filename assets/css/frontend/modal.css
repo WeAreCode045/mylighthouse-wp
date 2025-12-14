@@ -81,7 +81,7 @@
 
 /* Calendar Container */
 .mlb-modal-calendar {
-    visibility: hidden;
+   display:none;
 }
 
 .mlb-modal-calendar > * {
