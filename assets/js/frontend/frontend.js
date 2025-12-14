@@ -9,6 +9,24 @@
 (function() {
     'use strict';
 
+    // Get params from data attributes (CSP-safe)
+    function getParams() {
+        var dataEl = document.querySelector('.mlb-data-params');
+        if (dataEl) {
+            return {
+                ajax_url: dataEl.dataset.ajaxUrl,
+                nonce: dataEl.dataset.nonce,
+                booking_page_url: dataEl.dataset.bookingPageUrl,
+                spinner_image_url: dataEl.dataset.spinnerImageUrl,
+                calendar_modal_template: document.getElementById('mlb-calendar-template') ? document.getElementById('mlb-calendar-template').innerHTML : ''
+            };
+        }
+        // Fallback to window object if it exists
+        return window.cqb_params || {};
+    }
+    
+    var cqb_params = getParams();
+
     // Calendar Modal Class
     class CalendarModal {
         constructor(formElement, options = {}) {
