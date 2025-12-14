@@ -70,6 +70,13 @@
             this.detailsSection = this.overlay.querySelector('.mlb-modal-details-section');
             this.calendarSection = this.overlay.querySelector('.mlb-modal-calendar-section');
             
+            if (!this.detailsSection) {
+                console.error('MLB Calendar: Details section not found in template');
+            }
+            if (!this.calendarSection) {
+                console.error('MLB Calendar: Calendar section not found in template');
+            }
+            
             document.body.appendChild(this.overlay);
             
             // Store reference on form
@@ -294,11 +301,17 @@
         }
 
         open() {
+            console.log('MLB: Opening modal, initialized:', this.isInitialized);
             if (!this.isInitialized) {
                 this.init();
             }
+            if (!this.overlay) {
+                console.error('MLB: Cannot open modal - overlay not found');
+                return;
+            }
             this.overlay.classList.add('mlb-calendar-modal-show');
             document.body.style.overflow = 'hidden';
+            console.log('MLB: Modal opened');
         }
 
         close() {
