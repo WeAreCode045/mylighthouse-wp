@@ -80,6 +80,7 @@
 .mlb-modal-calendar {
     flex-shrink: 0;
     line-height: 0;
+    display: none;
 }
 
 .mlb-modal-calendar > * {
