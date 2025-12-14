@@ -762,7 +762,6 @@ class Mylighthouse_Booker_Elementor_Widget_Booking_Form extends Widget_Base
 		$params_data = array(
 			'ajax-url' => admin_url('admin-ajax.php'),
 			'nonce' => wp_create_nonce('cqb_nonce'),
-			'booking-page-url' => $booking_page_url,
 			'spinner-image-url' => $spinner_image,
 		);
 		

@@ -16,7 +16,6 @@
             return {
                 ajax_url: dataEl.dataset.ajaxUrl,
                 nonce: dataEl.dataset.nonce,
-                booking_page_url: dataEl.dataset.bookingPageUrl,
                 spinner_image_url: dataEl.dataset.spinnerImageUrl,
                 calendar_modal_template: document.getElementById('mlb-calendar-template') ? document.getElementById('mlb-calendar-template').innerHTML : ''
             };
@@ -354,9 +353,7 @@
 
     // Get booking engine base URL
     function getBookingEngineURL() {
-        return (typeof cqb_params !== 'undefined' && cqb_params.booking_page_url) 
-            ? cqb_params.booking_page_url 
-            : (window.MLBBookingEngineBase || 'https://bookingengine.mylighthouse.com/');
+        return 'https://bookingengine.mylighthouse.com/';
     }
 
     // Show loading spinner
