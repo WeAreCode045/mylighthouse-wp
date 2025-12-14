@@ -74,7 +74,6 @@
     padding: 24px;
     min-height: 400px;
     position: relative;
-    overflow: hidden;
 }
 
 /* Calendar Container */
@@ -84,23 +83,23 @@
 
 /* Right Column (Booking Details) */
 .mlb-modal-right-column {
-    width: 340px;
+    width: 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
     max-height: calc(100% - 48px);
-    overflow-y: auto;
-    margin-left: 24px;
-    transform: translateX(100%);
+    overflow: hidden;
     opacity: 0;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
 }
 
 .mlb-modal-right-column.mlb-visible {
-    transform: translateX(0);
+    width: 340px;
+    margin-left: 24px;
     opacity: 1;
     pointer-events: auto;
+    overflow-y: auto;
 }
 
 /* Back Button (hidden on desktop) */
