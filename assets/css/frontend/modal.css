@@ -73,11 +73,12 @@
     gap: 0;
     padding: 16px;
     position: relative;
+    align-items: baseline;
 }
 
 /* Calendar Container */
 .mlb-modal-calendar {
-display:none;
+    display:none;
 }
 
 /* Right Column (Booking Details) */
@@ -170,7 +171,6 @@ display:none;
 
 /* Modal Actions */
 .mlb-modal-actions {
-    padding: 20px 0 0;
     display: flex;
     justify-content: stretch;
 }
@@ -252,6 +252,5 @@ display:none;
     
     .mlb-modal-content-wrapper {
         position: relative;
-        min-height: 450px;
     }
 }
