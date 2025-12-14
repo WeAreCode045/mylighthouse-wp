@@ -167,14 +167,14 @@
 }
 
 .mlb-info-row .mlb-label {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #000;
 }
 
 .mlb-info-row span:not(.mlb-label) {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #1f2937;
@@ -194,7 +194,7 @@
     color: var(--mlb-btn-text, #ffffff);
     border: none;
     border-radius: 8px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
