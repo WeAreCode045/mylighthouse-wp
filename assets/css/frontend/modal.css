@@ -72,16 +72,18 @@
     display: inline-flex;
     flex-direction: row;
     gap: 0;
-    padding: 16px;
+    padding: 30px;
     position: relative;
     align-items: flex-start;
-    vertical-align: top;
+    vertical-align: middle;
+    max-height: 320px
 }
 
 /* Calendar Container */
 .mlb-modal-calendar {
     flex-shrink: 0;
     line-height: 0;
+    display: none;
 }
 
 .mlb-modal-calendar > * {
